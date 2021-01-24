@@ -9,3 +9,4 @@
 <script src="{{asset('assets/js/template.js')}}"></script>
 <script src="{{asset('assets/js/dashboard.js')}}"></script>
 <script src="{{asset('assets/js/datepicker.js')}}"></script>
+<script src="{{asset('/datetime/build/jquery.datetimepicker.full.min.js')}}"></script>

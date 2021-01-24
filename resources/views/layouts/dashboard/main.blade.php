@@ -13,6 +13,7 @@
             @include('layouts.dashboard.footer')
         </div>
     </div>
+    @yield('scripts')
     @include('layouts.dashboard.scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script type="text/javascript">

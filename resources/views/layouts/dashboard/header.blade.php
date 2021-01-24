@@ -63,7 +63,7 @@
                             <div class="dropdown-body">
                                 <ul class="profile-nav p-0 pt-3">
                                     <li class="nav-item">
-                                        <a href="javascript:;" class="nav-link">
+                                        <a href="{{ route('dashboard.calendarial') }}" class="nav-link">
                                             <i data-feather="edit-3"></i>
                                             <span>Peak & Off-peak</span>
                                         </a>
@@ -75,7 +75,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                        <a href="{{ route('dashboard.fleets') }}" class="nav-link">
                                             <i data-feather="truck"></i>
                                             <span>Add Fleet</span>
                                         </a>
@@ -130,7 +130,20 @@
                     </a>
                     <div class="submenu">
                         <ul class="submenu-item">
-                            Add Route
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('dashboard.add_route') }}">
+                                    <span class="menu-title">
+                                        Add Route
+                                    </span>
+                                    </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('dashboard.routes') }}">
+                                            <span class="menu-title">
+                                                All Route
+                                            </span>
+                                        </a>
+                                    </li>
                         </ul>
                     </div>
                 </li>

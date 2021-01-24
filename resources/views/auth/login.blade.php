@@ -1,5 +1,5 @@
-@extends('layouts.main')
-@section('title', 'Login')
+@extends('layouts.auth.main')
+@section('title', 'Admin')
 @section('stylesheet')
 @endsection
 @section('body')

@@ -146,57 +146,61 @@
                     <table class="table table-hover mb-0">
                         <thead>
                             <tr>
-                                <th class="pt-0">Image</th>
-                                <th class="pt-0">Product Name</th>
-                                <th class="pt-0">Price</th>
-                                <th class="pt-0">Compare Price</th>
-                                <th class="pt-0">Quantity</th>
-                                <th class="pt-0">Unit</th>
-                                <th class="pt-0">Available</th>
-                                <th class="pt-0">Status</th>
+                                <th class="pt-0">#</th>
+                                <th class="pt-0">Group</th>
+                                <th class="pt-0">Amount</th>
+                                <th class="pt-0">Seaters</th>
+                                <th class="pt-0">Route</th>
+                                <th class="pt-0">Agent</th>
                                 <th class="pt-0">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach($products as $product)
-                            <tr>
-                                <td>
-                                    <img src="{{asset('users_products_images/'.$product->product_image_a)}}" class="rounded-circle wd-35" alt="user">
-                                </td>
-                                <td>{{$product->product_name}}</td>
-                                <td>{{number_format($product->price, 2)}}</td>
-                                <td><strike>{{number_format($product->compare_price, 2)}}</strike></td>
-                                <td>{{$product->quantity}}</td>
-                                <td>{{$product->unit}}</td>
-                                <td>{{$product->number}}</td>
-                                <td>
-                                    @if($product->active == false)
-                                    <span class="badge badge-danger">Not Active</span>
-                                    @else
-                                    <span class="badge badge-success">Active</span>
-                                    @endif
-                                </td>
-                                <td class="form-inline">
-                                    @if($product->active == true)
-                                    <form action="{{route('user_lock_product', base64_encode($product->id))}}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-outline-warning style=" margin:2px;"">Lock</button>
-                                    </form>
-                                    @else
-                                    <form action="{{route('user_unlock_product', base64_encode($product->id))}}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-outline-warning" style="margin:2px;">Unlock</button>
-                                    </form>
-                                    @endif
-                                    <a href="{{route('user_get_edit_product', base64_encode($product->id))}}">
-                                        <button type="button" style="margin:2px;" class="btn btn-outline-success">Edit</button>
-                                    </a>
-                                    <button type="button" class="btn btn-danger btn-icon" style="margin:2px;">
-                                        <i data-feather="trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            @endforeach --}}
+                            @foreach($routes as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->group }}</td>
+                                    <td>KSh{{ number_format($item->amount, 2) }}</td>
+                                    <td>{{ $item->seaters }}</td>
+                                    <td>{{ $item->departure }} ~ {{ $item->destination }}</td>
+                                    <td>
+                                        {{-- {{ @$item->agent->fname }} --}}
+                                    </td>
+                                    <td class="form-inline float-right">
+                                        <button class="btn btn-default btn-sm">
+                                            <a href="{{route('dashboard.edit_route', base64_encode($item->id))}}">
+                                                <i data-feather="edit"></i>
+                                            </a>
+                                        </button>
+                                        <button class="btn btn btn-sm">
+                                            <a href="{{route('route.show', base64_encode($item->id))}}">
+                                                <i data-feather="globe"></i>
+                                        </button>
+                                        @if($item->suspend == false)
+                                        <form action="{{route('dashboard.suspend_route', base64_encode($item->id))}}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn btn-sm" style="margin:2px"><i data-feather="lock"></i></button>
+                                        </form>
+                                        @else
+                                        <form action="{{route('dashboard.unsuspend_route', base64_encode($item->id))}}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn btn-sm" style="margin:2px"><i data-feather="unlock"></i></button>
+                                        </form>
+                                        @endif
+                                        {{-- @if($item->admin_suspend == false)
+                                        <form action="{{route('dashboard.unsuspend_fleet', base64_encode($item->id))}}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-outline-success btn-sm" style="margin:2px"><i data-feather="lock"></i></button>
+                                        </form>
+                                        @else
+                                        <form action="{{route('dashboard.unsuspend_fleet', base64_encode($item->id))}}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-outline-success btn-sm" style="margin:2px"><i data-feather="unlock"></i></button>
+                                        </form>
+                                        @endif --}}
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
