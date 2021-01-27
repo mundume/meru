@@ -31,6 +31,10 @@ class User extends Authenticatable
         'handle'
     ];
 
+    protected $dates = [
+        'suspend'
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *

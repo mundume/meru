@@ -1,9 +1,16 @@
 @extends('layouts.auth.main')
-@section('title', 'Admin')
-@section('stylesheet')
-@endsection
+@section('title', 'Login')
 @section('body')
-<section class="hero-section ai5 relative" id="home" style="background: url(img/logo.png) no-repeat center center fixed;">
+<style>
+    #home {
+        background: url(shuttle_images/tourist.png) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: contain;
+    }
+</style>
+<section class="hero-section ai5 relative" id="home">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-5 offset-md-5">
@@ -56,7 +63,7 @@
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn login-btn" style="height:42px;">
+                                    <button type="submit" class="btn login-btn btn-block" style="height:42px;">
                                         {{ __('Login') }}
                                     </button>
 

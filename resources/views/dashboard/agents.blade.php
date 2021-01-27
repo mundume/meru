@@ -29,6 +29,7 @@
                                         <th class="pt-0">Email</th>
                                         <th class="pt-0">Mobile</th>
                                         <th class="pt-0">Office Mobile</th>
+                                        <th class="pt-0">Pass Code</th>
                                         <th></th>
                                         <th class="pt-0">Action</th>
                                     </tr>
@@ -42,6 +43,7 @@
                                         <td><code>{{ $user->user->email }}</code></td>
                                         <td>{{ $user->user->mobile }}</td>
                                         <td>{{ $user->user->c_mobile }}</td>
+                                        <td>{{ $user->pass_code }}</td>
                                         <td>
                                             @if($user->user->suspend == 'NULL')
                                             <span class="badge badge-danger">Not Active</span>
@@ -54,22 +56,22 @@
                                             <form action="{{route('dashboard.agent_lock', base64_encode($user->user->id))}}" method="POST">
                                                 @csrf
                                                 <button type="submit" class="btn btn-outline-warning" style="margin:2px;">
-                                                    <i data-feather="lock"></i>
+                                                    <i data-feather="lock" class="icon-sm"></i>
                                                 </button>
                                             </form>
                                             @else
                                             <form action="{{route('dashboard.agent_unlock', base64_encode($user->user->id))}}" method="POST">
                                                 @csrf
                                                 <button type="submit" class="btn btn-outline-warning" style="margin:2px;">
-                                                    <i data-feather="unlock"></i>
+                                                    <i data-feather="unlock" class="icon-sm"></i>
                                                 </button>
                                             </form>
                                             @endif
                                             <button type="button" style="margin:2px;" class="btn btn-outline-success">
-                                                <i data-feather="edit"></i>
+                                                <i data-feather="edit" class="icon-sm"></i>
                                             </button>
-                                            <button type="button" class="btn btn-danger btn-icon" style="margin:2px;">
-                                                <i data-feather="trash"></i>
+                                            <button type="button" class="btn btn-outline-danger" style="margin:2px;">
+                                                <i data-feather="trash" class="icon-sm"></i>
                                             </button>
                                         </td>
                                     </tr>

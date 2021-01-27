@@ -22,6 +22,7 @@ class CreateCalendarialsTable extends Migration
             $table->string('amount');
             $table->string('off_peak');
             $table->string('name');
+            $table->boolean('lock')->nullable();
             $table->timestamps();
         });
     }

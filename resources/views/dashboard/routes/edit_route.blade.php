@@ -52,7 +52,7 @@
                             <small class="text-danger">{{$errors->first('mobile')}}</small>
                         </div>
                         <div class="col-md-6">
-                            <small>Re-assign Agent* <b>{{ @$agent->user->first_name }} {{ @$agent->user->last_name }}</b></small>
+                            <small>Re-assign Agent* <b>{{ @$agent->user->fname }} {{ @$agent->user->lname }}</b></small>
                             <select class="form-control border-radius" style="height: 45px;text-transform: uppercase;" name="agent">
                                 <option selected data-default disabled>Re-assign Agent</option>
                                 <option value="ignore">HEAD OFFICE</option>

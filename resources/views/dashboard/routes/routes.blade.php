@@ -26,52 +26,57 @@
                                 <th class="pt-0">Seaters</th>
                                 <th class="pt-0">Route</th>
                                 <th class="pt-0">Agent</th>
-                                <th class="pt-0">Action</th>
+                                <th class="pt-0 float-right">Overall Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($routes as $item)
-                            <tr>
+                            @php
+                            if($item->suspend == true):
+                            $color = 'tomato';
+                            else:
+                            $color = '';
+                            endif
+                            @endphp
+                            @php
+                            if($item->admin_suspend == true):
+                            $strike = 'line-through';
+                            else:
+                            $strike = '';
+                            endif
+                            @endphp
+                            <tr style="background-color: {{ $color }};text-decoration: {{ $strike }};">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->group }}</td>
                                 <td>KSh{{ number_format($item->amount, 2) }}</td>
                                 <td>{{ $item->seaters }}</td>
                                 <td>{{ $item->departure }} ~ {{ $item->destination }}</td>
                                 <td>
-                                    {{-- {{ @$item->agent->fname }} --}}
+                                    @foreach($item->agent as $agent)
+                                    {{ @$agent->fname }} {{ @$agent->lname }}
+                                    @endforeach
                                 </td>
-                                <td class="form-inline">
+                                <td class="form-inline float-right">
                                     <button class="btn btn-default btn-sm">
                                         <a href="{{route('dashboard.edit_route', base64_encode($item->id))}}">
-                                            <i data-feather="edit"></i>
+                                            <i data-feather="edit" class="icon-sm"></i>
                                         </a>
                                     </button>
-                                    <button class="btn btn-outline-success btn-sm">
+                                    <button class="btn btn btn-sm">
                                         <a href="{{route('route.show', base64_encode($item->id))}}">
-                                            <i data-feather="eye"></i>
+                                            <i data-feather="globe" class="icon-sm"></i>
                                     </button>
-                                    @if($item->suspend == false)
-                                    <form action="{{route('dashboard.unsuspend_fleet', base64_encode($item->id))}}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-outline-success btn-sm" style="margin:2px"><i data-feather="lock"></i></button>
+                                    @if($item->admin_suspend == false)
+                                    <form action="{{route('dashboard.admin_suspend_route', base64_encode($item->id))}}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" style="margin:2px"><i data-feather="unlock" class="icon-sm"></i></button>
                                     </form>
                                     @else
-                                    <form action="{{route('dashboard.unsuspend_fleet', base64_encode($item->id))}}" method="POST">
+                                    <form action="{{route('dashboard.admin_unsuspend_route', base64_encode($item->id))}}" method="POST">
                                         @csrf
-                                        <button type="submit" class="btn btn-outline-success btn-sm" style="margin:2px"><i data-feather="unlock"></i></button>
+                                        <button type="submit" class="btn btn-outline-success btn-sm" style="margin:2px"><i data-feather="lock" class="icon-sm"></i></button>
                                     </form>
                                     @endif
-                                    {{-- @if($item->admin_suspend == false)
-                                        <form action="{{route('dashboard.unsuspend_fleet', base64_encode($item->id))}}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-outline-success btn-sm" style="margin:2px"><i data-feather="lock"></i></button>
-                                    </form>
-                                    @else
-                                    <form action="{{route('dashboard.unsuspend_fleet', base64_encode($item->id))}}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-outline-success btn-sm" style="margin:2px"><i data-feather="unlock"></i></button>
-                                    </form>
-                                    @endif --}}
                                 </td>
                             </tr>
                             @endforeach

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Route extends Model
 {
     use HasFactory;
-    protected $guarded = ['id', 'fleet_unique'];
+    protected $guarded = ['id'];
     protected $casts = [
         'pick_up' => 'array'
     ];

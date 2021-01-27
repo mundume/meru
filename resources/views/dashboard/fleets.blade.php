@@ -45,22 +45,22 @@
                                 <td>{{$item->driver_contact}}</td>
                                 <td>{{ $item->capacity }}</td>
                                 <td>{{$item->created_at->format('d-m-Y')}}</td>
-                                <td class="form-inline">
-                                    <button class="btn btn-default btn-sm" data-toggle="modal" style="margin:2px" data-target="#edit_fleet_{{ $item->id }}"><i data-feather="edit"></i></button>
+                                <td class="form-inline float-right">
+                                    <button class="btn btn-default" data-toggle="modal" style="margin:2px" data-target="#edit_fleet_{{ $item->id }}"><i data-feather="edit" class="icon-sm"></i></button>
                                     @if($item->suspend == true)
                                     <form action="{{route('dashboard.unsuspend_fleet', base64_encode($item->id))}}" method="POST">
                                         @csrf
-                                        <button type="submit" class="btn btn-outline-success btn-sm" style="margin:2px"><i data-feather="unlock"></i></button>
+                                        <button type="submit" class="btn btn-outline-success" style="margin:2px"><i data-feather="unlock" class="icon-sm"></i></button>
                                     </form>
                                     @else
                                     <form action="{{route('dashboard.suspend_fleet', base64_encode($item->id))}}" method="POST">
                                         @csrf
-                                        <button type="submit" class="btn btn-outline-info btn-sm" style="margin:2px"><i data-feather="lock"></i></button>
+                                        <button type="submit" class="btn btn-outline-info" style="margin:2px"><i data-feather="lock" class="icon-sm"></i></button>
                                     </form>
                                     @endif
                                     <form action="{{route('dashboard.delete_fleet', base64_encode($item->id))}}" method="POST">
                                         @csrf
-                                        <button type="submit" class="btn btn-danger btn-sm" style="margin:2px"><i data-feather="trash"></i></button>
+                                        <button type="submit" class="btn btn-danger" style="margin:2px"><i data-feather="trash" class="icon-sm"></i></button>
                                     </form>
                                 </td>
                             </tr>
@@ -106,7 +106,7 @@
                                                     </div>
                                                 </div>
                                                 <br>
-                                                <button type="submit" class="btn btn-success float-right mb-2">EDIT FLEET</button>
+                                                <button type="submit" class="btn btn-success btn-block" style="height: 45px;">EDIT FLEET</button>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
@@ -166,7 +166,7 @@
                         </div>
                     </div>
                     <br>
-                    <button type="submit" class="btn btn-success float-right mb-2">ADD FLEET</button>
+                    <button type="submit" class="btn btn-success btn-block" style="height: 45px;">ADD FLEET</button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -174,4 +174,14 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
+@if (count($errors) > 0)
+<script>
+    $(document).ready(function () {
+        $('#add_fleet').modal('show')
+    })
+</script>
+@endif
 @endsection

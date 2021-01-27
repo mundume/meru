@@ -1,9 +1,12 @@
 @extends('layouts.dashboard.main')
 @section('title', 'Peak & Off-peaks')
+<link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
 @section('body')
 <div class="row">
     <div class="col-md-12">
-        <button class="btn btn-success" type="button" data-toggle="modal" data-target="#add_peak" style="text-transform: uppercase;border-radius: 0px;">ADD PEAK</button>
+        <button class="btn btn-success float-right" type="button" data-toggle="modal" data-target="#add_peak" style="text-transform: uppercase;border-radius: 0px;">
+            <i data-feather="plus"></i>&nbsp;ADD PEAK
+        </button>
     </div>
 </div>
 <br>
@@ -20,14 +23,14 @@
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
                         <thead>
-                            <tr class="info">
-                                <th>#</th>
-                                <th>Route</th>
-                                <th>Date</th>
-                                <th>Off Peak Amount</th>
-                                <th>Peak Amount</th>
-                                <th>Fleet ID</th>
-                                <th>Action</th>
+                            <tr>
+                                <th class="pt-0">#</th>
+                                <th class="pt-0">Route</th>
+                                <th class="pt-0">Date</th>
+                                <th class="pt-0">Off Peak Amount</th>
+                                <th class="pt-0">Peak Amount</th>
+                                <th class="pt-0">Fleet ID</th>
+                                <th class="pt-0">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,11 +42,15 @@
                                 <td>{{number_format($loc->off_peak, 2)}}</td>
                                 <td>{{number_format($loc->amount, 2)}}</td>
                                 <td>{{$loc->fleet_unique}}</td>
-                                <td class="form-inline">
-                                    <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#edit_peak-{{$loc->id}}"><i class="fa fa-edit"></i></button>
-                                    <form action="{{route('provider.delete_peak', $loc->id)}}" method="POST">
+                                <td class="form-inline float-right">
+                                    <button class="btn btn-outline-success" data-toggle="modal" data-target="#edit_peak-{{$loc->id}}" style="margin:2px;">
+                                        <i data-feather="edit" class="icon-sm"></i>
+                                    </button>
+                                    <form action="{{route('dashboard.delete_peak', base64_encode($loc->id))}}" method="POST">
                                         @csrf
-                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                        <button type="submit" class="btn btn-outline-danger">
+                                            <i data-feather="trash" class="icon-sm"></i>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
@@ -59,11 +66,11 @@
                                             </h4>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{route('provider.edit_peak', $loc->id)}}" method="POST">
+                                            <form action="{{route('dashboard.edit_peak', base64_encode($loc->id))}}" method="POST">
                                                 @csrf
                                                 <div class="row">
                                                     <div class="col-md-12 col-xs-12 col-sm-12">
-                                                        <input type="text" name="date" value="{{ $loc->date }}" style="border-radius: 0px;height:50px;" id="get_date" required class="form-control" readonly>
+                                                        <input type="text" name="date" value="{{ $loc->date }}" style="border-radius: 0px;height:50px;" id="datee" required class="form-control" readonly>
                                                         <small class="text-danger">{{$errors->first('date')}}</small>
                                                     </div>
                                                 </div>
@@ -75,7 +82,7 @@
                                                     </div>
                                                 </div>
                                                 <br>
-                                                <button type="submit" class="btn btn-warning">EDIT
+                                                <button type="submit" class="btn btn-warning btn-block">EDIT
                                                     PEAK</button>
                                             </form>
                                         </div>
@@ -137,7 +144,7 @@
                     <br>
                     <div class="row">
                         <div class="col-md-12 col-xs-12 col-sm-12">
-                            <input type="text" name="date" placeholder="DATE" style="border-radius: 0px;height:50px;" id="get_datee" required class="form-control" readonly>
+                            <input type="text" name="date" placeholder="DATE" style="border-radius: 0px;height:50px;" id="date" required class="form-control" readonly>
                             <small class="text-danger">{{$errors->first('date')}}</small>
                         </div>
                     </div>
@@ -149,7 +156,18 @@
                         </div>
                     </div>
                     <br>
-                    <button type="submit" class="btn btn-warning">ADD PEAK</button>
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                            <code>Ignore if not locking fleet at date above.*</code>
+                            <select class="form-control" name="lock" style="border-radius: 0px;height:50px;">
+                                <option selected data-default disabled>LOCK FLEET
+                                </option>
+                                <option value="1">LOCK</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-warning btn-block" style="height: 42px;">ADD PEAK</button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -157,4 +175,22 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
+<script src="{{asset('/datetime/build/jquery.datetimepicker.full.min.js')}}"></script>
+<script>
+    $(document).ready(function () {
+        $('#date').datetimepicker({
+            datepicker: true,
+            timepicker: false,
+            format: 'Y-m-d'
+        })
+        $('#datee').datetimepicker({
+            datepicker: true,
+            timepicker: false,
+            format: 'Y-m-d'
+        })
+    })
+</script>
 @endsection

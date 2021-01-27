@@ -3,7 +3,7 @@
         <div class="container">
             <div class="navbar-content">
                 <a href="{{ route('dashboard.index') }}" class="navbar-brand">
-                    Independent<span>APP</span>
+                    Shuttle<span>APP</span>
                 </a>
                 <form class="search-form">
                     <div class="input-group">
@@ -46,12 +46,12 @@
                     </li>
                     <li class="nav-item dropdown nav-profile">
                         <a class="nav-link dropdown-toggle" href="dashboard-one.html#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="{{asset('img/logo.png')}}" alt="profile">
+                            <img src="{{asset('shuttle_images/tourist.png')}}" alt="profile">
                         </a>
                         <div class="dropdown-menu" aria-labelledby="profileDropdown">
                             <div class="dropdown-header d-flex flex-column align-items-center">
                                 <div class="figure mb-3">
-                                    <img src="{{asset('img/logo.png')}}" alt="logo">
+                                    <img src="{{asset('shuttle_images/tourist.png')}}" alt="logo">
                                 </div>
                                 <div class="info text-center">
                                     <p class="name font-weight-bold mb-0">
@@ -75,19 +75,19 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{ route('dashboard.fleets') }}" class="nav-link">
+                                        <a href="{{ route('dashboard.add_fleets') }}" class="nav-link">
                                             <i data-feather="truck"></i>
                                             <span>Add Fleet</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="javascript:;" class="nav-link">
+                                        <a href="#" class="nav-link">
                                             <i data-feather="settings"></i>
                                             <span>Office Settings</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="javascript:;" class="nav-link">
+                                        <a href="{{ route('dashboard.edit_account') }}" class="nav-link">
                                             <i data-feather="edit"></i>
                                             <span>Edit Profile</span>
                                         </a>
@@ -148,32 +148,32 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('dashboard.add_parcel') }}">
                         <i class="link-icon" data-feather="folder-plus"></i>
                         <span class="menu-title">Add Parcel</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('dashboard.parcels') }}">
                         <i class="link-icon" data-feather="map"></i>
                         <span class="menu-title">Parcel Dispatches</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('dashboard.fleets') }}">
                         <i class="link-icon" data-feather="truck"></i>
                         <span class="menu-title">Fleet Dispatches</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="http://mkulima.agrigate.co.ke" target="_blank" class="nav-link">
+                    <a href="{{ route('dashboard.wallet') }}" class="nav-link">
                         <i class="link-icon" data-feather="dollar-sign"></i>
                         <span class="menu-title">Wallet</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="link-icon" data-feather="phone-call"></i>
-                        <span class="menu-title">Enquiry</span></a>
+                    <a class="nav-link" href="{{ route('dashboard.bookings') }}">
+                        <i class="link-icon" data-feather="globe"></i>
+                        <span class="menu-title">Bookings</span></a>
                     </a>
                 </li>
             </ul>

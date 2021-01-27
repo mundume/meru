@@ -13,11 +13,10 @@
                         </div>
                         <div class="row">
                             <div class="col-6 col-md-12 col-xl-12">
-                                <h4 class="mb-2 mt-3">3,897</h4>
+                                <h4 class="mb-2 mt-3">{{ $bookings }}</h4>
                                 <div class="d-flex align-items-baseline">
                                     <p class="text-success">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
+                                        <i data-feather="globe" class="icon-sm mb-1"></i>
                                     </p>
                                 </div>
                             </div>
@@ -33,11 +32,10 @@
                         </div>
                         <div class="row">
                             <div class="col-6 col-md-12 col-xl-12">
-                                <h4 class="mb-2 mt-3">2,520</h4>
+                                <h4 class="mb-2 mt-3">{{ $parcels }}</h4>
                                 <div class="d-flex align-items-baseline">
                                     <p class="text-success">
-                                        <span>+3.3%</span>
-                                        <i data-feather="arrow-up" class="icon-sm mb-1"></i>
+                                        <i data-feather="map" class="icon-sm mb-1"></i>
                                     </p>
                                 </div>
                             </div>
@@ -53,11 +51,10 @@
                         </div>
                         <div class="row">
                             <div class="col-6 col-md-12 col-xl-12">
-                                <h4 class="mb-2 mt-3">35,084</h4>
+                                <h4 class="mb-2 mt-3">{{ $routes->count() }}</h4>
                                 <div class="d-flex align-items-baseline">
-                                    <p class="text-danger">
-                                        <span>-2.8%</span>
-                                        <i data-feather="arrow-down" class="icon-sm mb-1"></i>
+                                    <p class="text-success">
+                                        <i data-feather="truck" class="icon-md mb-1"></i>
                                     </p>
                                 </div>
                             </div>
@@ -87,7 +84,29 @@
             </div>
         </div>
     </div>
-</div> <!-- row -->
+</div>
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <select class="form-control" style="height: 45px;text-transform: uppercase;" id="booking_office">
+            <option selected data-default disabled>Choose Booking Office</option>
+            @foreach($routes as $route)
+            <option value="{{$route->id}}">{{$route->departure}} ~
+                {{$route->destination}} ({{ $route->seaters }})</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <div id="buttons" class="float-right"></div>
+    </div>
+</div>
+
+<br>
 
 <div class="row">
     <div class="col-12 col-xl-12 grid-margin stretch-card">
@@ -152,52 +171,57 @@
                                 <th class="pt-0">Seaters</th>
                                 <th class="pt-0">Route</th>
                                 <th class="pt-0">Agent</th>
-                                <th class="pt-0">Action</th>
+                                <th class="pt-0 float-right">Agent Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($routes as $item)
-                                <tr>
+                            @php
+                            if($item->suspend == true):
+                            $color = 'tomato';
+                            else:
+                            $color = '';
+                            endif
+                            @endphp
+                            @php
+                            if($item->admin_suspend == true):
+                            $strike = 'line-through';
+                            else:
+                            $strike = '';
+                            endif
+                            @endphp
+                            <tr style="background-color: {{ $color }};text-decoration: {{ $strike }};">
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->group }}</td>
                                     <td>KSh{{ number_format($item->amount, 2) }}</td>
                                     <td>{{ $item->seaters }}</td>
                                     <td>{{ $item->departure }} ~ {{ $item->destination }}</td>
                                     <td>
-                                        {{-- {{ @$item->agent->fname }} --}}
+                                        @foreach($item->agent as $agent)
+                                        {{ @$agent->fname }} {{ @$agent->lname }}
+                                        @endforeach
                                     </td>
                                     <td class="form-inline float-right">
                                         <button class="btn btn-default btn-sm">
                                             <a href="{{route('dashboard.edit_route', base64_encode($item->id))}}">
-                                                <i data-feather="edit"></i>
+                                                <i data-feather="edit" class="icon-sm"></i>
                                             </a>
                                         </button>
                                         <button class="btn btn btn-sm">
                                             <a href="{{route('route.show', base64_encode($item->id))}}">
-                                                <i data-feather="globe"></i>
+                                                <i data-feather="globe" class="icon-sm"></i>
                                         </button>
                                         @if($item->suspend == false)
                                         <form action="{{route('dashboard.suspend_route', base64_encode($item->id))}}" method="POST">
                                             @csrf
-                                            <button type="submit" class="btn btn btn-sm" style="margin:2px"><i data-feather="lock"></i></button>
+                                            <button type="submit" class="btn btn-outline-danger" style="margin:2px"><i data-feather="unlock" class="icon-sm"></i></button>
                                         </form>
                                         @else
                                         <form action="{{route('dashboard.unsuspend_route', base64_encode($item->id))}}" method="POST">
                                             @csrf
-                                            <button type="submit" class="btn btn btn-sm" style="margin:2px"><i data-feather="unlock"></i></button>
+                                            <button type="submit" class="btn btn-outline-success" style="margin:2px"><i data-feather="lock" class="icon-sm"></i></button>
                                         </form>
                                         @endif
-                                        {{-- @if($item->admin_suspend == false)
-                                        <form action="{{route('dashboard.unsuspend_fleet', base64_encode($item->id))}}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="btn btn-outline-success btn-sm" style="margin:2px"><i data-feather="lock"></i></button>
-                                        </form>
-                                        @else
-                                        <form action="{{route('dashboard.unsuspend_fleet', base64_encode($item->id))}}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="btn btn-outline-success btn-sm" style="margin:2px"><i data-feather="unlock"></i></button>
-                                        </form>
-                                        @endif --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -208,4 +232,44 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('#booking_office').on('change', function (e) {
+            var route_id = e.target.value
+            $.ajax({
+                url: "{{ route('dashboard.booking_office') }}",
+                type: "POST",
+                data: {
+                    route_id: route_id,
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function (data) {
+                    var clear = ""
+                    $("#buttons").empty(clear)
+                    var obj = jQuery.parseJSON(data)
+                    $.each(obj, function (propName, propVal) {
+                        var seater = propVal.seaters
+                        var id = propVal.id
+                        if (seater == 7) {
+                            $('#buttons').append('<a href="/book/tickets/7/' + id + '" class="btn btn-success" class="btn btn-success" style="text-transform: uppercase;">Sell Ticket(7)</a>')
+                        } else if (seater == 10) {
+                            $('#buttons').append('<a href="/book/tickets/10/' + id + '" class="btn btn-success" class="btn btn-success" style="text-transform: uppercase;">Sell Ticket(10)</a>')
+                        } else if (seater == 11) {
+                            $('#buttons').append('<a href="/book/tickets/11/' + id + '" class="btn btn-success" class="btn btn-success" style="text-transform: uppercase;">Sell Ticket(11)</a>')
+                        } else if (seater == 14) {
+                            $('#buttons').append('<a href="/book/tickets/14/' + id + '" class="btn btn-success" class="btn btn-success" style="text-transform: uppercase;">Sell Ticket(14)</a>')
+                        } else if (seater == 16) {
+                            $('#buttons').append('<a href="/book/tickets/16/' + id + '" class="btn btn-success" class="btn btn-success" style="text-transform: uppercase;">Sell Ticket(16)</a>')
+                        } else {
+                            $('#buttons').html('<span class="label label-danger">Oops, No fleet found</span>')
+                        }
+                    })
+                }
+            })
+        })
+    })
+</script>
 @endsection
