@@ -37,6 +37,29 @@
         toastr.warning("{{ Session::get('warning') }}");
         @endif
     </script>
+    <script>
+        if ("{!! Auth::check() !!}") {
+            fetchBalance()
+        }
+
+        function fetchBalance() {
+            $.ajax({
+                url: "{{ route('dashboard.fetch_balance') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                cache: false,
+                dataType: 'json',
+                success: function (data) {
+                    $('#check_balance').html(data)
+                },
+                complete: function (data) {
+                    setTimeout(fetchBalance, 5000)
+                }
+            })
+        }
+    </script>
 </body>
 
 </html>

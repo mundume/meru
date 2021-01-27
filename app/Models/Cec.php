@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Dropoff extends Model
+class Cec extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    public function charge() {
-        return $this->hasMany(Charge::class);
+    public function route() {
+        return $this->hasMany(Route::class, 'fleet_unique', 'fleet_id');
     }
 }

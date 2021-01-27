@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-md-12">
         <button class="btn btn-success float-right" style="margin:2px;" data-toggle="modal" data-target="#add_fleet">
-            <i data-feather="plus"></i>&nbsp;ADD FLEET
+            <i data-feather="plus" class="icon-sm"></i>&nbsp;ADD FLEET
         </button>
     </div>
 </div>

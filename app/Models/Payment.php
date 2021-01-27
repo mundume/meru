@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Dropoff extends Model
+class Payment extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    public function charge() {
-        return $this->hasMany(Charge::class);
+    public function booking() {
+        return $this->belongsTo(Booking::class, 'ticket_no', 'ticket_no');
     }
 }

@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-md-12">
         <button class="btn btn-success float-right" type="button" data-toggle="modal" data-target="#add_peak" style="text-transform: uppercase;border-radius: 0px;">
-            <i data-feather="plus"></i>&nbsp;ADD PEAK
+            <i data-feather="plus" class="icon-sm"></i>&nbsp;ADD PEAK
         </button>
     </div>
 </div>

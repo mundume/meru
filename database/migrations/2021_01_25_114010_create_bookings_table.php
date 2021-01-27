@@ -19,7 +19,7 @@ class CreateBookingsTable extends Migration
             $table->string('CheckoutRequestID')->nullable();
             $table->string('group');
             $table->string('seaters')->nullable();
-            $table->string('amount');
+            $table->double('amount');
             $table->string('fullname')->nullable();
             $table->string('id_no');
             $table->string('pick_up')->nullable();

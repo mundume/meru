@@ -16,8 +16,14 @@
                     </div>
                 </form>
                 <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="#" class="nav-item">
+                            <i data-feather="dollar-sign"></i>
+                            <span style="color:orange;margin-top:-10px;" id="check_balance">0.00</span>
+                        </a>
+                    </li>
                     <li class="nav-item dropdown nav-notifications">
-                        <a class="nav-link dropdown-toggle" href="dashboard-one.html#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i data-feather="bell"></i>
                             <div class="indicator">
                                 <div class="circle"></div>
@@ -34,7 +40,7 @@
                                         <i data-feather="alert-circle"></i>
                                     </div>
                                     <div class="content">
-                                        <p>New order!</p>
+                                        <p>New book!</p>
                                         <p class="sub-text text-muted">1 hrs ago</p>
                                     </div>
                                 </a>
@@ -81,7 +87,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                        <a href="{{ route('dashboard.settings') }}" class="nav-link">
                                             <i data-feather="settings"></i>
                                             <span>Office Settings</span>
                                         </a>
@@ -160,7 +166,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard.fleets') }}">
+                    <a class="nav-link" href="{{ route('dashboard.dispatches') }}">
                         <i class="link-icon" data-feather="truck"></i>
                         <span class="menu-title">Fleet Dispatches</span>
                     </a>

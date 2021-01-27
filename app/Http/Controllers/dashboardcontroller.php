@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\smscontroller;
-use App\Models\{AgentUser,User,Account,Fleet,Category,Route,Calendarial,AgentRoute,Booking,Parcel};
+use App\Models\{AgentUser,User,Account,Fleet,Category,Route,Calendarial,AgentRoute,Booking,Parcel,BookingUser,Payment,Cec,Dispatch};
 use DB;
 use Hash;
 use Session;
@@ -12,6 +12,8 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\{Str};
 use Auth;
+use PDF;
+use Carbon\Carbon;
 
 class dashboardcontroller extends Controller
 {
@@ -382,8 +384,28 @@ class dashboardcontroller extends Controller
         return json_encode($route);
     }
     public function view_ticket_7($id) {
+        $filter_user = app_filterAgent();
         $route = Route::find($id);
-        return view('tickets.7', compact('route'));
+        $current_bookings = Booking::where([
+            ['user_id', $filter_user],
+            ['dispatched', false],
+            ['departure', $route->departure],
+            ['destination', $route->destination],
+            ['is_paid', true],
+            ['seaters', 7],
+            ['suspended', false]
+        ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
+        $online_bookings = Booking::where([
+            ['user_id', $filter_user],
+            ['dispatched', false],
+            ['departure', $route->departure],
+            ['destination', $route->destination],
+            ['is_paid', true],
+            ['seaters', 7],
+            ['suspended', true]
+        ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
+        $fleets = Fleet::where([['user_id', $filter_user], ['suspend', false]])->get();
+        return view('tickets.7', compact('route','current_bookings','online_bookings', 'fleets'));
     }
     public function view_ticket_10($id) {
         return view('tickets.10');
@@ -397,18 +419,34 @@ class dashboardcontroller extends Controller
     public function view_ticket_16($id) {
         return view('tickets.16');
     }
-    public function bookings() {
-        $bookings = Booking::where('user_id', auth()->user()->id)->get();
+    public function bookings(Request $request) {        
+        if($this->check_if_admin() == false) return redirect()->back();
+        $user = auth()->user();
+        if($request->created_at) {
+            $bookings = Booking::whereDate('created_at', $request->created_at)->where('user_id', auth()->user()->id)->get();
+        } else {
+            $bookings = Booking::where('user_id', auth()->user()->id)->get();
+        }
         return view('dashboard.bookings', compact('bookings'));
     }
-    public function fleets() {
-        return view('dashboard.fleet_dispatches');
+    public function filter_bookings(Request $request) {
+        return redirect()->route('dashboard.bookings', ['created_at' => $request->date]);
     }
     public function parcels() {
         return view('dashboard.parcel_dispatches');
     }
-    public function wallet() {
-        return view('dashboard.wallet');
+    public function wallet(Request $request) {
+        if($this->check_if_admin() == false) return redirect()->back();
+        $user = auth()->user();
+        if($request->created_at) {
+            $payments = Payment::whereDate('created_at', $request->created_at)->where('user_id', auth()->user()->id)->with('booking')->get();
+        } else {
+            $payments = Payment::where('user_id', auth()->user()->id)->with('booking')->get();
+        }
+        return view('dashboard.wallet', compact('payments'));
+    }
+    public function filter_wallet(Request $request) {
+        return redirect()->route('dashboard.wallet', ['created_at' => $request->date]);
     }
     public function edit_account() {
         $user = auth()->user();
@@ -431,5 +469,226 @@ class dashboardcontroller extends Controller
         ]);
         Session::flash('info', 'Account updated successfully.');
         return redirect()->route('dashboard.index');
+    }
+    public function booked(Request $request) {
+        $books = Booking::where([
+            ['fleet_unique', $request->fleet_unique],
+            ['is_paid', true],
+            ['suspended', false],
+            ['dispatched', false],
+            ['seaters', $request->seaters],
+            ['departure', $request->departure],
+            ['destination', $request->destination]
+            ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
+        $data = [];
+        foreach($books as $book) {
+            $seats = $book->seat_no;
+            array_push($data, $seats);
+        }
+        return json_encode($data);
+    }
+    public function modal_booked(Request $request) {
+        $books = Booking::where([
+            ['seaters', $request->seaters],
+            ['is_paid', true],
+            ['suspended', false],
+            ['dispatched', false],
+            ['time', $request->time],
+            ['user_id', $request->user_id]
+        ])->whereDate('travel_date', $request->date)->get();
+        $data = [];
+        foreach($books as $book) {
+            $seats = $book->seat_no;
+            array_push($data, $seats);
+        }
+        return json_encode($data);
+    }
+    public function moderator_sell_ticket(Request $request) {
+        $this->validate($request, [
+            'mobile' => 'required|digits:10',
+            'seat_no' => 'required',
+            'amount' => 'required'
+        ]);
+        if($request->travel_date != null && $request->time == null) {
+            Session::flash('error', 'Oops, time can\'t be empty.');
+            return redirect()->back();
+        }
+        $filter_date = app_filterDate($request->travel_date, $request->time);
+        $filter_user = app_filterAgent();
+        $books = Booking::where([
+            ['user_id', auth()->user()->id],
+            ['fleet_unique', $request->fleet_unique],
+            ['seaters', $request->seaters],
+            ['dispatched', 0],
+            ['time', $filter_date['time']],
+            ['travel_date', $filter_date['date']],
+            ['suspended', 0],
+            ['is_paid', true]
+            ])->get();
+
+        foreach($books as $book) {
+            if($request->seat_no == $book->seat_no) {
+                Session::flash('error', 'Oops, seat number already booked');
+                return redirect()->back();
+            }
+        }
+        $ticket_no = mt_rand(1000, 9000);
+        $token = hash('sha256', Str::random());
+        $contact = '254'.substr($request->mobile,-9);
+        if($request->payment_method == 'mpesa') {
+
+        } else {
+            DB::transaction(function() use($ticket_no,$filter_date,$filter_user,$contact,$request,$token) {
+                $booking_data = [
+                    'user_id' => $filter_user,
+                    'CheckoutRequestID' => null,
+                    'group' => $request->group,
+                    'seaters' => $request->seaters,
+                    'amount' => $request->amount,
+                    'fullname' => $request->fullname,
+                    'id_no' => $request->id_no,
+                    'pick_up' => 'Office Ticket',
+                    'mobile' => $request->mobile,
+                    'time' => $filter_date['time'],
+                    'travel_date' => $filter_date['date'],
+                    'ticket_no' => $ticket_no,
+                    'departure' => $request->departure,
+                    'destination' => $request->destination,
+                    'ticket_token' => $token,
+                    'seat_no' => $request->seat_no,
+                    'is_paid' => true,
+                    'payment_method' => $request->payment_method,
+                    'fleet_unique' => $request->fleet_unique
+                ];
+                $payment_data = [
+                    'user_id' => $filter_user,
+                    'ResultCode' => 0,
+                    'ResultDesc' => 'Moderator Ticket',
+                    'MerchantRequestID' => 0,
+                    'CheckoutRequestID' => 0,
+                    'mpesaReceiptNumber' => 0,
+                    'ticket_no' => $ticket_no,
+                    'amount' => $request->amount,
+                    'phoneNumber' => $request->mobile,
+                    'TransactionDate' => Carbon::now()
+                ];
+                $book = Booking::create($booking_data);
+                Payment::create($payment_data);
+                $exist_agent = app_existsAgent();
+                if($exist_agent == 1) {
+                    $agen = new BookingUser;
+                    $agen->booking_id = $book->id;
+                    $agen->user_id = auth()->user()->id; 
+                    $agen->save();
+                }
+                $message = "Ticket number: ".$ticket_no.
+                "\r\nAmount paid KSh" . $request->amount . " for seat no " .$request->seat_no.
+                "\r\n" . $request->departure . " ~ " . $request->destination.
+                "\r\nBook a online ticket".
+                "\r\nhttps://shuttleapp.co.ke/".
+                "\r\nRegards\r\n".auth()->user()->c_name." Team";
+                $sms = new smscontroller;
+                $sms->send_sms($contact, $message);
+            });
+            Session::flash('success', 'Ticket generated.');
+            return redirect()->back();
+        }
+    }
+    public function delay_commuter($id) {
+        Booking::find(base64_decode($id))->update([
+            'suspended' => 1
+        ]);
+        Session::flash('info', 'Ticket pushed to waiting.');
+        return redirect()->back();
+    }
+    public function activate_commuter($id) {
+        Booking::find(base64_decode($id))->update([
+            'suspended' => false
+        ]);
+        Session::flash('info', 'Ticket activated.');
+        return redirect()->back();
+    }
+    public function dispatch_fleet(Request $request, $id, $fleet_unique) {
+        $new_id = app_filterAgent();
+        $path = public_path('pdfs/');
+        $rout = Route::where('fleet_unique', $fleet_unique)->first();
+        $books = Booking::where([
+            ['user_id', $new_id],
+            ['fleet_unique', $fleet_unique],
+            ['seaters', $rout->seaters],
+            ['dispatched', false],
+            ['suspended', false],
+            ['is_paid', true]
+        ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
+        $cash = Booking::where([
+            ['user_id', $new_id],
+            ['fleet_unique', $fleet_unique],
+            ['seaters', $rout->seaters],
+            ['dispatched', false],
+            ['suspended', false],
+            ['is_paid', true],
+            ['payment_method', 'cash']
+        ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->sum('amount');
+        $mpesa = Booking::where([
+            ['user_id', $new_id],
+            ['fleet_unique', $fleet_unique],
+            ['seaters', $rout->seaters],
+            ['dispatched', false],
+            ['suspended', false],
+            ['is_paid', true],
+            ['payment_method', 'mpesa']
+        ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->sum('amount');
+        $der = $path.$fleet_unique.'-'.date('Y-m-d-H-i').'.pdf';
+        DB::transaction(function() use($request,$books,$fleet_unique,$der,$rout,$cash,$mpesa) {
+            foreach($books as $book) {
+                $book->update([
+                    'dispatched' => 1
+                ]);
+            }
+            Dispatch::create([
+                'dispatch' => json_encode($books),                
+                'fleet_id' => $fleet_unique,
+                'readable_fleet_id' => $request->readable_fleet_id
+            ]);
+            $pdf = PDF::loadView('prints/fleet_list', compact('books', 'rout'))->setPaper('a4')->setWarnings(false)->save($der);
+            $cec = Cec::create([
+                'path' => $der,
+                'fleet_id' => $fleet_unique,
+                'no_of_commuters' => $books->count(),
+                'readable_fleet_id' => $request->readable_fleet_id,
+                'cash' => $cash,
+                'mpesa' => $mpesa,
+                'total_amount' => $cash+$mpesa
+            ]);
+        });
+        Session::flash('success', 'Fleet dispatched successfully');
+        return redirect()->back();
+    }
+    public function dispatch_fleet_print($fleet_unique) {
+        $print = Cec::orderBy('id','desc')->where('fleet_id', $fleet_unique)->first();
+        if($print) {
+            return response()->download($print->path);
+        } 
+        Session::flash('info', 'Oops, dispatch fleet first to download the list');
+        return redirect()->back();
+    }
+    public function dispatches(Request $request) {
+        if($this->check_if_admin() == false) return redirect()->back();
+        $routes = Route::where('user_id', auth()->user()->id)->get()->pluck('fleet_unique');
+        if($request->created_at) {
+            $dispatchs = Cec::orderBy('id', 'desc')->whereDate('created_at', $request->created_at)->whereIn('fleet_id', $routes)->with('route')->get();
+        } else {
+            $dispatchs = Cec::orderBy('id', 'desc')->whereIn('fleet_id', $routes)->with('route')->get();
+        }
+        return view('dashboard.fleet_dispatches', compact('dispatchs'));
+    }
+    public function search_dispatches(Request $request) {
+        return redirect()->route('dashboard.dispatches', ['created_at' => $request->date]);
+    }
+    public function fetch_balance() {
+        if(!auth()->user()) return redirect()->back();
+        $data = Account::where('user_id', auth()->user()->id)->select('balance')->first();
+        $data = round($data->balance, 2);
+        return json_encode($data);
     }
 }

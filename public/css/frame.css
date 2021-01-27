@@ -85,7 +85,8 @@ ol {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: flex-start;
+    justify-content: center;
+    margin-left: 25px;
 }
 
 .seat {
@@ -105,7 +106,7 @@ ol {
 }
 
 .seat input[type=checkbox]:checked+label {
-    background: #bada55;
+    background: #F42536;
     -webkit-animation-name: rubberBand;
     animation-name: rubberBand;
     -webkit-animation-duration: 300ms;
@@ -142,8 +143,8 @@ ol {
     font-size: 14px;
     font-weight: bold;
     line-height: 1.5rem;
-    padding: 5px 7px;
-    background: #F42536;
+    padding: 4px 7px;
+    background: #bada55;
     border-radius: 5px;
     -webkit-animation-duration: 300ms;
     animation-duration: 300ms;
