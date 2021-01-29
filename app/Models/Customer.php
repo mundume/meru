@@ -5,11 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Provider extends Model
+class Customer extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    public function dropoff() {
-        return $this->hasMany(Dropoff::class);
-    }
 }

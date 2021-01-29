@@ -12,4 +12,7 @@ class AgentUser extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+    public function dropoff() {
+        return $this->hasOne(Dropoff::class, 'id', 'office_id');
+    }
 }

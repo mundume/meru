@@ -19,7 +19,7 @@ class userseeder extends Seeder
                 'role_id' => 1,
                 'fname' => 'Derrick',
                 'lname' => 'Bundi',
-                'c_name' => 'Meru Artists Co.',
+                'c_name' => 'Shuttle App',
                 'mobile' => '0799770833',
                 'c_mobile' => '0799770833',
                 'id_no' => '31842542',
@@ -37,7 +37,7 @@ class userseeder extends Seeder
         DB::table('accounts')->insert([
             [
                 'user_id' => 1,
-				'c_name' => 'Meru Artists Co.',
+				'c_name' => 'Shuttle App',
 				'u_name' => 'Derrick',
 				'mobile' => '0799770833',
 				'balance' => 0,
@@ -47,7 +47,7 @@ class userseeder extends Seeder
         ]);
         DB::table('providers')->insert([
             'user_id' => 1,
-            'c_name' => 'Meru Artists Co.'
+            'c_name' => 'Shuttle App'
         ]);
     }
 }

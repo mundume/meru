@@ -30,7 +30,8 @@
                                         <th class="pt-0">Mobile</th>
                                         <th class="pt-0">Office Mobile</th>
                                         <th class="pt-0">Pass Code</th>
-                                        <th></th>
+                                        <th class="pt-0"></th>
+                                        <th class="pt-0">Office</th>
                                         <th class="pt-0">Action</th>
                                     </tr>
                                 </thead>
@@ -45,14 +46,15 @@
                                         <td>{{ $user->user->c_mobile }}</td>
                                         <td>{{ $user->pass_code }}</td>
                                         <td>
-                                            @if($user->user->suspend == 'NULL')
-                                            <span class="badge badge-danger">Not Active</span>
+                                            @if($user->user->suspend == null)
+                                            <span class="badge badge-success">Active</span>                                            
                                             @else
-                                            <span class="badge badge-success">Active</span>
+                                            <span class="badge badge-danger">Not Active</span>
                                             @endif
                                         </td>
+                                        <td>{{ @$user->dropoff->office_name }}</td>
                                         <td class="form-inline">
-                                            @if($user->user->suspend == true)
+                                            @if($user->user->suspend == null)
                                             <form action="{{route('dashboard.agent_lock', base64_encode($user->user->id))}}" method="POST">
                                                 @csrf
                                                 <button type="submit" class="btn btn-outline-warning" style="margin:2px;">
@@ -62,7 +64,7 @@
                                             @else
                                             <form action="{{route('dashboard.agent_unlock', base64_encode($user->user->id))}}" method="POST">
                                                 @csrf
-                                                <button type="submit" class="btn btn-outline-warning" style="margin:2px;">
+                                                <button type="submit" class="btn btn-outline-success" style="margin:2px;">
                                                     <i data-feather="unlock" class="icon-sm"></i>
                                                 </button>
                                             </form>
@@ -81,6 +83,50 @@
                         </div>
                     </div>
                 </div>
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col-lg-12 col-xl-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-baseline mb-2">
+                    <h6 class="card-title mb-0">Agents Topups</h6>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th class="pt-0">#</th>
+                                <th class="pt-0">Name</th>
+                                <th class="pt-0">ID</th>
+                                <th class="pt-0">Amount</th>
+                                <th class="pt-0">Mobile</th>
+                                <th class="pt-0"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($topups as $user)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{$user->user->fname}} {{ $user->user->lname }}</td>
+                                <td>{{ $user->user->id_no }}</td>
+                                <td>{{ number_format($user->amount, 2) }}</td>
+                                <td>{{ $user->user->mobile }}</td>
+                                <td class="float-right">
+                                    <button type="button" class="btn btn-outline-danger" style="margin:2px;">
+                                        <i data-feather="trash" class="icon-sm"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -148,7 +194,7 @@
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label>Select Role</label>
                             <select class="js-example-basic-single w-100 @error('role') is-invalid @enderror" style="height: 42px;" name="role">
                                 <option selected hidden data-default disabled>Select Role</option>
@@ -158,6 +204,15 @@
                             @error('role')
                             <small class="text-danger">{{$message}}</small>
                             @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label>Assign Agent Location</label>
+                            <select class="form-control" style="height: 42px;" name="office_id" required>
+                                <option selected data-default disabled>Assign Agent Location</option>
+                                @foreach($offices as $sp)
+                                <option value="{{$sp->id}}">{{$sp->office_name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <br>
@@ -183,15 +238,21 @@
                 <form action="{{route('dashboard.topup_agent')}}" method="POST">
                     @csrf
                     <div class="row">
-                        <div class="col-md-12 col-xs-12 col-sm-12">
-                            <input type="text" {{ $errors->cood->has('email') ? 'has-error' : '' }} name="email" required style="height:42px;" class="form-control" placeholder="Email Address*">
+                        <div class="col-md-12 col-xs-12 col-sm-12 {{ $errors->cood->has('email') ? 'has-error' : '' }}">
+                            <select class="form-control" style="height: 42px;" name="email" required>
+                                <option selected data-default disabled>CHOOSE AGENT</option>
+                                @foreach($agents as $agent)
+                                <option>{{$agent->user->email}}</option>
+                                @endforeach
+                            </select>
+                            {{-- <input type="text" {{ $errors->cood->has('email') ? 'has-error' : '' }} name="email" required style="height:42px;" class="form-control" placeholder="Email Address*"> --}}
                             <small class="text-danger">{{$errors->cood->first('email')}}</small>
                         </div>
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-md-12 col-xs-12 col-sm-12">
-                            <input type="number" name="amount" {{ $errors->cood->has('amount') ? 'has-error' : '' }} required style="height:42px;" class="form-control" placeholder="Amount*">
+                        <div class="col-md-12 col-xs-12 col-sm-12 {{ $errors->cood->has('amount') ? 'has-error' : '' }}">
+                            <input type="number" name="amount" required style="height:42px;" class="form-control" placeholder="Amount*">
                             <small class="text-danger">{{$errors->cood->first('amount')}}</small>
                         </div>
                     </div>
@@ -204,4 +265,21 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
+@if (count($errors->cood) > 0)
+<script>
+    $(document).ready(function () {
+        $('#topup_agent').modal('show');
+    });
+</script>
+@endif
+@if (count($errors) > 0)
+<script>
+    $(document).ready(function () {
+        $('#add_agent').modal('show');
+    });
+</script>
+@endif
 @endsection

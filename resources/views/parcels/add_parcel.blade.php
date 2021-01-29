@@ -35,6 +35,7 @@
                                 <th>ID</th>
                                 <th>Destination</th>
                                 <th>Fleet</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,20 +43,22 @@
                             <tr>
                                 <td class="form-inline">
                                     @if($item->progress == false)
-                                    <form action="{{route('courier.progress', $item->id)}}" method="POST">
+                                    <form action="{{route('dashboard.progress', $item->id)}}" method="POST">
                                         @csrf
-                                        <button class="btn btn-success"><i data-feather="check" class="icon-sm"></i></button>
+                                        <button class="btn btn-success" type="submit" style="margin:2px;">
+                                            <i data-feather="check" class="icon-sm"></i>
+                                        </button>
                                     </form>
-                                    <button class="btn btn-default btn-sm" disabled>
-                                        <i class="fa fa-edit"></i>
+                                    <button class="btn btn-outline-warning" disabled style="margin:2px;">
+                                        <i data-feather="edit" class="icon-sm"></i>
                                     </button>
                                     @else
-                                    <form action="{{route('print_parcel', $item->parcel_no)}}" method="POST">
+                                    <form action="{{route('dashboard.print_parcel', $item->parcel_no)}}" method="POST">
                                         @csrf
-                                        <button class="btn btn-outline-warning"><i data-feather="printer" class="icon-sm"></i></button>
+                                        <button class="btn btn-outline-warning" style="margin:2px;"><i data-feather="printer" class="icon-sm"></i></button>
                                     </form>
-                                    <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#edit_parcel_{{ $item->parcel_no }}">
-                                        <i data-feather="edit" class="icon-s,"></i>
+                                    <button class="btn btn-success" data-toggle="modal" style="margin:2px;" data-target="#edit_parcel_{{ $item->parcel_no }}">
+                                        <i data-feather="edit" class="icon-sm"></i>
                                     </button>
                                     @endif
                                 </td>
@@ -68,8 +71,15 @@
                                 <td>{{$item->receiver_name}}</td>
                                 <td>{{$item->receiver_mobile}}</td>
                                 <td>{{$item->id_no}}</td>
-                                <td>{{$item->dropoff->name}}</td>
+                                <td>{{@$item->dropoff->office_route}}</td>
                                 <td>{{@$item->fleet->fleet_id}}</td>
+                                <td>
+                                    @if($item->is_paid == false)
+                                    <span class="badge badge-danger">Not Paid</span>
+                                    @else
+                                    <span class="badge badge-success">Paid</span>
+                                    @endif
+                                </td>
                             </tr>
                             <div class="modal close_modal" id="edit_parcel_{{ $item->parcel_no }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                 <div class="modal-dialog" role="document">
@@ -82,7 +92,7 @@
                                             </h4>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="{{route('parcel_assign_fleet', $item->parcel_no)}}" method="POST">
+                                            <form action="{{route('dashboard.parcel_assign_fleet', $item->parcel_no)}}" method="POST">
                                                 @csrf
                                                 <div class="row">
                                                     <div class="col-md-12 col-xs-12 col-sm-12">
@@ -124,10 +134,6 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <div class="alert alert-success alert-dismissible" style="text-transform: uppercase;">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    Enter Parcel Information.
-                </div>
                 @if ($errors->coo->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -144,9 +150,9 @@
                             <small>Sender name*</small>
                             <input type="text" name="sender_name" class="input-group form-control" placeholder="SENDER NAME*" style="height:45px;" required>
                         </div>
-                        <div class="col-md-6 {{ $errors->has('send_mobile') ? 'has-error' : '' }}">
+                        <div class="col-md-6 {{ $errors->has('sender_mobile') ? 'has-error' : '' }}">
                             <small>Sender mobile*</small>
-                            <input type="text" name="send_mobile" class="input-group form-control" placeholder="MOBILE NUMBER*" style="height:45px;" required>
+                            <input type="text" name="sender_mobile" class="input-group form-control" placeholder="MOBILE NUMBER*" style="height:45px;" required>
                         </div>
                     </div>
                     <br>
@@ -172,9 +178,9 @@
                         <div class="col-md-12 {{ $errors->has('destination') ? 'has-error' : '' }}">
                             <select class="form-control" style="height: 45px;" name="destination" id="category">
                                 <option selected hidden data-default disabled>CHOOSE DESTINATION</option>
-                                {{-- @foreach($dest as $sp)
-                                <option value="{{$sp->id}}">{{$sp->name}}</option>
-                                @endforeach --}}
+                                @foreach($dest as $sp)
+                                <option value="{{$sp->id}}">{{$sp->office_route}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -199,7 +205,7 @@
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <select class="form-control" style="height: 45px;" required name="status">
+                            <select class="form-control" style="height: 45px;" required name="is_paid">
                                 <option selected data-default disabled>PARCEL PAYMENT</option>
                                 <option value="1">PAID</option>
                                 <option value="0">PAY ON DELIVERY</option>
@@ -209,7 +215,8 @@
                     <br>
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 {{ $errors->has('parcel_description') ? 'has-error' : '' }}">
-                            <textarea name="parcel_description" placeholder="DESCRIBE PARCEL" required style="width:100%;height:70px;resize:none;border-radius:10px;"></textarea>
+                            <small>Describe parcel*</small>
+                            <textarea name="parcel_description" placeholder="DESCRIBE PARCEL" required style="width:100%;height:40px;resize:none;border-radius:10px;"></textarea>
                         </div>
                     </div>
                     <br>
@@ -244,9 +251,9 @@
                         <div class="col-md-12 col-xs-12 col-sm-12">
                             <select class="form-control" style="height: 50px;" name="drop">
                                 <option selected hidden data-default>SELECT DROPOFF</option>
-                                {{-- @foreach($dest as $sp)
-                                <option value="{{$sp->id}}">{{$sp->name}}</option>
-                                @endforeach --}}
+                                @foreach($dest as $sp)
+                                <option value="{{$sp->id}}">{{$sp->office_route}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -298,4 +305,57 @@
         }
     });
 </script>
+<script>
+    $(document).ready(function () {
+        $('#category').on('change', function (e) {
+            var cat_id = e.target.value
+            $.ajax({
+                url: "{{ route('dashboard.dropoffs_sub_category') }}",
+                type: "POST",
+                data: {
+                    cat_id: cat_id,
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function (data) {
+                    var price = ""
+                    $('#size_sub_category').empty()
+                    $('#price_sub_category').val(price)
+                    var obj = jQuery.parseJSON(data)
+                    $.each(obj, function (propName, propVal) {
+                        $('#size_sub_category').append('<option value="' + propVal
+                            .id + '">' + propVal.name + '</option>')
+                    })
+                    var new_ = obj[0].price
+                    $('#price_sub_category').val(new_)
+                }
+            })
+        })
+        $('#size_sub_category').on('change', function (e) {
+            var cat_id = e.target.value
+            $.ajax({
+                url: "{{ route('dashboard.bun_sub_category') }}",
+                type: "POST",
+                data: {
+                    cat_id: cat_id,
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function (data) {
+                    $('#price_sub_category').empty()
+                    var obj = jQuery.parseJSON(data)
+                    $.each(obj, function (propName, propVal) {
+                        var price = propVal.price
+                        $('#price_sub_category').val(price)
+                    })
+                }
+            })
+        })
+    })
+</script>
+@if (count($errors->coo) > 0)
+<script>
+    $(document).ready(function () {
+        $('#add_parcel').modal('show')
+    });
+</script>
+@endif
 @endsection

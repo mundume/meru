@@ -68,6 +68,7 @@
                             </div>
                             <div class="dropdown-body">
                                 <ul class="profile-nav p-0 pt-3">
+                                    @if(auth()->user()->can('admin-show'))
                                     <li class="nav-item">
                                         <a href="{{ route('dashboard.calendarial') }}" class="nav-link">
                                             <i data-feather="edit-3"></i>
@@ -93,6 +94,13 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="{{ route('dashboard.sms_blasts') }}" class="nav-link">
+                                            <i data-feather="message-square"></i>
+                                            <span>Sms Blasts</span>
+                                        </a>
+                                        </li>
+                                        @endif
+                                        <li class="nav-item">
                                         <a href="{{ route('dashboard.edit_account') }}" class="nav-link">
                                             <i data-feather="edit"></i>
                                             <span>Edit Profile</span>
@@ -128,6 +136,7 @@
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
+                @if(auth()->user()->can('admin-show'))
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="link-icon" data-feather="map-pin"></i>
@@ -153,19 +162,30 @@
                         </ul>
                     </div>
                 </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('dashboard.add_parcel') }}">
                         <i class="link-icon" data-feather="folder-plus"></i>
                         <span class="menu-title">Add Parcel</span>
                     </a>
                 </li>
+                @if(auth()->user()->can('admin-show'))
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('dashboard.parcels') }}">
                         <i class="link-icon" data-feather="map"></i>
                         <span class="menu-title">Parcel Dispatches</span>
                     </a>
                 </li>
+                @else
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('dashboard.agent_parcels') }}">
+                        <i class="link-icon" data-feather="map"></i>
+                        <span class="menu-title">Parcel Dispatches</span>
+                    </a>
+                    </li>
+                    @endif
+                    @if(auth()->user()->can('admin-show'))
+                    <li class="nav-item">
                     <a class="nav-link" href="{{ route('dashboard.dispatches') }}">
                         <i class="link-icon" data-feather="truck"></i>
                         <span class="menu-title">Fleet Dispatches</span>
@@ -182,6 +202,15 @@
                         <span class="menu-title">Bookings</span></a>
                     </a>
                 </li>
+                @endif
+                @if(auth()->user()->hasRole('booking'))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('agent.bookings') }}">
+                        <i class="link-icon" data-feather="globe"></i>
+                        <span class="menu-title">Bookings</span></a>
+                    </a>
+                </li>
+                @endif
             </ul>
         </div>
     </nav>

@@ -7,6 +7,8 @@ use App\Http\Controllers\agentscontroller;
 use App\Http\Controllers\pesacontroller;
 use App\Http\Controllers\parcelscontroller;
 use App\Http\Controllers\settingscontroller;
+use App\Http\Controllers\courierscontroller;
+use App\Http\Controllers\graphscontroller;
 
 Auth::routes();
 Route::get('/', [pagescontroller::class, 'independent'])->name('independent');
@@ -53,8 +55,15 @@ Route::prefix('dashboard')->group(function() {
     });
     Route::prefix('parcels')->group(function() {
         Route::get('/', [dashboardcontroller::class, 'parcels'])->name('dashboard.parcels');
+        Route::get('/all', [dashboardcontroller::class, 'agent_parcels'])->name('dashboard.agent_parcels');
         Route::get('/create', [parcelscontroller::class, 'index'])->name('dashboard.add_parcel');
         Route::post('/create/post', [parcelscontroller::class, 'post_parcel'])->name('dashboard.post_parcel');
+        Route::post('/dropoffs/sub_category', [parcelscontroller::class, 'dropoffs_sub_category'])->name('dashboard.dropoffs_sub_category');
+        Route::post('/dropoffs/bun_sub_category', [parcelscontroller::class, 'bun_sub_category'])->name('dashboard.bun_sub_category');
+        Route::post('/progress/{id}', [parcelscontroller::class, 'update_progress'])->name('dashboard.progress');
+        Route::post('/parcel/assign/fleet/{parcel_no}', [parcelscontroller::class, 'parcel_assign_fleet'])->name('dashboard.parcel_assign_fleet');
+        Route::post('/picked/{id}', [parcelscontroller::class, 'picked'])->name('dashboard.picked');
+        Route::post('/sms/{id}', [parcelscontroller::class, 'parcel_sms'])->name('dashboard.sms');
     });
     Route::prefix('wallet')->group(function() {
         Route::get('/', [dashboardcontroller::class, 'wallet'])->name('dashboard.wallet');
@@ -70,6 +79,8 @@ Route::prefix('dashboard')->group(function() {
     Route::prefix('print')->group(function() {
         Route::post('/dispatch/{fleet_unique}', [dashboardcontroller::class, 'dispatch_fleet_print'])->name('dashboard.dispatch_fleet_print');
         Route::post('/dropoff', [parcelscontroller::class, 'print_dropoff'])->name('dashboard.print_dropoff');
+        Route::post('/print/parcel/{parcel_no}', [parcelscontroller::class, 'print_parcel'])->name('dashboard.print_parcel');
+        Route::post('/print/receipt/{parcel_no}', [parcelscontroller::class, 'print_receipt'])->name('dashboard.print_receipt');
     });
     Route::get('/dispatches', [dashboardcontroller::class, 'dispatches'])->name('dashboard.dispatches');
     Route::post('/dispatches/search', [dashboardcontroller::class, 'search_dispatches'])->name('dashboard.search_dispatches');
@@ -83,6 +94,29 @@ Route::prefix('dashboard')->group(function() {
         Route::post('/add_charge', [settingscontroller::class, 'add_charge'])->name('dashboard.add_charge');
         Route::post('/edit_charge', [settingscontroller::class, 'edit_charge'])->name('dashboard.edit_charge');
         Route::get('/preview', [settingscontroller::class, 'preview'])->name('dashboard.preview');
+    });
+    //agent dashboard
+    Route::prefix('home')->group(function() {
+        Route::get('/', [agentscontroller::class, 'index'])->name('agent.home');
+        Route::get('/bookings', [agentscontroller::class, 'bookings'])->name('agent.bookings');
+        Route::post('/bookings/search', [agentscontroller::class, 'filter_bookings'])->name('agent.filter_booking');
+    });
+    //courier dashboard
+    Route::prefix('courier')->group(function() {
+        Route::get('/', [courierscontroller::class, 'index'])->name('courier.home');
+    });
+    Route::prefix('sms')->group(function() {
+        Route::get('/', [dashboardcontroller::class, 'sms_blasts'])->name('dashboard.sms_blasts');
+        Route::post('/add', [dashboardcontroller::class, 'add_customer'])->name('dashboard.add_customer');
+        Route::post('/customer/trash/{id}', [dashboardcontroller::class, 'trash_customer'])->name('dashboard.trash_customer');
+        Route::post('/customer/trash/all/{id}', [dashboardcontroller::class, 'contacts_delete'])->name('dashboard.contacts_delete');
+        Route::post('/import/contacts/{id}', [dashboardcontroller::class, 'import_contacts'])->name('dashboard.import_contacts');
+        Route::post('/blasts', [dashboardcontroller::class, 'send_blast_sms'])->name('dashboard.send_blast_sms');
+    });
+    Route::prefix('graphs')->group(function() {
+        Route::get('/sales', [graphscontroller::class, 'sales'])->name('graphs.sales');
+        Route::get('/pie_chart', [graphscontroller::class, 'pie_chart'])->name('graphs.pie_chart');
+        Route::get('/line_graph', [graphscontroller::class, 'line_graph'])->name('graphs.line_graph');
     });
 });
 Route::get('/route/{id}', [pagescontroller::class, 'show_route'])->name('route.show');

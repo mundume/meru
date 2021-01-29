@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -21,6 +22,18 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
+    protected function authenticated(Request $request, $user) {
+        if($user->hasRole('admin')) {
+            return redirect()->route('dashboard.index');
+        } else if($user->hasRole('booking')) {
+            return redirect()->route('agent.home');
+        } else if($user->hasRole('courier')) {
+            return redirect()->route('courier.home');
+        } else {
+            return redirect('/login');
+        }
+    }
 
     /**
      * Where to redirect users after login.

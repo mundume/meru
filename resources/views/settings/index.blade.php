@@ -32,6 +32,9 @@
             <div class="col-md-12">
                 <div class="form-inline" style="justify-content: center;">
                     <button class="btn btn-outline-info" style="margin:2px;">
+                        {{$drop->office_name}}
+                        </button>
+                        <button class="btn btn-outline-info" style="margin:2px;">
                         {{$drop->office_route}}
                     </button>
                     <button class="btn btn-outline-success" style="margin:2px;" data-toggle="modal" data-target="#edit_charge-{{$drop->id}}">
@@ -145,14 +148,6 @@
         <br>
         @endforeach
         <hr>
-        <?php $cec = \App\Models\Coordinate::where('user_id', auth()->user()->id)->first(); ?>
-        @if(!$cec)
-        <button class="btn btn-warning" data-toggle="modal" data-target="#add_coordinate" style="text-transform: uppercase;">Add
-            Coordinates</button>
-        @else
-        <button class="btn btn-warning" data-toggle="modal" data-target="#add_coordinate" disabled style="text-transform: uppercase;">Edit
-            Coordinates</button>
-        @endif
         <a href="{{route('dashboard.preview')}}" class="btn btn-success pull-right" style="text-transform: uppercase;">View &
             Activate</a>
         @else
@@ -188,7 +183,7 @@
             <div class="modal-body">
                 <form action="{{route('dashboard.add_provider')}}" method="POST">
                     @csrf
-                    <input type="text" name="name" required style="height:50px;" class="form-control" placeholder="Xwift Courier Services *">
+                    <input type="text" name="name" required style="height:42px;" class="form-control" placeholder="Shuttle App*">
                     <br>
                     <button type="submit" class="btn btn-warning btn-block" style="height:50px;">ADD SERVICE</button>
                 </form>
@@ -215,69 +210,22 @@
                     <div class="row">
                         <div class="col-md-6">
                             <small>Departure*</small>
-                            <input type="text" name="from" required style="height:42px;" class="form-control" placeholder="From*">
+                            <input type="text" name="from" required style="height:42px;" class="form-control" placeholder="FROM*">
                         </div>
                         <div class="col-md-6">
                             <small>Destination*</small>
-                            <input type="text" name="to" required style="height:42px;" class="form-control" placeholder="To*">
-                        </div>
-                    </div>
-                    <br>
-                    <button type="submit" class="btn btn-warning btn-block" style="height: 40px;">ADD DROPOFF</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-
-<style>
-    .pac-container {
-        z-index: 9999;
-    }
-</style>
-<div class="modal close_modal" id="add_coordinate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="border-radius:0px;">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">
-                    <center style="text-transform: uppercase;">Add Coordinates
-                    </center>
-                </h4>
-            </div>
-            <div class="modal-body">
-                @if ($errors->cood->any())
-                <div class="alert alert-danger">
-                    <ol>
-                        @foreach ($errors->cood->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ol>
-                </div>
-                @endif
-                <form action="{{route('dashboard.add_coordinate')}}" method="POST">
-                    @csrf
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 {{ $errors->cood->has('address_address') ? 'has-error' : '' }}">
-                            <input type="text" id="address-input" name="address_address" class="form-control map-input" style="height:38px;" placeholder="Click to add Google Location">
-                            <div id="address-map-container" style="width:100%;height:300px; ">
-                                <div style="width: 100%; height: 100%" id="address-map"></div>
+                            <input type="text" name="to" required style="height:42px;" class="form-control" placeholder="TO*">
                             </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <small>Office name*</small>
+                                    <input type="text" name="office_name" style="height: 42px;" class="form-control" placeholder="OFFICE NAME*">
                         </div>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-xs-6 col-sm-6 col-md-6 {{ $errors->cood->has('address_latitude') ? 'has-error' : '' }}">
-                            <input class="input-group form-control" name="address_latitude" id="address-latitude" readonly>
-                        </div>
-                        <div class="col-xs-6 col-sm-6 col-md-6 {{ $errors->cood->has('address_longitude') ? 'has-error' : '' }}">
-                            <input class="input-group form-control" name="address_longitude" id="address-longitude" readonly>
-                        </div>
-                    </div>
-                    <br>
-                    <button type="submit" class="btn btn-warning add_coordinate btn-block">ADD COORDINATE</button>
+                        <br>
+                    <button type="submit" class="btn btn-warning btn-block" style="height: 40px;">ADD DROPOFF</button>
                 </form>
             </div>
             <div class="modal-footer">

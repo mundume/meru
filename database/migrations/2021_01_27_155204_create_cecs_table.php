@@ -17,11 +17,11 @@ class CreateCecsTable extends Migration
             $table->id();
             $table->string('path');
             $table->string('fleet_id');
-            $table->string('readable_fleet_id');
-            $table->integer('no_of_commuters');
-            $table->double('cash');
-            $table->double('mpesa');
-            $table->double('total_amount');
+            $table->string('readable_fleet_id')->nullable();
+            $table->integer('no_of_commuters')->nullable();
+            $table->double('cash')->nullable();
+            $table->double('mpesa')->nullable();
+            $table->double('total_amount')->nullable();
             $table->boolean('is_receipt')->default(false);
             $table->timestamps();
         });

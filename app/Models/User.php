@@ -56,4 +56,13 @@ class User extends Authenticatable
     public function agent_parcels() {
         return $this->belongsToMany(Parcel::class, 'parcel_users');
     }
+    public function agent_booking() {
+        return $this->belongsToMany(Booking::class, 'booking_users')->where('is_paid', 1);
+    }
+    public function agent_routes() {
+        return $this->belongsToMany(Route::class, 'agent_routes', 'user_id', 'route_id')->where([['admin_suspend', 0]]);
+    }
+    // public function agent_parcels() {
+    //     return $this->belongsToMany(Parcel::class, 'parcel_users');
+    // }
 }
