@@ -86,7 +86,7 @@ ol {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
-    margin-left: 25px;
+    /* margin-left: 25px; */
 }
 
 .seat {

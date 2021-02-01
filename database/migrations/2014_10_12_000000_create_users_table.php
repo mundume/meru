@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('c_name');
             $table->string('c_mobile')->nullable();            
             $table->string('c_county')->nullable();
-            $table->integer('id_no');
+            $table->string('id_no');
             $table->timestamp('suspend')->nullable();
             $table->string('handle');
             $table->string('email', 100)->unique();

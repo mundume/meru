@@ -6,7 +6,7 @@
 <script src="{{asset('assets/vendors/apexcharts/apexcharts.min.js')}}"></script>
 <script src="{{asset('assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
 <script src="{{asset('assets/vendors/feather-icons/feather.min.js')}}"></script>
-{{-- <script src="{{asset('assets/js/template.js')}}"></script> --}}
+<script src="{{asset('assets/js/template.js')}}"></script>
 {{-- <script src="{{asset('assets/js/dashboard.js')}}"></script> --}}
 {{-- <script src="{{asset('assets/js/chartjs.js')}}"></script> --}}
 {{-- <script src="{{asset('assets/js/datepicker.js')}}"></script> --}}

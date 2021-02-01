@@ -25,7 +25,7 @@
                                     <tr>
                                         <th class="pt-0">#</th>
                                         <th class="pt-0">Name</th>
-                                        <th class="pt-0">ID</th>
+                                        {{-- <th class="pt-0">ID</th> --}}
                                         <th class="pt-0">Email</th>
                                         <th class="pt-0">Mobile</th>
                                         <th class="pt-0">Office Mobile</th>
@@ -40,7 +40,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{$user->user->fname}}</td>
-                                        <td>{{ $user->user->id_no }}</td>
+                                        {{-- <td>{{ $user->user->id_no }}</td> --}}
                                         <td><code>{{ $user->user->email }}</code></td>
                                         <td>{{ $user->user->mobile }}</td>
                                         <td>{{ $user->user->c_mobile }}</td>

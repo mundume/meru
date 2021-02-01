@@ -1,6 +1,7 @@
 <?php
 use Carbon\Carbon;
 use App\Models\{AgentUser};
+use App\Http\Controllers\smscontroller;
 
 function app_filterDate($date, $time) {
     if($date == null && $time == null) {
@@ -47,4 +48,10 @@ function app_existsAgent() {
         $der = 0;
         return $der;
     }
+}
+function app_ErrorOne() {
+    $message = "Critical Error Notification.\r\nSubsidiary failed to book a seat.\r\nERROR_01.";
+    $contact = "254799770833";
+    $sms = new smscontroller;
+    $sms->send_sms($contact, $message);
 }
