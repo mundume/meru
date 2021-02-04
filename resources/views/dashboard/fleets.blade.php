@@ -17,7 +17,7 @@
                     <h6 class="card-title mb-0">Fleets</h6>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table table-hover mb-0" id="fleetTable">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -184,4 +184,9 @@
     })
 </script>
 @endif
+<script>
+    $(document).ready(function () {
+        $('#fleetTable').DataTable()
+    });
+</script>
 @endsection

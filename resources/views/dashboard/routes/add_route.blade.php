@@ -145,7 +145,6 @@
 @section('scripts')
 <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
 <script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
-<script src="{{asset('/datetime/build/jquery.datetimepicker.full.min.js')}}"></script>
 <script>
     tinymce.init({
         selector: 'textarea',

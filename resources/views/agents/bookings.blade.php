@@ -29,7 +29,7 @@
                     <h6 class="card-title mb-0">Bookings ({{ $bookings->count() }})</h6>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table table-hover mb-0" id="bookingTable">
                         <thead>
                             <tr>
                                 <th>Ticket</th>
@@ -41,6 +41,7 @@
                                 <th>Seaters</th>
                                 <th>Route</th>
                                 <th>Status</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,6 +61,11 @@
                                     @else
                                     <span class="badge badge-success">Paid</span>
                                     @endif
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-info btn-xs" style="margin:1px;">
+                                        <i data-feather="eye" class="icon-sm"></i>
+                                    </button>
                                 </td>
                             </tr>
                             @endforeach
@@ -82,5 +88,10 @@
             format: 'Y-m-d'
         })
     })
+</script>
+<script>
+    $(document).ready(function () {
+        $('#bookingTable').DataTable()
+    });
 </script>
 @endsection

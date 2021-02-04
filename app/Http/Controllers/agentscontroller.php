@@ -22,7 +22,7 @@ class agentscontroller extends Controller
         if($this->check_if_agent_booking() == false) return redirect()->back();
         $user = auth()->user();
         $agent = AgentCourier::where('user_id', $user->id)->first();
-        $parcels = Parcel::orderBy('id', 'desc')->where([['progress', 1], ['destination', $agent->dropoff_id]]);
+        $parcels = Parcel::orderBy('id', 'desc')->where([['progress', 1], ['destination_office', $agent->dropoff_id]]);
         $bookings = $user->agent_booking;
         $books = $user->agent_booking()->whereDate('booking_users.created_at', Carbon::today())->get();
         // $parcels = auth()->user()->agent_parcels()->whereDate('parcel_users.created_at', Carbon::today())->get();

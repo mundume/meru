@@ -11,12 +11,90 @@
         </button>
         </div>
         </div>
+        @if(auth()->user()->role_id == 1)
         <br>
         <div class="row">
             <div class="col-lg-12 col-xl-12 stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-baseline mb-2">
+                            <h6 class="card-title mb-0">Administrators</h6>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="pt-0">#</th>
+                                            <th class="pt-0">Name</th>
+                                            {{-- <th class="pt-0">ID</th> --}}
+                                            <th class="pt-0">Email</th>
+                                            <th class="pt-0">Mobile</th>
+                                            <th class="pt-0">Office Mobile</th>
+                                            {{-- <th class="pt-0">Pass Code</th> --}}
+                                            <th class="pt-0"></th>
+                                            {{-- <th class="pt-0">Office</th> --}}
+                                            <th class="pt-0">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($admins as $user)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{$user->fname}}</td>
+                                            {{-- <td>{{ $user->user->id_no }}</td> --}}
+                                            <td><code>{{ $user->email }}</code></td>
+                                            <td>{{ $user->mobile }}</td>
+                                            <td>{{ $user->c_mobile }}</td>
+                                            {{-- <td>{{ $user->pass_code }}</td> --}}
+                                            <td>
+                                                @if($user->suspend == null)
+                                                <span class="badge badge-success">Active</span>
+                                                @else
+                                                <span class="badge badge-danger">Not Active</span>
+                                                @endif
+                                            </td>
+                                            {{-- <td>{{ @$user->dropoff->office_name }}</td> --}}
+                                            <td class="form-inline">
+                                                @if($user->role_id == 0)
+                                                @if($user->suspend == null)
+                                                <form action="{{route('dashboard.agent_lock', base64_encode($user->id))}}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-outline-warning" style="margin:2px;">
+                                                        <i data-feather="lock" class="icon-sm"></i>
+                                                    </button>
+                                                </form>
+                                                @else
+                                                <form action="{{route('dashboard.agent_unlock', base64_encode($user->id))}}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-outline-success" style="margin:2px;">
+                                                        <i data-feather="unlock" class="icon-sm"></i>
+                                                    </button>
+                                                </form>
+                                                @endif
+                                                @endif
+                                                <button type="button" style="margin:2px;" class="btn btn-outline-success">
+                                                    <i data-feather="edit" class="icon-sm"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger" style="margin:2px;">
+                                                    <i data-feather="trash" class="icon-sm"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            @endif
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-12 col-xl-12 stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-baseline mb-2">
                             <h6 class="card-title mb-0">Agents</h6>
                         </div>
                         <div class="table-responsive">
@@ -52,7 +130,7 @@
                                             <span class="badge badge-danger">Not Active</span>
                                             @endif
                                         </td>
-                                        <td>{{ @$user->dropoff->office_name }}</td>
+                                        <td>{{ substr(@$user->dropoff->office_name,0,10) }}..</td>
                                         <td class="form-inline">
                                             @if($user->user->suspend == null)
                                             <form action="{{route('dashboard.agent_lock', base64_encode($user->user->id))}}" method="POST">
@@ -69,12 +147,15 @@
                                                 </button>
                                             </form>
                                             @endif
-                                            <button type="button" style="margin:2px;" class="btn btn-outline-success">
+                                            <button type="button" style="margin:2px;" class="btn btn-outline-success" data-toggle="modal" data-target="#edit_agent">
                                                 <i data-feather="edit" class="icon-sm"></i>
                                             </button>
-                                            <button type="button" class="btn btn-outline-danger" style="margin:2px;">
+                                            {{-- <form action="{{ route('dashboard.delete_user', base64_encode($user->user->id)) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-outline-danger" style="margin:2px;">
                                                 <i data-feather="trash" class="icon-sm"></i>
                                             </button>
+                                            </form> --}}
                                         </td>
                                     </tr>
                                     @endforeach
@@ -200,6 +281,9 @@
                                 <option selected hidden data-default disabled>Select Role</option>
                                 <option value="0">Booking & Courier</option>
                                 <option value="1">Courier Only</option>
+                                @if(auth()->user()->role_id == 1)
+                                <option value="2">Admin</option>
+                                @endif
                             </select>
                             @error('role')
                             <small class="text-danger">{{$message}}</small>
@@ -207,11 +291,14 @@
                         </div>
                         <div class="col-md-6">
                             <label>Assign Agent Location</label>
-                            <select class="form-control" style="height: 42px;" name="office_id" required>
+                            <select class="form-control" style="height: 42px;" required name="office_name">
                                 <option selected data-default disabled>Assign Agent Location</option>
-                                @foreach($offices as $sp)
-                                <option value="{{$sp->id}}">{{$sp->office_name}}</option>
+                                @foreach($offices->unique('office_name') as $sp)
+                                <option>{{$sp->office_name}}</option>
                                 @endforeach
+                                @if(auth()->user()->role_id == 1)
+                                <option value="admin">Admin</option>
+                                @endif
                             </select>
                         </div>
                     </div>

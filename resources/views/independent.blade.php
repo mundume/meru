@@ -1,42 +1,65 @@
 @extends('layouts.main')
 @section('title', 'Home')
+<link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
 @section('body')
 <div class="intro-section" id="home">
-    <div class="slide-1" style="background-image: url('images/hero_1.jpg');" data-stellar-background-ratio="0.5">
+    <div class="slide-1" style="background-image: url('shuttle_images/tourist.png');" data-stellar-background-ratio="0.5">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-12">
                     <div class="row align-items-center">
                         <div class="col-lg-6 mb-4">
-                            <h1 data-aos="fade-up" data-aos-delay="100">Book unique express</h1>
-                            <p class="mb-4" data-aos="fade-up" data-aos-delay="200">
-                                We are the best because we offer the best
-                            </p>
-                            <p data-aos="fade-up" data-aos-delay="300"><a href="#" class="btn btn-primary py-3 px-5 btn-pill">Contact Us</a></p>
+                            <center>
+                                <h2 data-aos="fade-up" data-aos-delay="100">
+                                    1. Discover And Book Unique Fleet
+                                </h2>
+                                <h2 data-aos="fade-up" data-aos-delay="100">
+                                    2. Sending Parcels Now Made Easy
+                                </h2>
+                                <p data-aos="fade-up" data-aos-delay="300">
+                                    <a href="#" class="btn btn-primary btn-pill">Send Parcel</a>
+                                    <a href="#" class="btn btn-primary btn-pill">Contact Us</a>
+                                </p>
+                            </center>
                         </div>
-                        <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
-                            <form action="" method="post" class="form-box">
-                                <h3 class="h4 text-black mb-4">Search Route</h3>
+                        <div class="col-lg-5 ml-auto">
+                            <form action="{{ route('independent.search') }}" method="GET" class="form-box">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        SEARCH ROUTE
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <select class="form-control" name="seaters" required>
+                                            <option selected hidden data-default disabled>SELECT SEATERS</option>
+                                            @foreach($uni->unique('seaters') as $rou)
+                                            <option>{{$rou->seaters }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
                                 <div class="form-group row">
                                     <div class="col-md-6 mb-3 mb-lg-0">
-                                        <input type="text" class="form-control" placeholder="Departure">
+                                        <select class="form-control" name="departure" required>
+                                            <option selected hidden data-default disabled>DEPARTURE</option>
+                                            @foreach($uni->unique('departure') as $rou)
+                                            <option>{{ $rou->departure }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Destination">
+                                        <select class="form-control" name="destination" required>
+                                            <option selected hidden data-default disabled>DESTINATION</option>
+                                            @foreach($uni->unique('destination') as $rou)
+                                            <option>{{ $rou->destination }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Travel Date">
-                                </div>
-                                {{-- <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Email Addresss">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Password">
-                                </div>
-                                <div class="form-group mb-4">
-                                    <input type="password" class="form-control" placeholder="Re-type Password">
-                                </div> --}}
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-primary btn-pill btn-block" value="SEARCH ROUTE">
                                 </div>
@@ -44,11 +67,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>            
         </div>
     </div>
 </div>
-<div class="site-section courses-title" id="work">
+{{-- <div class="site-section courses-title" id="work">
     <div class="container">
         <div class="row mb-5 justify-content-center">
             <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="">
@@ -56,58 +79,34 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 <div class="site-section courses-entry-wrap" data-aos="fade-up" data-aos-delay="100">
     <div class="container">
         <div class="row">
             <div class="owl-carousel col-12 nonloop-block-14">
-                <div class="course bg-white h-100 align-self-stretch">
+                @foreach($routes as $route)
+                <div class="course bg-white align-self-stretch">
                     <figure class="m-0">
-                        <a href="course-single.html"><img src="images/img_1.jpg" alt="Image" class="img-fluid"></a>
+                        <a href="{{ route('route.show', base64_encode($route->id)) }}">
+                            <img src="{{ asset('shuttle_images/logo.png') }}" alt="Image" class="img-fluid">
+                        </a>
                     </figure>
                     <div class="course-inner-text py-4 px-4">
-                        <span class="course-price">1000.00</span>
-                        <h3><a href="#">Meru ~ Nakuru</a></h3>
+                        <span class="course-price">{{ number_format($route->amount) }}</span>
+                        <h3><a href="{{ route('route.show', base64_encode($route->id)) }}">{{ $route->departure }} ~ {{ $route->destination }}</a></h3>
                     </div>
                     <div class="d-flex border-top stats">
-                        <div class="py-3 px-4"><span class="icon-users"></span> 16 Seaters</div>
-                        <div class="py-3 px-4 w-25 ml-auto border-left"><span class="icon-chat">16</span> </div>
+                        <div class="py-3 px-4"><span class="icon-users"></span>
+                            {{ $route->depart1 }} | {{ $route->depart2 }} | {{ $route->depart3 }} | {{ $route->depart4 }}
+                        </div>
+                        <div class="py-3 px-4 w-25 ml-auto border-left">
+                            <span class="icon-chat">{{ $route->seaters }}</span>
+                        </div>
                     </div>
                 </div>
-                <div class="course bg-white h-100 align-self-stretch">
-                    <figure class="m-0">
-                        <a href="course-single.html"><img src="images/img_2.jpg" alt="Image" class="img-fluid"></a>
-                    </figure>
-                    <div class="course-inner-text py-4 px-4">
-                        <span class="course-price">1250.00</span>
-                        <h3><a href="#">Nairobi ~ Meru</a></h3>
-                    </div>
-                    <div class="d-flex border-top stats">
-                        <div class="py-3 px-4"><span class="icon-users"></span> 14 seaters</div>
-                        <div class="py-3 px-4 w-25 ml-auto border-left"><span class="icon-chat"></span> 14</div>
-                    </div>
-                </div>
-                <div class="course bg-white h-100 align-self-stretch">
-                    <figure class="m-0">
-                        <a href="course-single.html"><img src="images/img_3.jpg" alt="Image" class="img-fluid"></a>
-                    </figure>
-                    <div class="course-inner-text py-4 px-4">
-                        <span class="course-price">3000.00</span>
-                        <h3><a href="#">Nairobi ~ Mombasa</a></h3>
-                    </div>
-                    <div class="d-flex border-top stats">
-                        <div class="py-3 px-4"><span class="icon-users"></span> 16 seaters</div>
-                        <div class="py-3 px-4 w-25 ml-auto border-left"><span class="icon-chat"></span> 16</div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
-        {{-- <div class="row justify-content-center">
-            <div class="col-7 text-center">
-                <button class="customPrevBtn btn btn-primary m-1">Prev</button>
-                <button class="customNextBtn btn btn-primary m-1">Next</button>
-            </div>
-        </div> --}}
     </div>
 </div>
 <div class="site-section" id="services">
@@ -128,13 +127,13 @@
                 <div class="d-flex align-items-center custom-icon-wrap mb-3">
                     <span class="custom-icon-inner mr-3"><span class="icon icon-graduation-cap"></span></span>
                     <div>
-                        <h3 class="m-0">22,931 Yearly Graduates</h3>
+                        <h3 class="m-0">Total Bookings {{ $total_booking }}</h3>
                     </div>
                 </div>
                 <div class="d-flex align-items-center custom-icon-wrap">
                     <span class="custom-icon-inner mr-3"><span class="icon icon-university"></span></span>
                     <div>
-                        <h3 class="m-0">150 Universities Worldwide</h3>
+                        <h3 class="m-0">Today's Bookings {{ $today_booking }}</h3>
                     </div>
                 </div>
             </div>
@@ -149,13 +148,13 @@
                 <div class="d-flex align-items-center custom-icon-wrap mb-3">
                     <span class="custom-icon-inner mr-3"><span class="icon icon-graduation-cap"></span></span>
                     <div>
-                        <h3 class="m-0">22,931 Yearly Graduates</h3>
+                        <h3 class="m-0">Total Parcels {{ $total_parcel }}</h3>
                     </div>
                 </div>
                 <div class="d-flex align-items-center custom-icon-wrap">
                     <span class="custom-icon-inner mr-3"><span class="icon icon-university"></span></span>
                     <div>
-                        <h3 class="m-0">150 Universities Worldwide</h3>
+                        <h3 class="m-0">Today's Parcels {{ $today_parcel }}</h3>
                     </div>
                 </div>
             </div>
@@ -183,37 +182,25 @@
                     <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
                         <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span></div>
                         <div>
-                            <h3 class="m-0">22,931 Yearly Graduates</h3>
+                            <h3 class="m-0">Best services</h3>
                         </div>
                     </div>
                     <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
                         <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span></div>
                         <div>
-                            <h3 class="m-0">150 Universities Worldwide</h3>
+                            <h3 class="m-0">Reliable and Flexible</h3>
                         </div>
                     </div>
                     <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
                         <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span></div>
                         <div>
-                            <h3 class="m-0">Top Professionals in The World</h3>
+                            <h3 class="m-0">Cheap and Reliable</h3>
                         </div>
                     </div>
                     <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
                         <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span></div>
                         <div>
-                            <h3 class="m-0">Expand Your Knowledge</h3>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center custom-icon-wrap custom-icon-light mb-3">
-                        <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-graduation-cap"></span></span></div>
-                        <div>
-                            <h3 class="m-0">Best Online Teaching Assistant Courses</h3>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center custom-icon-wrap custom-icon-light">
-                        <div class="mr-3"><span class="custom-icon-inner"><span class="icon icon-university"></span></span></div>
-                        <div>
-                            <h3 class="m-0">Best Teachers</h3>
+                            <h3 class="m-0">Fast</h3>
                         </div>
                     </div>
                 </div>
@@ -241,17 +228,12 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <input type="text" class="form-control" placeholder="Subject">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-12">
                             <input type="email" class="form-control" placeholder="Email">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <textarea class="form-control" id="" cols="30" rows="10" placeholder="Write your message here."></textarea>
+                            <textarea class="form-control" id="" cols="30" rows="5" placeholder="Write your message here."></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -264,4 +246,17 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('#date').datetimepicker({
+            datepicker: true,
+            timepicker: false,
+            format: 'Y-m-d',
+            minDate: 0
+        })
+    })
+</script>
 @endsection

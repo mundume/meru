@@ -95,7 +95,7 @@
                     <h6 class="card-title mb-0">Yesterday's Parcel</h6>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table table-hover mb-0" id="parcelTable">
                         <thead>
                             <tr>
                                 <th></th>
@@ -197,4 +197,9 @@
 @endsection
 @section('scripts')
 <script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('#parcelTable').DataTable()
+    });
+</script>
 @endsection

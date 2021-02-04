@@ -46,14 +46,14 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-baseline">
-                            <h6 class="card-title mb-0">Fleets</h6>
+                            <h6 class="card-title mb-0">Routes</h6>
                         </div>
                         <div class="row">
                             <div class="col-6 col-md-12 col-xl-12">
                                 <h4 class="mb-2 mt-3">{{ $routes->count() }}</h4>
                                 <div class="d-flex align-items-baseline">
                                     <p class="text-success">
-                                        <i data-feather="truck" class="icon-md mb-1"></i>
+                                        <i data-feather="map-pin" class="icon-md mb-1"></i>
                                     </p>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                     <h6 class="card-title mb-0">Today's Bookings ({{ $books->count() }})</h6>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table table-hover mb-0" id="bookingTable">
                         <thead>
                             <tr>
                                 <th>Ticket</th>
@@ -127,6 +127,7 @@
                                 <th>Seaters</th>
                                 <th>Route</th>
                                 <th>Status</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -146,6 +147,11 @@
                                     @else
                                     <span class="badge badge-success">Paid</span>
                                     @endif
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-danger btn-xs" style="margin:1px;" disabled>
+                                        <i data-feather="trash" class="icon-sm"></i>
+                                    </button>
                                 </td>
                             </tr>
                             @endforeach
@@ -196,5 +202,10 @@
             })
         })
     })
+</script>
+<script>
+    $(document).ready(function () {
+        $('#bookingTable').DataTable()
+    });
 </script>
 @endsection

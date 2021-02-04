@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.main')
 @section('title', 'Fleet Dispatches')
-<link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
 @section('body')
+<link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4"></div>
@@ -22,7 +22,7 @@
                     <h6 class="card-title mb-0">Dispatches</h6>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table table-hover mb-0" id="dispatchTable">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -87,7 +87,6 @@
 @endsection
 @section('scripts')
 <script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
-<script src="{{asset('/datetime/build/jquery.datetimepicker.full.min.js')}}"></script>
 <script>
     $(document).ready(function () {
         $('#date').datetimepicker({
@@ -96,5 +95,10 @@
             format: 'Y-m-d'
         })
     })
+</script>
+<script>
+    $(document).ready(function () {
+        $('#dispatchTable').DataTable()
+    });
 </script>
 @endsection

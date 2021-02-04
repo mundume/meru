@@ -62,7 +62,7 @@ class graphscontroller extends Controller
         return json_encode($all_data);
     }
     public function pie_chart() {
-        $bookings = Booking::where([['is_paid', true], ['travel_date', Carbon::today()->format('Y-m-d')]])->sum('amount');
+        $bookings = Booking::where([['is_paid', true]])->whereDate('created_at', Carbon::today()->format('Y-m-d'))->sum('amount');
         $parcels = Parcel::where([['is_paid', true]])->whereDate('created_at', Carbon::today())->sum('service_provider_amount');
         $data['label'][0] = "Parcels";
         $data['label'][1] = "Booking";
@@ -120,6 +120,62 @@ class graphscontroller extends Controller
         $data = [$options, $options1];
         $all_data['label'] = $dates->keys();
         $all_data['datasets'] = $data;
+        return json_encode($all_data);
+    }
+    public function reporting_parcel() {
+        $dates = collect();
+        foreach(range(6,0) AS $i) {
+            $date = Carbon::today()->subDays($i)->format('Y-m-d');
+            $dates->put($date,0);
+        }
+        $parcels = Parcel::where([['is_paid', true], ['created_at', '>=', $dates->keys()->first()]])
+                            ->groupBy('date')->orderBy('date')
+                            ->get(([
+                                DB::raw('DATE(created_at) as date'),
+                                DB::raw('SUM(service_provider_amount) as "views"')
+                            ]))->pluck('views', 'date');
+        $dates = $dates->merge($parcels);
+        $data = [];
+        foreach($dates as $der) {
+            array_push($data, $der);
+        }
+        $options = [
+            'label' => 'Parcels',
+            'data' => $data,
+            'borderColor' => '#686868',
+            'backgroundColor' => '#686868',
+            'fill' => false
+        ];
+        $all_data['label'] = $dates->keys();
+        $all_data['datasets'] = [$options];
+        return json_encode($all_data);
+    }
+    public function reporting_booking() {
+        $dates = collect();
+        foreach(range(6,0) AS $i) {
+            $date = Carbon::today()->subDays($i)->format('Y-m-d');
+            $dates->put($date,0);
+        }
+        $bookings = Booking::where([['is_paid', true], ['created_at', '>=', $dates->keys()->first()]])
+                                ->groupBy('date')->orderBy('date')
+                                ->get(([
+                                    DB::raw('DATE(created_at) as date'),
+                                    DB::raw('SUM(amount) as "views"')
+                                ]))->pluck('views', 'date');
+        $dates = $dates->merge($bookings);
+        $data = [];
+        foreach($dates as $der) {
+            array_push($data, $der);
+        }
+        $options = [
+            'label' => 'Booking',
+            'data' => $data,
+            'borderColor' => '#686868',
+            'backgroundColor' => '#686868',
+            'fill' => false
+        ];
+        $all_data['label'] = $dates->keys();
+        $all_data['datasets'] = [$options];
         return json_encode($all_data);
     }
 }

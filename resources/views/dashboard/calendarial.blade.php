@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.main')
 @section('title', 'Peak & Off-peaks')
-<link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
 @section('body')
+<link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
 <div class="row">
     <div class="col-md-12">
         <button class="btn btn-success float-right" type="button" data-toggle="modal" data-target="#add_peak" style="text-transform: uppercase;border-radius: 0px;">
@@ -178,7 +178,6 @@
 @endsection
 @section('scripts')
 <script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
-<script src="{{asset('/datetime/build/jquery.datetimepicker.full.min.js')}}"></script>
 <script>
     $(document).ready(function () {
         $('#date').datetimepicker({

@@ -1,8 +1,8 @@
 @extends('layouts.dashboard.main')
-@section('title', 'Generate Ticket 10 Seaters')
+@section('title', 'Generate Ticket 16 Seaters')
+@section('body')
 <link rel="stylesheet" href="{{ asset('css/frame.css') }}">
 <link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
-@section('body')
 <div class="row">
     <div class="col-md-12">
         <button class="btn btn-outline-success">{{ $route->departure }} ~ {{ $route->destination }} | Booking Office</button>
@@ -48,8 +48,8 @@
                                         <th class="pt-0">Seat</th>
                                         <th class="pt-0">Name</th>
                                         <th class="pt-0">Mobile</th>
-                                        <th class="pt-0">Ticker No</th>
-                                        <th class="pt-0">Route</th>
+                                        <th class="pt-0">Ticket No</th>
+                                        {{-- <th class="pt-0">Route</th> --}}
                                         <th class="pt-0">Amount</th>
                                         <th class="pt-0">Action</th>
                                     </tr>
@@ -61,7 +61,7 @@
                                         <td>{{ $item->fullname }}</td>
                                         <td>{{ $item->mobile }}</td>
                                         <td>{{ $item->ticket_no }}</td>
-                                        <td>{{ $item->departure }} ~ {{ $item->destination }}</td>
+                                        {{-- <td>{{ $item->departure }} ~ {{ $item->destination }}</td> --}}
                                         <td>{{ number_format($item->amount,2) }}</td>
                                         <td>
                                             <form action="{{ route('dashboard.activate_commuter', base64_encode($item->id)) }}" method="POST">
@@ -90,8 +90,8 @@
                                         <th class="pt-0">Seat</th>
                                         <th class="pt-0">Name</th>
                                         <th class="pt-0">Mobile</th>
-                                        <th class="pt-0">Ticker No</th>
-                                        <th class="pt-0">Route</th>
+                                        <th class="pt-0">Ticket No</th>
+                                        {{-- <th class="pt-0">Route</th> --}}
                                         <th class="pt-0">Amount</th>
                                         <th class="pt-0">Action</th>
                                     </tr>
@@ -103,7 +103,7 @@
                                         <td>{{ $item->fullname }}</td>
                                         <td>{{ $item->mobile }}</td>
                                         <td>{{ $item->ticket_no }}</td>
-                                        <td>{{ $item->departure }} ~ {{ $item->destination }}</td>
+                                        {{-- <td>{{ $item->departure }} ~ {{ $item->destination }}</td> --}}
                                         <td>{{ number_format($item->amount,2) }}</td>
                                         <td>
                                             <form action="{{ route('dashboard.delay_commuter', base64_encode($item->id)) }}" method="POST">
@@ -270,21 +270,6 @@
 @endsection
 @section('scripts')
 <script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
-<script src="{{asset('/datetime/build/jquery.datetimepicker.full.min.js')}}"></script>
-<script>
-    $(document).ready(function () {
-        $('#show_time').click(function () {
-            $('#select_time').removeAttr('hidden')
-        })
-        $('#clear_select').click(function () {
-            $('#cecelia').val('').trigger('change')
-            $('#get_date').val('');
-            $('#select_time').attr("hidden", "hidden")
-            fetchBooked()
-            fetchBookedModal()
-        })
-    })
-</script>
 @if (count($errors) > 0)
 <script>
     $(document).ready(function () {
@@ -311,6 +296,7 @@
         var book_13 = $('.book_13').val()
         var book_14 = $('.book_14').val()
         var book_15 = $('.book_15').val()
+        var book_16 = $('.book_16').val()
         $.ajax({
             url: "{{ route('dashboard.booked') }}",
             type: "POST",
@@ -340,6 +326,7 @@
                 $('.book_13').prop('disabled', false)
                 $('.book_14').prop('disabled', false)
                 $('.book_15').prop('disabled', false)
+                $('.book_16').prop('disabled', false)
                 $.each(booked, function (propName, propVal) {
                     if (propVal == book_1) {
                         $('.book_1').prop('disabled', true)
@@ -371,6 +358,8 @@
                         $('.book_14').prop('disabled', true)
                     } else if (propVal == book_15) {
                         $('.book_15').prop('disabled', true)
+                    } else if(propVal == book_16) {
+                    $('.book_16').prop('disabled', true)
                     } else {
                         $('.book_1').prop('disabled', false)
                         $('.book_2').prop('disabled', false)
@@ -387,6 +376,7 @@
                         $('.book_13').prop('disabled', false)
                         $('.book_14').prop('disabled', false)
                         $('.book_15').prop('disabled', false)
+                        $('.book_16').prop('disabled', false)
                     }
                 })
             },
@@ -417,6 +407,7 @@
         var book_13_1 = $('.book_13_1').val()
         var book_14_1 = $('.book_14_1').val()
         var book_15_1 = $('.book_15_1').val()
+        var book_16_1 = $('.book_16_1').val()
         $.ajax({
             url: "{{ route('dashboard.booked') }}",
             type: "POST",
@@ -446,6 +437,7 @@
                 $('.book_13_1').prop('disabled', false)
                 $('.book_14_1').prop('disabled', false)
                 $('.book_15_1').prop('disabled', false)
+                $('.book_16_1').prop('disabled', false)
                 $.each(booked, function (propName, propVal) {
                     if (propVal == book_1_1) {
                         $('.book_1_1').prop('disabled', true)
@@ -461,7 +453,7 @@
                         $('.book_6_1').prop('disabled', true)
                     } else if (propVal == book_7_1) {
                         $('.book_7_1').prop('disabled', true)
-                    } else if (propVal == book_1_8) {
+                    } else if (propVal == book_8_1) {
                         $('.book_8_1').prop('disabled', true)
                     } else if (propVal == book_9_1) {
                         $('.book_9_1').prop('disabled', true)
@@ -473,10 +465,12 @@
                         $('.book_12_1').prop('disabled', true)
                     } else if (propVal == book_13_1) {
                         $('.book_13_1').prop('disabled', true)
-                    } else if (propVal == book__114) {
+                    } else if (propVal == book_14_1) {
                         $('.book_14_1').prop('disabled', true)
                     } else if (propVal == book_15_1) {
                         $('.book_15_1').prop('disabled', true)
+                    } else if(propVal == book_16_1) {
+                    $('.book_16_1').prop('disabled', true)
                     } else {
                         $('.book_1_1').prop('disabled', false)
                         $('.book_2_1').prop('disabled', false)
@@ -493,6 +487,7 @@
                         $('.book_13_1').prop('disabled', false)
                         $('.book_14_1').prop('disabled', false)
                         $('.book_15_1').prop('disabled', false)
+                        $('.book_16_1').prop('disabled', false)
                     }
                 })
             },
@@ -504,6 +499,14 @@
 </script>
 <script>
     $(document).ready(function () {
+        $('#show_time').click(function () {
+        // $('#select_time').attr("hidden", "hidden");
+        $('#select_time').removeAttr('hidden')
+        })
+        })
+        </script>
+        <script>
+            $(document).ready(function () {
         $('#select_time').on('change', function (e) {
             var time = e.target.value
             var seaters = "{!! $route->seaters !!}"
@@ -524,6 +527,7 @@
             var book_13_1 = $('.book_13_1').val()
             var book_14_1 = $('.book_14_1').val()
             var book_15_1 = $('.book_15_1').val()
+            var book_16_1 = $('.book_16_1').val()
             $.ajax({
                 url: "{{ route('dashboard.get_booked_seats') }}",
                 type: "POST",
@@ -555,6 +559,7 @@
                     $('.book_13_1').prop('disabled', false)
                     $('.book_14_1').prop('disabled', false)
                     $('.book_15_1').prop('disabled', false)
+                    $('.book_16_1').prop('disabled', false)
                     $.each(booked, function (propName, propVal) {
                         if (propVal == book_1_1) {
                             $('.book_1_1').prop('disabled', true)
@@ -586,6 +591,8 @@
                             $('.book_14_1').prop('disabled', true)
                         } else if (propVal == book_15_1) {
                             $('.book_15_1').prop('disabled', true)
+                        } else if(propVal == book_16_1) {
+                        $('.book_16_1').prop('disabled', true)
                         } else {
                             $('.book_1_1').prop('disabled', false)
                             $('.book_2_1').prop('disabled', false)
@@ -602,6 +609,7 @@
                             $('.book_13_1').prop('disabled', false)
                             $('.book_14_1').prop('disabled', false)
                             $('.book_15_1').prop('disabled', false)
+                            $('.book_16_1').prop('disabled', false)
                         }
                     })
                 }
@@ -616,6 +624,18 @@
             timepicker: false,
             format: 'Y-m-d',
             minDate: '-1970/01/01'
+        })
+    })
+</script>
+<script>
+    $(document).ready(function () {
+        $('#clear_select').click(function () {
+            $('#cecelia').val('').trigger('change')
+            $('input[type=date]').val('');
+            $('#select_time').attr("hidden", "hidden");
+            // $('#select_time').removeAttr('hidden')
+            fetchBooked()
+            fetchBookedModal()
         })
     })
 </script>

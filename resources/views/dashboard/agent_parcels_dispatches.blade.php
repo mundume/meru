@@ -10,7 +10,7 @@
                 </div>
                 <hr>
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table table-hover mb-0" id="agentTable">
                         <thead>
                             <tr>
                                 <th></th>
@@ -70,10 +70,6 @@
                                     </button>
                                     @if($item->progress == 1 && $item->picked == 0)
                                     <button class="btn btn-success" data-toggle="modal" style="margin:2px;" data-target="#send_message_{{ $item->id }}">
-                                        <i data-feather="message-square" class="icon-sm"></i>
-                                    </button>
-                                    @else
-                                    <button class="btn btn-success btn-sm" style="margin:2px;" disabled>
                                         <i data-feather="message-square" class="icon-sm"></i>
                                     </button>
                                     @endif
@@ -193,5 +189,10 @@
         var len = val.value.length;
         $('#charNum').text(len);
     };
+</script>
+<script>
+    $(document).ready(function () {
+        $('#agentTable').DataTable()
+    });
 </script>
 @endsection

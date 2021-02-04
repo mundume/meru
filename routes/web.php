@@ -11,7 +11,24 @@ use App\Http\Controllers\courierscontroller;
 use App\Http\Controllers\graphscontroller;
 
 Auth::routes();
+
+//guest
 Route::get('/', [pagescontroller::class, 'independent'])->name('independent');
+Route::get('/search', [pagescontroller::class, 'search'])->name('independent.search');
+Route::post('/step_one/{route_id}', [pagescontroller::class, 'booking_step_one'])->name('independent.booking_step_one');
+Route::prefix('route')->group(function() {
+    Route::get('/booking/{id}', [pagescontroller::class, 'show_route'])->name('route.show');
+    Route::get('/booking/complete/{ticket_no}', [pagescontroller::class, 'complete_booking'])->name('independent.complete_booking');
+    Route::post('/booking/complete', [pagescontroller::class, 'post_complete_booking'])->name('independent.post_complete_booking');
+    Route::get('/booking/status/{ticket_no}', [pagescontroller::class, 'ticket_status'])->name('independent.ticket_status');
+    Route::post('/booking/check/status', [pagescontroller::class, 'check_status'])->name('independent.check_status');
+});
+Route::prefix('payments')->group(function() {
+    Route::post('/stk/callback', 'pesacontroller@stk_callback')->name('payment.callback');
+});
+// Route::post('/booked/seats', [pagescontroller::class, 'booked_seats'])->name('independent.get_booked_seats');
+Route::post('/booked/calendarial', [pagescontroller::class, 'booked_calendarial'])->name('independent.calendarial');
+//admin
 Route::prefix('dashboard')->group(function() {
     Route::get('/', [dashboardcontroller::class, 'index'])->name('dashboard.index');
     Route::get('/bookings', [dashboardcontroller::class, 'bookings'])->name('dashboard.bookings');
@@ -22,6 +39,7 @@ Route::prefix('dashboard')->group(function() {
         Route::post('/agent_lock/{id}', [dashboardcontroller::class, 'agent_lock'])->name('dashboard.agent_lock');
         Route::post('/agent_unlock/{id}', [dashboardcontroller::class, 'agent_unlock'])->name('dashboard.agent_unlock');
         Route::post('/top_up_agent', [dashboardcontroller::class, 'top_up_agent'])->name('dashboard.topup_agent');
+        Route::post('/edit_user/{id}', [dashboardcontroller::class, 'edit_user'])->name('dashboard.edit_user');
     });
     Route::prefix('fleets')->group(function() {
         Route::get('/', [dashboardcontroller::class, 'add_fleets'])->name('dashboard.add_fleets');
@@ -71,8 +89,8 @@ Route::prefix('dashboard')->group(function() {
     });
     Route::get('/account', [dashboardcontroller::class, 'edit_account'])->name('dashboard.edit_account');
     Route::post('/account/edit/{id}', [dashboardcontroller::class, 'update_account'])->name('dashboard.update_account');
-    Route::post('/booked/seats', [dashboardcontroller::class, 'booked'])->name('dashboard.booked');
-    Route::post('/booked/seats/modal', [dashboardcontroller::class, 'modal_booked'])->name('dashboard.get_booked_seats');
+    Route::post('/booked/seats', [pagescontroller::class, 'booked_seats'])->name('dashboard.booked');
+    Route::post('/booked/seats/modal', [pagescontroller::class, 'modal_booked'])->name('dashboard.get_booked_seats');
     Route::post('/moderator/create/ticket', [dashboardcontroller::class, 'moderator_sell_ticket'])->name('dashboard.moderator_sell_ticket');
     Route::post('/commuter/delay/{id}', [dashboardcontroller::class, 'delay_commuter'])->name('dashboard.delay_commuter');
     Route::post('/commuter/activate/{id}', [dashboardcontroller::class, 'activate_commuter'])->name('dashboard.activate_commuter');
@@ -117,10 +135,15 @@ Route::prefix('dashboard')->group(function() {
         Route::get('/sales', [graphscontroller::class, 'sales'])->name('graphs.sales');
         Route::get('/pie_chart', [graphscontroller::class, 'pie_chart'])->name('graphs.pie_chart');
         Route::get('/line_graph', [graphscontroller::class, 'line_graph'])->name('graphs.line_graph');
+        Route::get('/reporting_parcel', [graphscontroller::class, 'reporting_parcel'])->name('graphs.reporting_parcel');
+        Route::get('/reporting_booking', [graphscontroller::class, 'reporting_booking'])->name('graphs.reporting_booking');
+    });
+    Route::prefix('reports')->group(function() {
+        Route::get('/', [dashboardcontroller::class, 'daily_reporting'])->name('dashboard.daily_reporting');
+        Route::post('/add', [dashboardcontroller::class, 'add_admin'])->name('dashboard.add_admin');
+        Route::post('/admin/trash/{id}', [dashboardcontroller::class, 'trash_admin'])->name('dashboard.trash_admin');
     });
 });
-Route::get('/route/{id}', [pagescontroller::class, 'show_route'])->name('route.show');
-
 Route::get('/book/tickets/7/{id}', [dashboardcontroller::class, 'view_ticket_7'])->name('dashboard.view_ticket_7');
 Route::get('/book/tickets/10/{id}', [dashboardcontroller::class, 'view_ticket_10'])->name('dashboard.view_ticket_10');
 Route::get('/book/tickets/11/{id}', [dashboardcontroller::class, 'view_ticket_11'])->name('dashboard.view_ticket_11');

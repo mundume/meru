@@ -5,11 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class Admin extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    // public function booking() {
-    //     return $this->belongsTo(Booking::class, 'ticket_no', 'ticket_no');
-    // }
 }

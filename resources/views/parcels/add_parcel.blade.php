@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.main')
 @section('title', 'Add Parcel')
-<link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
 @section('body')
+<link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
 <div class="row">
     <div class="col-md-6">
         <button class="btn btn-outline-warning" data-toggle="modal" data-target="#print_dispatch">
@@ -24,14 +24,14 @@
                 </div>
                 <hr>
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table table-hover mb-0" id="parcelTable">
                         <thead>
                             <tr>
                                 <th></th>
                                 <th>#/N</th>
                                 <th>Sender Name</th>
                                 <th>Receiver Name</th>
-                                <th>Receiver Mobile</th>
+                                {{-- <th>Receiver Mobile</th> --}}
                                 <th>ID</th>
                                 <th>Destination</th>
                                 <th>Fleet</th>
@@ -45,19 +45,16 @@
                                     @if($item->progress == false)
                                     <form action="{{route('dashboard.progress', $item->id)}}" method="POST">
                                         @csrf
-                                        <button class="btn btn-success" type="submit" style="margin:2px;">
+                                        <button class="btn btn-success btn-xs" type="submit" style="margin:2px;">
                                             <i data-feather="check" class="icon-sm"></i>
                                         </button>
                                     </form>
-                                    <button class="btn btn-outline-warning" disabled style="margin:2px;">
-                                        <i data-feather="edit" class="icon-sm"></i>
-                                    </button>
                                     @else
                                     <form action="{{route('dashboard.print_parcel', $item->parcel_no)}}" method="POST">
                                         @csrf
-                                        <button class="btn btn-outline-warning" style="margin:2px;"><i data-feather="printer" class="icon-sm"></i></button>
+                                        <button class="btn btn-outline-warning btn-xs" style="margin:2px;"><i data-feather="printer" class="icon-sm"></i></button>
                                     </form>
-                                    <button class="btn btn-success" data-toggle="modal" style="margin:2px;" data-target="#edit_parcel_{{ $item->parcel_no }}">
+                                    <button class="btn btn-success btn-xs" data-toggle="modal" style="margin:2px;" data-target="#edit_parcel_{{ $item->parcel_no }}">
                                         <i data-feather="edit" class="icon-sm"></i>
                                     </button>
                                     @endif
@@ -69,7 +66,7 @@
                                 @endif
                                 <td>{{$item->sender_name}}</td>
                                 <td>{{$item->receiver_name}}</td>
-                                <td>{{$item->receiver_mobile}}</td>
+                                {{-- <td>{{$item->receiver_mobile}}</td> --}}
                                 <td>{{$item->id_no}}</td>
                                 <td>{{@$item->dropoff->office_route}}</td>
                                 <td>{{@$item->fleet->fleet_id}}</td>
@@ -197,14 +194,14 @@
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-md-6 {{ $errors->has('payment_method') ? 'has-error' : '' }}">
+                        {{-- <div class="col-md-6 {{ $errors->has('payment_method') ? 'has-error' : '' }}">
                             <select class="form-control" style="height: 45px;" required name="payment_method">
                                 <option selected data-default disabled>CHOOSE PAYMENT METHOD</option>
                                 <option value="cash">CASH</option>
                                 <option value="mpesa">MPESA</option>
                             </select>
-                        </div>
-                        <div class="col-md-6">
+                        </div> --}}
+                        <div class="col-md-12">
                             <select class="form-control" style="height: 45px;" required name="is_paid">
                                 <option selected data-default disabled>PARCEL PAYMENT</option>
                                 <option value="1">PAID</option>
@@ -358,4 +355,9 @@
     });
 </script>
 @endif
+<script>
+    $(document).ready(function () {
+        $('#parcelTable').DataTable()
+    });
+</script>
 @endsection

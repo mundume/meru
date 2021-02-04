@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.main')
 @section('title', 'Wallet')
-<link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
 @section('body')
+<link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4"></div>
@@ -29,16 +29,17 @@
                     <h6 class="card-title mb-0">Payments ({{ $payments->count() }})</h6>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table table-hover mb-0" id="walletTable">
                         <thead>
                             <tr>
                                 <th>Ticket/Parcel</th>
                                 <th>Date Paid</th>
-                                <th>Name</th>
-                                <th>ID</th>
+                                <th>Description</th>
+                                <th>Receipt NO</th>
                                 <th>Amount</th>
-                                <th>P/M</th>
+                                <th>Payer</th>
                                 <th>Status</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,16 +47,15 @@
                             <tr>
                                 <td>{{ $item->ticket_no }}</td>
                                 <td>{{ $item->created_at->format('Y-m-d') }}</td>
-                                <td>{{ $item->booking->fullname }}</td>
-                                <td>{{ $item->booking->id_no }}</td>
+                                <td>{{ $item->ResultDesc }}</td>
+                                <td>{{ $item->mpesaReceiptNumber }}</td>
                                 <td>{{ number_format($item->amount, 2) }}</td>
-                                <td>{{ $item->booking->payment_method }}</td>
+                                <td>{{ $item->phoneNumber }}</td>
+                                <td>{{ $item->MerchantRequestID  }}</td>
                                 <td>
-                                    @if($item->booking->is_paid == false)
-                                    <span class="badge badge-danger">Not Paid</span>
-                                    @else
-                                    <span class="badge badge-success">Paid</span>
-                                    @endif
+                                    <button class="btn btn-outline-danger btn-xs" style="margin:1px;" disabled>
+                                        <i data-feather="trash" class="icon-sm"></i>
+                                    </button>
                                 </td>
                             </tr>
                             @endforeach
@@ -69,7 +69,6 @@
 @endsection
 @section('scripts')
 <script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
-<script src="{{asset('/datetime/build/jquery.datetimepicker.full.min.js')}}"></script>
 <script>
     $(document).ready(function () {
         $('#date').datetimepicker({
@@ -78,5 +77,10 @@
             format: 'Y-m-d'
         })
     })
+</script>
+<script>
+    $(document).ready(function () {
+        $('#walletTable').DataTable()
+    });
 </script>
 @endsection

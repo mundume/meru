@@ -10,7 +10,7 @@
                 </div>
                 <hr>
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table table-hover mb-0" id="parcelTable">
                         <thead>
                             <tr>
                                 <th></th>
@@ -19,6 +19,7 @@
                                 <th>Receiver Name</th>
                                 <th>ID</th>
                                 <th>Fleet</th>
+                                <th>Route</th>
                                 <th>Amount</th>
                                 <th></th>
                             </tr>
@@ -30,23 +31,23 @@
                                     @if($item->progress == 1)
                                     <form action="{{route('dashboard.print_parcel', $item->parcel_no)}}" method="POST">
                                         @csrf
-                                        <button type="submit" class="btn btn-outline-warning" style="margin:2px;">
+                                        <button type="submit" class="btn btn-outline-warning btn-xs" style="margin:1px;">
                                             <i data-feather="printer" class="icon-sm"></i>
                                         </button>
                                     </form>
                                     @if($item->picked == 0)
-                                    <button class="btn btn-outline-success" style="margin:2px;" data-toggle="modal" data-target="#edit_parcel_{{ $item->parcel_no }}">
+                                    <button class="btn btn-outline-success btn-xs" style="margin:1px;" data-toggle="modal" data-target="#edit_parcel_{{ $item->parcel_no }}">
                                         <i data-feather="edit" class="icon-sm"></i>
                                     </button>
                                     @else
-                                    <button class="btn btn-outline-success" style="margin:2px;" disabled>
+                                    <button class="btn btn-outline-success btn-xs" style="margin:1px;" disabled>
                                         <i data-feather="edit" class="icon-sm"></i>
                                     </button>
                                     @endif
                                     @else
                                     <form action="{{route('dashboard.progress', $item->id)}}" method="POST">
                                         @csrf
-                                        <button class="btn btn-success" style="margin:2px;">
+                                        <button class="btn btn-success btn-xs" style="margin:1px;">
                                             <i data-feather="check" class="icon-sm"></i>
                                         </button>
                                     </form>
@@ -63,30 +64,27 @@
                                 <td>{{$item->receiver_name}}</td>
                                 <td>{{$item->id_no}}</td>
                                 <td>{{@$item->fleet->fleet_id}}</td>
+                                <td>{{substr(@$item->dropoff->office_route,0,7)}}..</td>
                                 <td>{{number_format($item->service_provider_amount, 2)}}</td>
                                 <td class="form-inline">
-                                    <button class="btn btn-outline-info" data-toggle="modal" style="margin:2px;" data-target="#more_info_{{ $item->id }}">
+                                    <button class="btn btn-outline-info btn-xs" data-toggle="modal" style="margin:1px;" data-target="#more_info_{{ $item->id }}">
                                         <i data-feather="eye" class="icon-sm"></i>
                                     </button>
                                     @if($item->progress == 1 && $item->picked == 0)
-                                    <button class="btn btn-success" data-toggle="modal" style="margin:2px;" data-target="#send_message_{{ $item->id }}">
-                                        <i data-feather="message-square" class="icon-sm"></i>
-                                    </button>
-                                    @else
-                                    <button class="btn btn-success btn-sm" style="margin:2px;" disabled>
+                                    <button class="btn btn-success btn-xs" data-toggle="modal" style="margin:1px;" data-target="#send_message_{{ $item->id }}">
                                         <i data-feather="message-square" class="icon-sm"></i>
                                     </button>
                                     @endif
                                     @if($item->picked == false)
                                     <form action="{{route('dashboard.picked', $item->id)}}" method="POST">
                                         @csrf
-                                        <button type="submit" class="btn btn-success" style="margin:2px;"><small>confirm</small></button>
+                                        <button type="submit" class="btn btn-success btn-xs" style="margin:1px;"><small>confirm</small></button>
                                     </form>
                                     @else
-                                    <button type="submit" class="btn btn-danger" style="margin:2px;" disabled>picked</button>
+                                    <button type="submit" class="btn btn-danger btn-xs" style="margin:1px;" disabled>picked</button>
                                     <form action="{{route('dashboard.print_receipt', $item->parcel_no)}}" method="POST">
                                         @csrf
-                                        <button type="submit" class="btn btn-outline-info" style="margin:2px;"><i data-feather="map" class="icon-sm"></i></button>
+                                        <button type="submit" class="btn btn-outline-info btn-xs" style="margin:1px;"><i data-feather="map" class="icon-sm"></i></button>
                                     </form>
                                     @endif
                                 </td>
@@ -193,5 +191,10 @@
         var len = val.value.length;
         $('#charNum').text(len);
     };
+</script>
+<script>
+    $(document).ready(function () {
+        $('#parcelTable').DataTable()
+    });
 </script>
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.main')
 @section('title', 'Bookings')
-<link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
 @section('body')
+<link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4"></div>
@@ -29,7 +29,7 @@
                     <h6 class="card-title mb-0">Bookings ({{ $bookings->count() }})</h6>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table table-hover mb-0" id="bookingTable">
                         <thead>
                             <tr>
                                 <th>Ticket</th>
@@ -41,6 +41,7 @@
                                 <th>Seaters</th>
                                 <th>Route</th>
                                 <th>Status</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,6 +62,11 @@
                                     <span class="badge badge-success">Paid</span>
                                     @endif
                                 </td>
+                                <td>
+                                    <button class="btn btn-outline-danger btn-xs" style="margin:1px;" disabled>
+                                        <i data-feather="trash" class="icon-sm"></i>
+                                    </button>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -73,7 +79,6 @@
 @endsection
 @section('scripts')
 <script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
-<script src="{{asset('/datetime/build/jquery.datetimepicker.full.min.js')}}"></script>
 <script>
     $(document).ready(function () {
         $('#date').datetimepicker({
@@ -82,5 +87,10 @@
             format: 'Y-m-d'
         })
     })
+</script>
+<script>
+    $(document).ready(function () {
+        $('#bookingTable').DataTable()
+    });
 </script>
 @endsection

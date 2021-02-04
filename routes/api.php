@@ -10,6 +10,6 @@ use App\Http\Controllers\apis\apiscontroller;
 
 Route::middleware('api_token')->group(function() {
     Route::prefix('xwift/{api_token}')->group(function() {
-        Route::post('/routes', [apiscontroller::class, 'routes']);
+        Route::get('/routes', [apiscontroller::class, 'routes']);
     });
 });

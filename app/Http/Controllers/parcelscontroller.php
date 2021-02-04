@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\{Fleet,Parcel,Provider,Dropoff,Charge,Account,ParcelUser,Cec};
+use App\Models\{Fleet,Parcel,Provider,Dropoff,Charge,Account,ParcelUser,Cec,Payment};
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -44,12 +44,15 @@ class parcelscontroller extends Controller
             'destination' => 'required',
             'size' => 'required', 
             'service_provider_amount' => 'required',
-            'payment_method' => 'required',
             'is_paid' => 'required'
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator, 'coo')->withInput();
         }
+
+        $drop = Dropoff::where('id', $request->destination)->first();
+        $cec = Dropoff::where('office_name', $drop->office_name)->first();
+
         $filter_user = app_filterAgent();
         $prov = Provider::where('user_id', $filter_user)->first();
         $provider = [$prov->id, $prov->c_name];
@@ -57,40 +60,49 @@ class parcelscontroller extends Controller
         $parcel_no = 'PA'.mt_rand(1000, 9999);
         $account = Account::where('user_id', auth()->user())->first();
         $contact = '254'.substr($request->send_mobile, -9);
-        if($request->payment_method == 'mpesa') {
-
-        } else {
-            DB::transaction(function() use($filter_user,$request,$contact,$url,$parcel_no,$provider) {
-                $parcel_data = [
-                    'user_id' => $filter_user,
-                    'sender_name' => $request->sender_name,
-                    'sender_mobile' => $request->sender_mobile,
-                    'parcel_description' => $request->parcel_description,
-                    'receiver_name' => $request->receiver_name,
-                    'receiver_mobile' => $request->receiver_mobile,
-                    'id_no' => $request->id_no,
-                    'provider' => $provider,
-                    'destination' => $request->destination,
-                    'size' => $request->size,
-                    'service_provider_amount' => $request->service_provider_amount,
-                    'url' => $url,
-                    'parcel_no' => $parcel_no,
-                    'payment_method' => $request->payment_method,
-                    'is_paid' => $request->is_paid
-                ];
-                $parcel = Parcel::create($parcel_data);
-                $creator = [
-                    'parcel_id' => $parcel->id,
-                    'user_id' => auth()->user()->id
-                ];
-                ParcelUser::create($creator);
-                $message = "Parcel Number ". $parcel_no."\r\nRegards\r\n".Auth::user()->c_name." Team";
-                $sms = new smscontroller;
-                $sms->send_sms($contact, $message);
-            });
-            Session::flash('success', 'Parcel added');
-            return redirect()->back();
-        }
+        DB::transaction(function() use($filter_user,$request,$contact,$url,$parcel_no,$provider,$cec) {
+            $parcel_data = [
+                'user_id' => $filter_user,
+                'sender_name' => $request->sender_name,
+                'sender_mobile' => $request->sender_mobile,
+                'parcel_description' => $request->parcel_description,
+                'receiver_name' => $request->receiver_name,
+                'receiver_mobile' => $request->receiver_mobile,
+                'id_no' => $request->id_no,
+                'provider' => $provider,
+                'destination' => $request->destination,
+                'destination_office' => $cec->id,
+                'size' => $request->size,
+                'service_provider_amount' => $request->service_provider_amount,
+                'url' => $url,
+                'parcel_no' => $parcel_no,
+                'is_paid' => $request->is_paid
+            ];
+            $payment = [
+                'user_id' => $filter_user,
+                'ResultCode' => 0,
+                'ResultDesc' => 'Parcel Payment',
+                'MerchantRequestID' => 0,
+                'CheckoutRequestID' => 0,
+                'mpesaReceiptNumber' => 0,
+                'ticket_no' => $parcel_no,
+                'amount' => $request->service_provider_amount,
+                'phoneNumber' => $request->sender_mobile,
+                'TransactionDate' => Carbon::now()
+            ];
+            $parcel = Parcel::create($parcel_data);
+            Payment::create($payment);
+            $creator = [
+                'parcel_id' => $parcel->id,
+                'user_id' => auth()->user()->id
+            ];
+            ParcelUser::create($creator);
+            $message = "Parcel Number\r\n#". $parcel_no."\r\nRegards\r\n".Auth::user()->c_name." Team";
+            $sms = new smscontroller;
+            $sms->send_sms($contact, $message);
+        });
+        Session::flash('success', 'Parcel added');
+        return redirect()->back();
     }
     public function dropoffs_sub_category(Request $request) {
         $data = Charge::where('dropoff_id', $request->cat_id)->get();
@@ -118,6 +130,12 @@ class parcelscontroller extends Controller
         return redirect()->back();
     }
     public function parcel_assign_fleet(Request $request, $parcel_no) {
+        $check = Parcel::where('parcel_no', $parcel_no)->first();
+        $parcel_user = ParcelUser::where('parcel_id', $check->id)->first();
+        if($parcel_user->user_id != auth()->user()->id) {
+            Session::flash('error', 'Oops, you are not allowed to perform operation.');
+            return redirect()->back();
+        }
         $parcel = Parcel::where('parcel_no', $parcel_no)->update([
             'fleet_id' => $request->fleet_id
         ]);

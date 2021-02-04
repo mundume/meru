@@ -7,7 +7,7 @@
             <li class="row--1">
                 <ol class="seats" type="A">
                     <li class="seat">
-                        <input type="checkbox" name="seat_no" value="#2" id="#2_1" class="book_2">
+                        <input type="checkbox" name="seat_no" value="#2" id="#2_1" class="book_2_1">
                         <label for="#2_1">#2</label>
                     </li>
                     <li class="seat">
@@ -27,7 +27,7 @@
             <li class="row--2">
                 <ol class="seats" type="A">
                     <li class="seat">
-                        <input type="checkbox" name="seat_no" value="#3" id="#3_1" class="book_3">
+                        <input type="checkbox" name="seat_no" value="#3" id="#3_1" class="book_3_1">
                         <label for="#3_1">#3</label>
                     </li>
                     <li class="seat">
@@ -39,7 +39,7 @@
                         <label for="#5">#5</label>
                     </li>
                     <li class="seat">
-                        <input type="checkbox" name="seat_no" value="#6" id="#6_1" class="book_6">
+                        <input type="checkbox" name="seat_no" value="#6" id="#6_1" class="book_6_1">
                         <label for="#6_1">#6</label>
                     </li>
                 </ol>
@@ -47,7 +47,7 @@
             <li class="row--3">
                 <ol class="seats" type="A">
                     <li class="seat">
-                        <input type="checkbox" name="seat_no" value="#7" id="#7_1" class="book_7">
+                        <input type="checkbox" name="seat_no" value="#7" id="#7_1" class="book_7_1">
                         <label for="#7_1">#7</label>
                     </li>
                     <li class="seat">
@@ -59,7 +59,7 @@
                         <label for="#8">#8</label>
                     </li>
                     <li class="seat">
-                        <input type="checkbox" name="seat_no" value="#9" id="#9_1" class="book_9">
+                        <input type="checkbox" name="seat_no" value="#9" id="#9_1" class="book_9_1">
                         <label for="#9_1">#9</label>
                     </li>
                 </ol>
@@ -67,7 +67,7 @@
             <li class="row--4">
                 <ol class="seats" type="A">
                     <li class="seat">
-                        <input type="checkbox" name="seat_no" value="#10" id="#10_1" class="book_10">
+                        <input type="checkbox" name="seat_no" value="#10" id="#10_1" class="book_10_1">
                         <label for="#10_1">#10</label>
                     </li>
                     <li class="seat">
@@ -79,7 +79,7 @@
                         <label for="#11">#11</label>
                     </li>
                     <li class="seat">
-                        <input type="checkbox" name="seat_no" value="#12" id="#12_1" class="book_12">
+                        <input type="checkbox" name="seat_no" value="#12" id="#12_1" class="book_12_1">
                         <label for="#12_1">#12</label>
                     </li>
                 </ol>
@@ -87,7 +87,7 @@
             <li class="row--5">
                 <ol class="seats" type="A">
                     <li class="seat">
-                        <input type="checkbox" name="seat_no" value="#13" id="#13_1" class="book_13">
+                        <input type="checkbox" name="seat_no" value="#13" id="#13_1" class="book_13_1">
                         <label for="#13_1">#13</label>
                     </li>
                     <li class="seat">
@@ -99,7 +99,7 @@
                         <label for="#15">#15</label>
                     </li>
                     <li class="seat">
-                        <input type="checkbox" name="seat_no" value="#16" id="#16_1" class="book_16">
+                        <input type="checkbox" name="seat_no" value="#16" id="#16_1" class="book_16_1">
                         <label for="#16_1">#16</label>
                     </li>
                 </ol>

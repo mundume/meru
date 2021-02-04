@@ -23,12 +23,13 @@ class CreateParcelsTable extends Migration
             $table->string('receiver_mobile');
             $table->string('id_no');
             $table->string('provider');
-            $table->string('destination');
+            $table->integer('destination');
+            $table->integer('destination_office');
             $table->string('size');
             $table->double('service_provider_amount');
             $table->string('parcel_no');
             $table->string('url');
-            $table->string('payment_method');
+            $table->string('payment_method')->default('cash');
             $table->boolean('is_paid')->default(false);
             $table->boolean('progress')->default(false);
             $table->boolean('picked')->default(false);

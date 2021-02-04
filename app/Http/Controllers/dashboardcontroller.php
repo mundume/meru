@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\smscontroller;
 use App\Http\Controllers\graphscontroller;
-use App\Models\{AgentUser,User,Account,Fleet,Category,Route,Calendarial,AgentRoute,Booking,Parcel,BookingUser,Payment,Cec,Dispatch,Provider,Dropoff,AgentCourier,Topup,Customer};
+use App\Models\{AgentUser,User,Account,Fleet,Category,Route,Calendarial,AgentRoute,Booking,Parcel,BookingUser,Payment,Cec,Dispatch,Provider,Dropoff,AgentCourier,Topup,Customer,Admin};
 use DB;
 use Hash;
 use Session;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Support\{Str};
+use Illuminate\Support\{Str,Arr};
+use Illuminate\Support\Facades\Log;
 use Auth;
 use PDF;
 use Carbon\Carbon;
@@ -36,10 +37,10 @@ class dashboardcontroller extends Controller
         } else if(Auth::check() && Auth::user()->hasRole('courier')) {
             return redirect()->route('courier.home');
         } else {
-            $user = auth()->user();
-            $routes = Route::where([['user_id', $user->id]])->with('agent')->get();
-            $bookings = Booking::where('user_id', auth()->user()->id)->get()->count();
-            $parcels = Parcel::where('user_id', auth()->user()->id)->get()->count();
+            // $user = auth()->user();
+            $routes = Route::with('agent')->get();
+            $bookings = Booking::get()->count();
+            $parcels = Parcel::get()->count();
 
             $bun = new graphscontroller;
             $der['chart_data'] = $bun->line_graph();
@@ -49,12 +50,17 @@ class dashboardcontroller extends Controller
     }
     public function agents() {
         if($this->check_if_admin() == false) return redirect()->back();
-        $user = auth()->user();
-        $agents = AgentUser::where('company_id', $user->id)->with(['user', 'dropoff'])->get();
-        $provider = Provider::where('user_id', $user->id)->first();
+        // $user = auth()->user();
+        $agents = AgentUser::with(['user', 'dropoff'])->get();
+        $provider = Provider::first();
         $offices = Dropoff::where('provider_id', $provider->id)->get();
         $topups = Topup::orderBy('id', 'desc')->with('user')->get();
-        return view('dashboard.agents', compact('agents', 'offices', 'topups'));
+        $ids = [];
+        foreach($agents as $agent) {
+            array_push($ids, $agent->user_id);
+        }
+        $admins = User::whereNotIn('id', $ids)->get();
+        return view('dashboard.agents', compact('agents', 'offices', 'topups', 'admins'));
     }
     public function add_agent(Request $request) {
         if($this->check_if_admin() == false) return redirect()->back();
@@ -67,11 +73,11 @@ class dashboardcontroller extends Controller
             'mobile' => 'required | digits:10',
             'role' => 'required'
         ]);
-        $user = auth()->user();
+        // $user = auth()->user();
         $handle = strtolower(Str::random(7));
         $agent_unique = Str::random(7);
         $password = strtolower(substr($request->fname, 0, 2).mt_rand(1000,9999));
-        DB::transaction(function() use($request,$password,$user,$handle,$agent_unique) {
+        DB::transaction(function() use($request,$password,$handle,$agent_unique) {
             $user_data = [
                 'fname' => $request->fname,
                 'lname' => $request->lname,
@@ -92,19 +98,20 @@ class dashboardcontroller extends Controller
                 $permissions = [2,3];
                 $role->syncPermissions($permissions);
                 $new_user->assignRole([$role->id]);
-            } else {
+            } else if($request->role == 1) {
                 $role = Role::find(3);
                 $permissions = [3];
                 $role->syncPermissions($permissions);
                 $new_user->assignRole([$role->id]);
+            } else {
+                $role = Role::find(1);
+                $permissions = [1,2,3];
+                $role->syncPermissions($permissions);
+                $new_user->assignRole([$role->id]);
             }
+            $cec = Dropoff::where('office_name', $request->office_name)->first();
 
-            $agent_office = [
-                'dropoff_id' => $request->office_id,
-                'user_id' => $new_user->id
-            ];
-            AgentCourier::create($agent_office);
-
+            $agent_office = ['dropoff_id' => $cec->id, 'user_id' => $new_user->id];    
             $account_data = [
                 'user_id' =>  $new_user->id,
                 'c_name' => $new_user->c_name,
@@ -114,15 +121,18 @@ class dashboardcontroller extends Controller
                 'total_amount' => 0,
                 'account_code' => $code
             ];
-            Account::create($account_data);
-
-            AgentUser::create([
-                'company_id' => $user->id,
+            $agent_data = [
+                'company_id' => 1,
                 'user_id' => $new_user->id,
                 'agent_unique' => strtolower($agent_unique),
-                'office_id' => $request->office_id,
+                'office_id' => $cec->id,
                 'pass_code' => $password
-            ]);
+            ];
+            if($request->role != 2) {
+                Account::create($account_data);
+                AgentCourier::create($agent_office);
+                AgentUser::create($agent_data);
+            }
         });
         $sms = new smscontroller;
         $message = "Login Code\r\nPasscode:".$password."\r\nhttp://127.0.0.1:8000/dashboard/\r\nRegards\r\n".auth()->user()->c_name." Team";
@@ -130,6 +140,9 @@ class dashboardcontroller extends Controller
         $sms->send_sms($contact, $message);
         Session::flash('success', 'Agent added successfully.');
         return redirect()->back();
+    }
+    public function edit_user($id) {
+
     }
     public function agent_lock($id) {
         if($this->check_if_admin() == false) return redirect()->back();
@@ -145,7 +158,7 @@ class dashboardcontroller extends Controller
     }
     public function add_fleets() {
         if($this->check_if_admin() == false) return redirect()->back();
-        $fleets = Fleet::orderBy('id', 'desc')->where('user_id', auth()->user()->id)->get();
+        $fleets = Fleet::orderBy('id', 'desc')->get();
         return view('dashboard.fleets', compact('fleets'));
     }
     public function add_fleet(Request $request) {
@@ -205,7 +218,7 @@ class dashboardcontroller extends Controller
     public function calendarial() {
         if($this->check_if_admin() == false) return redirect()->back();
         $category = Category::get();
-        $route = Route::where([['user_id', auth()->user()->id]])->get();
+        $route = Route::get();
         $calendar = Category::with('calendarial')->get();
         $data = [];
         foreach($calendar as $bun) {
@@ -256,7 +269,7 @@ class dashboardcontroller extends Controller
     }
     public function add_route() {
         if($this->check_if_admin() == false) return redirect()->back();
-        $agents = AgentUser::where('company_id', auth()->user()->id)->with('user')->get();
+        $agents = AgentUser::with('user')->get();
         return view('dashboard.routes.add_route', compact('agents'));
     }
     public function create_route(Request $request) {
@@ -272,7 +285,7 @@ class dashboardcontroller extends Controller
             'arriv1' => 'required'
         ]);
         $user = auth()->user();
-        $routes = Route::where('user_id', $user->id)->get();
+        $routes = Route::get();
         $unique = 'FLID'.mt_rand(1000,9999);        
         foreach($routes as $route) {
             if($route->seaters == $request->seaters && $route->departure == $request->departure && $route->destination == $request->destination) {
@@ -315,13 +328,13 @@ class dashboardcontroller extends Controller
     }
     public function routes() {
         if($this->check_if_admin() == false) return redirect()->back();
-        $routes = Route::where('user_id', auth()->user()->id)->with('agent')->get();
+        $routes = Route::with('agent')->get();
         return view('dashboard.routes.routes', compact('routes'));
     }
     public function edit_route($id) {
         if($this->check_if_admin() == false) return redirect()->back();
         $route = Route::find(base64_decode($id));
-        $agents = AgentUser::where('company_id', auth()->user()->id)->with('user')->get();
+        $agents = AgentUser::with('user')->get();
         $agent = AgentRoute::where('route_id', base64_decode($id))->with('user')->first();
         return view('dashboard.routes.edit_route', compact('route', 'agents', 'agent'));
     }
@@ -471,6 +484,7 @@ class dashboardcontroller extends Controller
     public function view_ticket_7($id) {
         $filter_user = app_filterAgent();
         $route = Route::find($id);
+        if($route->seaters != 7) return redirect()->route('dashboard.index');
         $current_bookings = Booking::where([
             ['user_id', $filter_user],
             ['dispatched', false],
@@ -495,6 +509,7 @@ class dashboardcontroller extends Controller
     public function view_ticket_10($id) {
         $filter_user = app_filterAgent();
         $route = Route::find($id);
+        if($route->seaters != 10) return redirect()->route('dashboard.index');
         $current_bookings = Booking::where([
             ['user_id', $filter_user],
             ['dispatched', false],
@@ -519,6 +534,7 @@ class dashboardcontroller extends Controller
     public function view_ticket_11($id) {
         $filter_user = app_filterAgent();
         $route = Route::find($id);
+        if($route->seaters != 11) return redirect()->route('dashboard.index');
         $current_bookings = Booking::where([
             ['user_id', $filter_user],
             ['dispatched', false],
@@ -543,6 +559,7 @@ class dashboardcontroller extends Controller
     public function view_ticket_14($id) {
         $filter_user = app_filterAgent();
         $route = Route::find($id);
+        if($route->seaters != 14) return redirect()->route('dashboard.index');
         $current_bookings = Booking::where([
             ['user_id', $filter_user],
             ['dispatched', false],
@@ -567,6 +584,7 @@ class dashboardcontroller extends Controller
     public function view_ticket_16($id) {
         $filter_user = app_filterAgent();
         $route = Route::find($id);
+        if($route->seaters != 16) return redirect()->route('dashboard.index');
         $current_bookings = Booking::where([
             ['user_id', $filter_user],
             ['dispatched', false],
@@ -590,11 +608,11 @@ class dashboardcontroller extends Controller
     }
     public function bookings(Request $request) {        
         if($this->check_if_admin() == false) return redirect()->back();
-        $user = auth()->user();
+        // $user = auth()->user();
         if($request->created_at) {
-            $bookings = Booking::whereDate('created_at', $request->created_at)->where('user_id', auth()->user()->id)->get();
+            $bookings = Booking::whereDate('created_at', $request->created_at)->get();
         } else {
-            $bookings = Booking::where('user_id', auth()->user()->id)->get();
+            $bookings = Booking::get();
         }
         return view('dashboard.bookings', compact('bookings'));
     }
@@ -611,17 +629,17 @@ class dashboardcontroller extends Controller
     public function agent_parcels() {
         $filter_user = app_filterAgent();
         $agent = AgentCourier::where('user_id', auth()->user()->id)->first();
-        $parcels = Parcel::orderBy('id', 'desc')->where([['progress', 1], ['destination', $agent->dropoff_id]])->get();        
+        $parcels = Parcel::orderBy('id', 'desc')->where([['progress', 1], ['destination_office', $agent->dropoff_id]])->get();        
         $fleets = Fleet::where([['user_id', $filter_user], ['suspend', false]])->get();
         return view('dashboard.agent_parcels_dispatches', compact('parcels', 'fleets'));
     }
     public function wallet(Request $request) {
         if($this->check_if_admin() == false) return redirect()->back();
-        $user = auth()->user();
+        // $user = auth()->user();
         if($request->created_at) {
-            $payments = Payment::whereDate('created_at', $request->created_at)->where('user_id', auth()->user()->id)->with('booking')->get();
+            $payments = Payment::whereDate('created_at', $request->created_at)->get();
         } else {
-            $payments = Payment::where('user_id', auth()->user()->id)->with('booking')->get();
+            $payments = Payment::get();
         }
         return view('dashboard.wallet', compact('payments'));
     }
@@ -649,39 +667,6 @@ class dashboardcontroller extends Controller
         ]);
         Session::flash('info', 'Account updated successfully.');
         return redirect()->route('dashboard.index');
-    }
-    public function booked(Request $request) {
-        $books = Booking::where([
-            ['fleet_unique', $request->fleet_unique],
-            ['is_paid', true],
-            ['suspended', false],
-            ['dispatched', false],
-            ['seaters', $request->seaters],
-            ['departure', $request->departure],
-            ['destination', $request->destination]
-            ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
-        $data = [];
-        foreach($books as $book) {
-            $seats = $book->seat_no;
-            array_push($data, $seats);
-        }
-        return json_encode($data);
-    }
-    public function modal_booked(Request $request) {
-        $books = Booking::where([
-            ['seaters', $request->seaters],
-            ['is_paid', true],
-            ['suspended', false],
-            ['dispatched', false],
-            ['time', $request->time],
-            ['user_id', $request->user_id]
-        ])->whereDate('travel_date', $request->date)->get();
-        $data = [];
-        foreach($books as $book) {
-            $seats = $book->seat_no;
-            array_push($data, $seats);
-        }
-        return json_encode($data);
     }
     public function moderator_sell_ticket(Request $request) {
         $this->validate($request, [
@@ -854,7 +839,7 @@ class dashboardcontroller extends Controller
     }
     public function dispatches(Request $request) {
         if($this->check_if_admin() == false) return redirect()->back();
-        $routes = Route::where('user_id', auth()->user()->id)->get()->pluck('fleet_unique');
+        $routes = Route::get()->pluck('fleet_unique');
         if($request->created_at) {
             $dispatchs = Cec::orderBy('id', 'desc')->whereDate('created_at', $request->created_at)->whereIn('fleet_id', $routes)->with('route')->get();
         } else {
@@ -881,7 +866,7 @@ class dashboardcontroller extends Controller
         $this->validate($request, [
             'mobile' => 'required|digits:10'
         ]);
-        $cus = Customer::where([['active', 1], ['user_id', auth()->user()->id]])->get();
+        $cus = Customer::where([['active', 1]])->get();
         $contacts = [];
         foreach($cus as $cu) {
             array_push($contacts, $cu->mobile);
@@ -929,7 +914,7 @@ class dashboardcontroller extends Controller
          return redirect()->back();
     }
     public function send_blast_sms(Request $request) {
-        $contacts = Customer::where([['active', true], ['user_id', auth()->user()->id]])->get();
+        $contacts = Customer::where([['active', true]])->get();
          $message = $request->message;
          $contact = [];
          foreach($contacts->unique('mobile') as $cont) {
@@ -939,5 +924,53 @@ class dashboardcontroller extends Controller
          $send->send_sms($contact, $message);        
          Session::flash('success', 'Messages sent.');
          return redirect()->back();
+    }
+    public function daily_reporting() {
+        if($this->check_if_admin() == false) return redirect()->back();
+        if(auth()->user()->role_id != 1) {
+            Session::flash('error', 'Oops, you are not allowed to access this page.');
+            return redirect()->back();
+        }
+        $admins = Admin::get();
+        return view('dashboard.daily_reporting', compact('admins'));
+    }
+    public function add_admin(Request $request) {
+        if($this->check_if_admin() == false) return redirect()->back();
+        Admin::create([
+            'name' => $request->name,
+            'mobile' => $request->mobile
+        ]);
+        Session::flash('success', 'Admin added.');
+        return redirect()->back();
+    }
+    public function trash_admin($id) {
+        if($this->check_if_admin() == false) return redirect()->back();
+        $del = Admin::find(base64_decode($id));
+        $del->delete();
+        Session::flash('success', 'Admin deleted.');
+        return redirect()->back();
+
+    }
+    public function notify_admin() {
+        $booking = Booking::where([['travel_date', Carbon::today()->format('Y-m-d')],['is_paid', true]])->get();
+        $booking_count = $booking->count();
+        $booking_sum = $booking->sum('amount');
+        $parcel = Parcel::where('is_paid', true)->whereDate('created_at', Carbon::today()->format('Y-m-d'))->get();
+        $parcel_count = $parcel->count();
+        $parcel_sum = $parcel->sum('service_provider_amount');
+
+        // $data = [$booking_count, $booking_sum, $parcel_count, $parcel_sum];
+        // Log::info($data);
+
+        $message = "Daily Report\r\nBookings #".$booking_count."/=".$booking_sum.
+                   "\r\nParcels #".$parcel_count."/=".$parcel_sum.
+                   "\r\nRegards\r\n".User::first()->c_name." Team.";
+        $contact = [];
+        $admins = Admin::get();
+        foreach($admins as $admin) {
+            array_push($contact, $admin->mobile);
+        }
+        $sms = new smscontroller;
+        $sms->send_sms($contact, $message);
     }
 }

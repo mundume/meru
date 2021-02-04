@@ -7503,7 +7503,8 @@ svg {
   vertical-align: middle; }
 
 table {
-  border-collapse: collapse; }
+  border-collapse: collapse;
+  }
 
 caption {
   padding-top: 0.875rem 0.9375rem;
@@ -8483,7 +8484,8 @@ pre {
   color: #212529; }
   .table th,
   .table td {
-    padding: 0.875rem 0.9375rem;
+  /* padding: 0.875rem 0.9375rem; */
+  padding: 3px 3px;
     vertical-align: top;
     border-top: 1px solid #e8ebf1; }
   .table thead th {

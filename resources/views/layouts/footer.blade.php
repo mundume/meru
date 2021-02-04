@@ -20,7 +20,7 @@
                 <form action="#" class="footer-subscribe">
                     <div class="d-flex mb-5">
                         <input type="text" class="form-control rounded-0" placeholder="Email">
-                        <input type="submit" class="btn btn-primary rounded-0" value="Subscribe">
+                        <button type="submit" class="btn btn-primary rounded-0">Subscribe</button>
                     </div>
                 </form>
             </div>

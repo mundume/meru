@@ -1,7 +1,6 @@
 @extends('layouts.dashboard.main')
 @section('title', 'Dashboard')
 @section('body')
-
 <div class="row">
     <div class="col-12 col-xl-12 stretch-card">
         <div class="row flex-grow">
@@ -207,7 +206,7 @@
                                             </a>
                                         </button>
                                         <button class="btn btn btn-sm">
-                                            <a href="{{route('route.show', base64_encode($item->id))}}">
+                                            <a href="{{route('route.show', base64_encode($item->id))}}" target="_blank">
                                                 <i data-feather="globe" class="icon-sm"></i>
                                         </button>
                                         @if($item->suspend == false)

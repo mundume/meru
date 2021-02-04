@@ -10,4 +10,44 @@ $('.slide-one-item').owlCarousel({center:false,items:1,loop:true,smartSpeed:900,
 +'<span class="countdown-block"><span class="label">%d</span> days </span>'
 +'<span class="countdown-block"><span class="label">%H</span> hr </span>'
 +'<span class="countdown-block"><span class="label">%M</span> min </span>'
-+'<span class="countdown-block"><span class="label">%S</span> sec</span>'));});};siteCountDown();var siteDatePicker=function(){if($('.datepicker').length>0){$('.datepicker').datepicker();}};siteDatePicker();var siteSticky=function(){$(".js-sticky-header").sticky({topSpacing:0});};siteSticky();var OnePageNavigation=function(){var navToggler=$('.site-menu-toggle');$("body").on("click",".main-menu li a[href^='#'], .smoothscroll[href^='#'], .site-mobile-menu .site-nav-wrap li a",function(e){e.preventDefault();var hash=this.hash;$('html, body').animate({'scrollTop':$(hash).offset().top},600,'easeInOutCirc',function(){window.location.hash=hash;});});};OnePageNavigation();var siteScroll=function(){$(window).scroll(function(){var st=$(this).scrollTop();if(st>100){$('.js-sticky-header').addClass('shrink');}else{$('.js-sticky-header').removeClass('shrink');}})};siteScroll();});
++'<span class="countdown-block"><span class="label">%S</span> sec</span>'));
+});
+};
+siteCountDown();
+var siteDatePicker = function () {
+    if ($('.datepicker').length > 0) {
+        $('.datepicker').datepicker();
+    }
+};
+siteDatePicker();
+var siteSticky = function () {
+    $(".js-sticky-header").sticky({
+        topSpacing: 1
+    });
+};
+siteSticky();
+var OnePageNavigation = function () {
+    var navToggler = $('.site-menu-toggle');
+    $("body").on("click", ".main-menu li a[href^='#'], .smoothscroll[href^='#'], .site-mobile-menu .site-nav-wrap li a", function (e) {
+        e.preventDefault();
+        var hash = this.hash;
+        $('html, body').animate({
+            'scrollTop': $(hash).offset().top
+        }, 600, 'easeInOutCirc', function () {
+            window.location.hash = hash;
+        });
+    });
+};
+OnePageNavigation();
+var siteScroll = function () {
+    $(window).scroll(function () {
+        var st = $(this).scrollTop();
+        if (st > 100) {
+            $('.js-sticky-header').addClass('shrink');
+        } else {
+            $('.js-sticky-header').removeClass('shrink');
+        }
+    })
+};
+siteScroll();
+});

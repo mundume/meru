@@ -22,15 +22,15 @@ class settingscontroller extends Controller
     }
     public function index() {
         if($this->check_if_admin() == false) return redirect()->back();
-        $id = auth()->user()->id;
-        $prov = Provider::where('user_id', $id)->first();
+        // $id = auth()->user()->id;
+        $prov = Provider::first();
         $drops = Dropoff::where('provider_id', $prov->id)->with('charge')->get();
         return view('settings.index', compact('prov', 'drops'));
     }
     public function add_provider(Request $request) {
        if($this->check_if_admin() == false) return redirect()->back(); 
        $id = auth()->user()->id;
-        $exist = Provider::where('user_id', $id)->first();
+        $exist = Provider::first();
         if($exist) {
             Session::flash('error', 'Oops, you cant manage more than one courier service');
             return redirect()->back();
@@ -44,8 +44,8 @@ class settingscontroller extends Controller
     }
     public function add_dropoff(Request $request) {
         if($this->check_if_admin() == false) return redirect()->back(); 
-        $id = auth()->user()->id;
-        $prov = Provider::where('user_id', $id)->first();
+        // $id = auth()->user()->id;
+        $prov = Provider::first();
         $office_route = $request->from . "~" . $request->to;
         $drop = new Dropoff;
         $drop->provider_id = $prov->id;
@@ -114,8 +114,8 @@ class settingscontroller extends Controller
     }
     public function preview() {
         if($this->check_if_admin() == false) return redirect()->back(); 
-        $filter_user = app_filterAgent();
-        $prov = Provider::where('user_id', $filter_user)->with('dropoff')->get();
+        // $filter_user = app_filterAgent();
+        $prov = Provider::with('dropoff')->get();
         $charge = [];
         foreach($prov as $dropoff) {
             foreach($dropoff->dropoff as $data) {

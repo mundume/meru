@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
+                    <table class="table table-hover mb-0" id="routeTable">
                         <thead>
                             <tr>
                                 <th class="pt-0">#</th>
@@ -87,4 +87,12 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('#routeTable').DataTable()
+    });
+</script>
 @endsection

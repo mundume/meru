@@ -211,6 +211,14 @@
                     </a>
                 </li>
                 @endif
+                @if(auth()->user()->role_id == 1)
+                <li class="nav-item">
+                    <a href="{{ route('dashboard.daily_reporting') }}" class="nav-link">
+                        <i class="link-icon" data-feather="users"></i>
+                        <span class="menu-title">Reporting</span>
+                    </a>
+                </li>
+                @endif
             </ul>
         </div>
     </nav>
