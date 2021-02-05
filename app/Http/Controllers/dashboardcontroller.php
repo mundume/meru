@@ -616,6 +616,40 @@ class dashboardcontroller extends Controller
         }
         return view('dashboard.bookings', compact('bookings'));
     }
+    public function future_bookings() {
+        $bookings = Booking::where([
+            ['is_paid', 1],
+            ['dispatched', 0]
+            ])->whereDate('travel_date', '>', Carbon::now()->format('Y-m-d'))->get();
+        $routes = Route::get();
+        return view('dashboard.future_bookings', compact('bookings', 'routes'));
+    }
+    public function future_bookings_check(Request $request) {
+        $data = [
+            'fleet_id' => $request->fleet_id,
+            'travel_date' => $request->date,
+            'time' => $request->time
+        ];     
+        return redirect()->route('dashboard.future_booking', $data);
+    }
+    public function future_booking(Request $request) {
+        $fleet = Route::find($request->fleet_id);
+        $bookings = Booking::where([
+            ['is_paid', 1],
+            ['dispatched', 0],
+            ['travel_date', $request->travel_date],
+            ['fleet_unique', $fleet->fleet_unique],
+            ['time', $request->time]
+            ])->get();
+        $routes = Route::get();
+        $date = $request->travel_date;
+        $time = $request->time;
+        return view('dashboard.future_bookings_check', compact('bookings', 'fleet', 'routes', 'date', 'time'));
+    }
+    public function look_for_time(Request $request) {
+        $data = Route::where('id', $request->cat_id)->get(['depart1', 'depart2', 'depart3', 'depart4']);
+        return json_encode($data);
+    }
     public function filter_bookings(Request $request) {
         return redirect()->route('dashboard.bookings', ['created_at' => $request->date]);
     }
@@ -713,7 +747,7 @@ class dashboardcontroller extends Controller
                     'fullname' => $request->fullname,
                     'id_no' => $request->id_no,
                     'pick_up' => 'Office Ticket',
-                    'mobile' => $request->mobile,
+                    'mobile' => $contact,
                     'time' => $filter_date['time'],
                     'travel_date' => $filter_date['date'],
                     'ticket_no' => $ticket_no,
@@ -734,7 +768,7 @@ class dashboardcontroller extends Controller
                     'mpesaReceiptNumber' => 0,
                     'ticket_no' => $ticket_no,
                     'amount' => $request->amount,
-                    'phoneNumber' => $request->mobile,
+                    'phoneNumber' => $contact,
                     'TransactionDate' => Carbon::now()
                 ];
                 $book = Booking::create($booking_data);
@@ -820,6 +854,63 @@ class dashboardcontroller extends Controller
                 'path' => $der,
                 'fleet_id' => $fleet_unique,
                 'no_of_commuters' => $books->count(),
+                'readable_fleet_id' => $request->readable_fleet_id,
+                'cash' => $cash,
+                'mpesa' => $mpesa,
+                'total_amount' => $cash+$mpesa
+            ]);
+        });
+        Session::flash('success', 'Fleet dispatched successfully');
+        return redirect()->back();
+    }
+    public function dispatch_fleet_future(Request $request, $id, $route, $date) {
+        $path = public_path('pdfs/');
+        $rout = Route::where('fleet_unique', $route)->first();
+        $books = Booking::where([
+            ['fleet_unique', $route],
+            ['seaters', $rout->seaters],
+            ['dispatched', 0],
+            ['travel_date', $date],
+            ['suspended', 0],
+            ['is_paid', 1]
+        ])->get();
+        $cash = Booking::where([
+            ['fleet_unique', $route],
+            ['seaters', $rout->seaters],
+            ['dispatched', false],
+            ['suspended', false],
+            ['travel_date', $date],
+            ['is_paid', true],
+            ['payment_method', 'cash']
+        ])->sum('amount');
+        $mpesa = Booking::where([
+            ['fleet_unique', $route],
+            ['seaters', $rout->seaters],
+            ['dispatched', false],
+            ['suspended', false],
+            ['travel_date', $date],
+            ['is_paid', true],
+            ['payment_method', 'mpesa']
+        ])->sum('amount');
+        $der = $path.$route.'-'.date('Y-m-d-H-i').'.pdf';
+        DB::transaction(function() use($request, $books,$route,$der,$rout,$date,$cash, $mpesa) {
+            foreach($books as $book) {
+                $book->update([
+                    'dispatched' => 1
+                ]);
+            }
+            $dispatch = Dispatch::create([
+                'dispatch' => json_encode($books),                
+                'fleet_id' => $route,
+                'readable_fleet_id' => $request->readable_fleet_id
+            ]);
+            $pdf = PDF::loadView('prints/fleet_list', compact('books', 'rout'))->setPaper('a4')->setWarnings(false)->save($der);
+            // return $pdf->stream($der);
+            $cec = Cec::create([
+                'path' => $der,
+                'fleet_id' => $route,
+                'no_of_commuters' => $books->count(),
+                'created_at' => $date,
                 'readable_fleet_id' => $request->readable_fleet_id,
                 'cash' => $cash,
                 'mpesa' => $mpesa,

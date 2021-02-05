@@ -32,6 +32,10 @@ Route::post('/booked/calendarial', [pagescontroller::class, 'booked_calendarial'
 Route::prefix('dashboard')->group(function() {
     Route::get('/', [dashboardcontroller::class, 'index'])->name('dashboard.index');
     Route::get('/bookings', [dashboardcontroller::class, 'bookings'])->name('dashboard.bookings');
+    Route::get('/bookings/future', [dashboardcontroller::class, 'future_bookings'])->name('dashboard.future_bookings');
+    Route::get('/bookings/future/{fleet_id}/{travel_date}/{time}', [dashboardcontroller::class, 'future_booking'])->name('dashboard.future_booking');
+    Route::post('/bookings/future/check', [dashboardcontroller::class, 'future_bookings_check'])->name('dashboard.future_bookings_check');
+    Route::post('/bookings/time', [dashboardcontroller::class, 'look_for_time'])->name('dashboard.look_for_time');
     Route::post('/bookings/search', [dashboardcontroller::class, 'filter_bookings'])->name('dashboard.filter_booking');
     Route::prefix('agents')->group(function() {
         Route::get('/', [dashboardcontroller::class, 'agents'])->name('dashboard.agents');
@@ -49,6 +53,7 @@ Route::prefix('dashboard')->group(function() {
         Route::post('/edit_fleet/{id}', [dashboardcontroller::class, 'edit_fleet'])->name('dashboard.edit_fleet');
         Route::post('/delete_fleet/{id}', [dashboardcontroller::class, 'delete_fleet'])->name('dashboard.delete_fleet');
         Route::post('/dispatch/{user_id}/{fleet_unique}', [dashboardcontroller::class, 'dispatch_fleet'])->name('dashboard.dispatch_fleet');        
+        Route::post('/dispatch/{id}/{route}/{date}', [dashboardcontroller::class, 'dispatch_fleet_future'])->name('dashboard.dispatch_fleet_future');        
     });
     Route::prefix('calendarial')->group(function() {
         Route::get('/', [dashboardcontroller::class, 'calendarial'])->name('dashboard.calendarial');
@@ -90,6 +95,7 @@ Route::prefix('dashboard')->group(function() {
     Route::get('/account', [dashboardcontroller::class, 'edit_account'])->name('dashboard.edit_account');
     Route::post('/account/edit/{id}', [dashboardcontroller::class, 'update_account'])->name('dashboard.update_account');
     Route::post('/booked/seats', [pagescontroller::class, 'booked_seats'])->name('dashboard.booked');
+    Route::post('/booked/seats/future', [pagescontroller::class, 'booked_future'])->name('dashboard.booked_future');
     Route::post('/booked/seats/modal', [pagescontroller::class, 'modal_booked'])->name('dashboard.get_booked_seats');
     Route::post('/moderator/create/ticket', [dashboardcontroller::class, 'moderator_sell_ticket'])->name('dashboard.moderator_sell_ticket');
     Route::post('/commuter/delay/{id}', [dashboardcontroller::class, 'delay_commuter'])->name('dashboard.delay_commuter');

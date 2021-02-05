@@ -31,7 +31,7 @@
 <div class="row">
     <div class="col-md-12">
         <button class="btn btn-success float-right" data-toggle="modal" data-target="#testUser">
-            <i class="icon-sm" data-feather="plus"></i>&nbsp;Add Admin
+            <i class="icon-sm" data-feather="plus"></i>&nbsp;Add Receiver
         </button>
     </div>
 </div>
@@ -41,7 +41,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-baseline mb-2">
-                    <h6 class="card-title mb-0">All Administrator</h6>
+                    <h6 class="card-title mb-0">All Receiver</h6>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
@@ -87,7 +87,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">
-                    <center style="text-transform: uppercase;">Add Administrator
+                    <center style="text-transform: uppercase;">Add Receiver
                     </center>
                 </h4>
             </div>

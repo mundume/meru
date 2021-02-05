@@ -175,7 +175,7 @@ public function booked_seats(Request $request) {
                 ['seaters', $request->seaters],
                 ['departure', $request->departure],
                 ['destination', $request->destination]
-                ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
+        ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
     $data = [];
     foreach($books as $book) {
         $seats = $book->seat_no;
@@ -216,5 +216,23 @@ public function booked_calendarial(Request $request) {
 public function check_status(Request $request) {
     $book = Booking::where('ticket_no', $request->ticket_no)->select('is_paid')->first();
     return json_encode($book);
+}
+public function booked_future(Request $request) {
+    $books = Booking::where([
+            ['is_paid', 1],
+            ['suspended', 0],
+            ['dispatched', 0],
+            ['seaters', $request->seaters],
+            ['departure', $request->departure],
+            ['destination', $request->destination],
+            ['time', $request->time]
+            ])->whereDate('travel_date', $request->travel_date)
+                ->get();
+        $data = [];
+        foreach($books as $book) {
+            $seats = $book->seat_no;
+            array_push($data, $seats);
+        }
+        return json_encode($data);
 }
 }

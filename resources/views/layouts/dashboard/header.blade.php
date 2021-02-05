@@ -196,11 +196,36 @@
                         <i class="link-icon" data-feather="dollar-sign"></i>
                         <span class="menu-title">Wallet</span></a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('dashboard.bookings') }}">
                         <i class="link-icon" data-feather="globe"></i>
                         <span class="menu-title">Bookings</span></a>
                     </a>
+                </li> --}}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="link-icon" data-feather="globe"></i>
+                        <span class="menu-title">Bookings</span>
+                        <i class="link-arrow"></i>
+                    </a>
+                    <div class="submenu">
+                        <ul class="submenu-item">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('dashboard.bookings') }}">
+                                    <span class="menu-title">
+                                        Bookings
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('dashboard.future_bookings') }}">
+                                    <span class="menu-title">
+                                        Future Bookings
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 @endif
                 @if(auth()->user()->hasRole('booking'))

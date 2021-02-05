@@ -30,6 +30,7 @@
                                 <th class="pt-0">Off Peak Amount</th>
                                 <th class="pt-0">Peak Amount</th>
                                 <th class="pt-0">Fleet ID</th>
+                                <th></th>
                                 <th class="pt-0">Action</th>
                             </tr>
                         </thead>
@@ -42,6 +43,13 @@
                                 <td>{{number_format($loc->off_peak, 2)}}</td>
                                 <td>{{number_format($loc->amount, 2)}}</td>
                                 <td>{{$loc->fleet_unique}}</td>
+                                <td>
+                                    @if($loc->lock == true)
+                                    <button class="btn btn-outline-danger"><i data-feather="lock" class="icon-sm"></i>&nbsp;LOCKED</button>
+                                    @else
+                                    <span class="badge badge-success">Available</span>
+                                    @endif
+                                </td>
                                 <td class="form-inline float-right">
                                     <button class="btn btn-outline-success" data-toggle="modal" data-target="#edit_peak-{{$loc->id}}" style="margin:2px;">
                                         <i data-feather="edit" class="icon-sm"></i>

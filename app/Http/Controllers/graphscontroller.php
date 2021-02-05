@@ -170,8 +170,8 @@ class graphscontroller extends Controller
         $options = [
             'label' => 'Booking',
             'data' => $data,
-            'borderColor' => '#686868',
-            'backgroundColor' => '#686868',
+            'borderColor' => '#727cf5',
+            'backgroundColor' => '#727cf5',
             'fill' => false
         ];
         $all_data['label'] = $dates->keys();

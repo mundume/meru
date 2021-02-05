@@ -38,7 +38,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-baseline mb-2">
-                            <h6 class="card-title mb-0">Online Booked Seats</h6>
+                            <h6 class="card-title mb-0">Delayed Booked Seats</h6>
                             <br>
                         </div>
                         <div class="table-responsive">
@@ -51,6 +51,7 @@
                                         <th class="pt-0">Ticket No</th>
                                         {{-- <th class="pt-0">Route</th> --}}
                                         <th class="pt-0">Amount</th>
+                                        <th class="pt-0">Time</th>
                                         <th class="pt-0">Action</th>
                                     </tr>
                                 </thead>
@@ -63,6 +64,7 @@
                                         <td>{{ $item->ticket_no }}</td>
                                         {{-- <td>{{ $item->departure }} ~ {{ $item->destination }}</td> --}}
                                         <td>{{ number_format($item->amount,2) }}</td>
+                                        <td><code>{{ $item->time }}</code></td>
                                         <td>
                                             <form action="{{ route('dashboard.activate_commuter', base64_encode($item->id)) }}" method="POST">
                                                 @csrf
@@ -93,6 +95,7 @@
                                         <th class="pt-0">Ticket No</th>
                                         {{-- <th class="pt-0">Route</th> --}}
                                         <th class="pt-0">Amount</th>
+                                        <th class="pt-0">Time</th>
                                         <th class="pt-0">Action</th>
                                     </tr>
                                 </thead>
@@ -105,6 +108,7 @@
                                         <td>{{ $item->ticket_no }}</td>
                                         {{-- <td>{{ $item->departure }} ~ {{ $item->destination }}</td> --}}
                                         <td>{{ number_format($item->amount,2) }}</td>
+                                        <td><code>{{ $item->time }}</code></td>
                                         <td>
                                             <form action="{{ route('dashboard.delay_commuter', base64_encode($item->id)) }}" method="POST">
                                                 @csrf

@@ -12,7 +12,7 @@
 
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <button class="btn btn-outline-success">{{ $route->departure }} ~ {{ $route->destination }}</button>
+                    <button class="btn btn-outline-success">{{ $route->departure }} ~ {{ $route->destination }} | {{ $route->seaters }}</button>
                     {{-- <a href="{{ url()->previous() }}" class="btn btn-outline-warning float-right">Go Back</a> --}}
                     @if($route->suspend == false && $route->admin_suspend == false)
                     <a href="#" class="btn btn-outline-warning float-right" data-toggle="modal" data-target="#book">BOOK</a>
@@ -25,7 +25,7 @@
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    Departure <b>{{ $route->departure }}</b> | Destination <b>{{ $route->destination }}</b>
+                                    Route <b>{{ $route->departure }}</b> ~ <b>{{ $route->destination }}</b>
                                 </h5>
                                 <p class="card-text">
                                     KSh&nbsp;{{ number_format($route->amount, 2) }}
