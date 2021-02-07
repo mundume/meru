@@ -18,7 +18,7 @@ use PDF;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\{Validator};
 use App\Jobs\HeadUpdate;
-
+use App\Jobs\Calendarial\{CreateCalendarial,DeleteCalendarial,UpdateCalendarial};
 class dashboardcontroller extends Controller
 {
     public function __construct() {
@@ -230,7 +230,6 @@ class dashboardcontroller extends Controller
         if($this->check_if_admin() == false) return redirect()->back();
         $route = Route::find($request->fleet_id);
         $exists = Calendarial::where([
-            ['user_id', auth()->user()->id],
             ['date', $request->date],
             ['fleet_unique', $route->fleet_unique]
             ])->first();
@@ -238,32 +237,52 @@ class dashboardcontroller extends Controller
             Session::flash('error', 'Date already exists.');
             return redirect()->back();
         }
-        $name = substr($route->departure,0,4).'~'.substr($route->destination,0,4).'('.$route->seaters.')';
-        $data = [
-            'category_id' => $request->category_id,
-            'fleet_unique' => $route->fleet_unique,
-            'date' => $request->date,
-            'amount' => $request->amount,
-            'user_id' => auth()->user()->id,
-            'off_peak' => $route->amount,
-            'name' => $name,
-            'lock' => $request->lock
-        ];
-        Calendarial::create($data);
+        DB::transaction(function() use($route, $request) {
+            $name = substr($route->departure,0,4).'~'.substr($route->destination,0,4).'('.$route->seaters.')';
+            $data = [
+                'category_id' => $request->category_id,
+                'fleet_unique' => $route->fleet_unique,
+                'date' => $request->date,
+                'amount' => $request->amount,
+                'user_id' => auth()->user()->id,
+                'off_peak' => $route->amount,
+                'name' => $name,
+                'lock' => $request->lock
+            ];        
+            $calend = Calendarial::create($data);
+            $dispatch = [
+                'fleet_unique'=>$route->fleet_unique,
+                'date'=>$request->date,
+                'amount'=>$request->amount,
+                'off_peak'=>$route->amount,
+                'name'=>$name,
+                'lock'=>$request->lock,
+                'import_id' => $calend->id
+            ];
+            CreateCalendarial::dispatch($dispatch)->delay(Carbon::now()->addSeconds(40));
+        });
         Session::flash('success', 'Peak added successfully.');
         return redirect()->back();
     }
     public function edit_peak(Request $request, $id) {
         if($this->check_if_admin() == false) return redirect()->back();
-        Calendarial::where('id', base64_decode($id))->update([
-            'date' => $request->date,
-            'amount' => $request->amount
-        ]);
+        DB::transaction(function() use($request, $id) {
+            Calendarial::where('id', base64_decode($id))->update([
+                'date' => $request->date,
+                'amount' => $request->amount
+            ]);
+            $dispatch = ['date'=>$request->date,'amount'=>$request->amount,'import_id'=>base64_decode($id)];
+            UpdateCalendarial::dispatch($dispatch)->delay(Carbon::now()->addSeconds(40));
+        });
         Session::flash('success', 'Edited Successfully.');
         return redirect()->back();
     }
     public function delete_peak($id) {
-        Calendarial::find(base64_decode($id))->delete();
+        DB::transaction(function() use($id) {
+            $dispatch = ['import_id'=>base64_decode($id)];
+            DeleteCalendarial::dispatch($dispatch)->delay(Carbon::now()->addSeconds(40));
+            Calendarial::find(base64_decode($id))->delete();
+        });
         Session::flash('error', 'Deleted Successfully.');
         return redirect()->back();
     }

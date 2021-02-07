@@ -15,6 +15,9 @@ class apiscontroller extends Controller
     public function __construct() {
         $this->booked = config('services.xwift_url').config('services.xwift_api_key').'/books';
         $this->update_route = config('services.xwift_url').config('services.xwift_api_key').'/update_route';
+        $this->create_calend = config('services.xwift_url').config('services.xwift_api_key').'/create_calend';
+        $this->update_calend = config('services.xwift_url').config('services.xwift_api_key').'/update_calend';
+        $this->delete_calend = config('services.xwift_url').config('services.xwift_api_key').'/delete_calend';
     }
     public function check_booked() {
         $client = new Client;
@@ -92,5 +95,49 @@ class apiscontroller extends Controller
         // Log::info($res);
         return response()->json();
         // wget -m -k -p https://demo07.gethomey.io/
+    }
+    public function create_calend($dispatch) {
+        $client = new Client;
+        $der = $client->request('post', $this->create_calend, [
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                'fleet_unique' => $dispatch['fleet_unique'],
+                'date' => $dispatch['date'],
+                'amount' => $dispatch['amount'],
+                'off_peak' => $dispatch['off_peak'],
+                'name' => $dispatch['name'],
+                'lock' => $dispatch['lock'],
+                'import_id' => $dispatch['import_id']
+            ])
+        ]);
+        return response()->json();
+    }
+    public function update_calend($dispatch) {
+        $client = new Client;
+        $der = $client->request('post', $this->update_calend, [
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                'date' => $dispatch['date'],
+                'amount' => $dispatch['amount'],
+                'import_id' => $dispatch['import_id']
+            ])
+        ]);
+        return response()->json();
+    }
+    public function delete_calend($dispatch) {
+        $client = new Client;
+        $der = $client->request('post', $this->delete_calend, [
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                'import_id' => $dispatch['import_id']
+            ])
+        ]);
+        return response()->json();
     }
 }

@@ -6,8 +6,8 @@
                 <nav class="site-navigation position-relative text-right" role="navigation">
                     <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
                         {{-- <li><a href="#home" class="nav-link">Home</a></li> --}}
-                        <li><a href="#work" class="nav-link">How it Work</a></li>
-                        <li><a href="#services" class="nav-link">Our Services</a></li>
+                        <li><a href="#work" class="nav-link">HOW IT WORK</a></li>
+                        <li><a href="#services" class="nav-link">OUR SERVICES</a></li>
                         {{-- <li><a href="#teachers-section" class="nav-link">Teachers</a></li> --}}
                     </ul>
                 </nav>

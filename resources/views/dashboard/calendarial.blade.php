@@ -117,7 +117,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">
-                    <center style="text-transform: uppercase;"><b>Add Peak</b>
+                    <center style="text-transform: uppercase;">Add Peak
                     </center>
                 </h4>
             </div>
@@ -191,12 +191,14 @@
         $('#date').datetimepicker({
             datepicker: true,
             timepicker: false,
-            format: 'Y-m-d'
+            format: 'Y-m-d',
+            minDate: '-1970/01/01'
         })
         $('#datee').datetimepicker({
             datepicker: true,
             timepicker: false,
-            format: 'Y-m-d'
+            format: 'Y-m-d',
+            minDate: '-1970/01/01'
         })
     })
 </script>

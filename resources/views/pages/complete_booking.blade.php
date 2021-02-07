@@ -248,7 +248,7 @@
                     // $('#fare').val(obj)
                     // $('#fare').html(obj)
                     if (obj == 'X_L01') {
-                        $('#ribbon').html('<span class="label label-error">Oops, fleet is not available on that date. Kindly change date or book another.</span>')
+                        $('#ribbon').html('<span class="label label-error">Oops, fleet is not available. Kindly change date or book another.</span>')
                         $('#lock_fool').prop('disabled', true)
                     } else {
                         $('#ribbon').html('<span class="label label-success">You are about to pay KSh. ' + obj + '</span>')
