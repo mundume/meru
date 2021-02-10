@@ -45,7 +45,7 @@ class apiscontroller extends Controller
                             'destination' => $value['destination'],
                             'ticket_token' => $value['ticketToken'],
                             'seat_no' => $value['seat_no'],
-                            'is_paid' => true,
+                            'is_paid' => $value['status'],
                             'payment_method' => 'mpesa',
                             'fleet_unique' => $value['fleet_unique']
                         ];

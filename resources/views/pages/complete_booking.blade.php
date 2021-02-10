@@ -126,7 +126,6 @@
         $('#select_time').on('change', function (e) {
             var time = e.target.value
             var seaters = "{!! $route->seaters !!}"
-            var user_id = "{!! $route->user_id !!}"
             var date = $('#get_date').val()
             var book_1 = $('.book_1').val()
             var book_2 = $('.book_2').val()
@@ -150,7 +149,6 @@
                 data: {
                     time: time,
                     seaters: seaters,
-                    user_id: user_id,
                     date: date,
                     "_token": "{{ csrf_token() }}"
                 },

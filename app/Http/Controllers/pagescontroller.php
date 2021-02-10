@@ -185,7 +185,6 @@ public function booked_seats(Request $request) {
 }
 public function modal_booked(Request $request) {
     $ders = Booking::where([
-        ['user_id', $request->user_id],
         ['seaters', $request->seaters],
         ['is_paid', 1],
         ['dispatched', 0],
