@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Http\Controllers\apis\apiscontroller;
+use App\Jobs\Book\Booking;
 
 class xwift_book extends Command
 {
@@ -17,5 +18,6 @@ class xwift_book extends Command
     {
         $call = new apiscontroller;
         $call->check_booked();
+        Booking::dispatch()->delay(now()->addSeconds(25));
     }
 }

@@ -18,6 +18,7 @@ use PDF;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\{Validator};
 use App\Jobs\HeadUpdate;
+use App\Jobs\Book\BookDispatch;
 use App\Jobs\Calendarial\{CreateCalendarial,DeleteCalendarial,UpdateCalendarial};
 class dashboardcontroller extends Controller
 {
@@ -259,7 +260,7 @@ class dashboardcontroller extends Controller
                 'lock'=>$request->lock,
                 'import_id' => $calend->id
             ];
-            CreateCalendarial::dispatch($dispatch)->delay(Carbon::now()->addSeconds(40));
+            CreateCalendarial::dispatch($dispatch)->delay(Carbon::now()->addSeconds(55));
         });
         Session::flash('success', 'Peak added successfully.');
         return redirect()->back();
@@ -272,7 +273,7 @@ class dashboardcontroller extends Controller
                 'amount' => $request->amount
             ]);
             $dispatch = ['date'=>$request->date,'amount'=>$request->amount,'import_id'=>base64_decode($id)];
-            UpdateCalendarial::dispatch($dispatch)->delay(Carbon::now()->addSeconds(40));
+            UpdateCalendarial::dispatch($dispatch)->delay(Carbon::now()->addSeconds(55));
         });
         Session::flash('success', 'Edited Successfully.');
         return redirect()->back();
@@ -280,7 +281,7 @@ class dashboardcontroller extends Controller
     public function delete_peak($id) {
         DB::transaction(function() use($id) {
             $dispatch = ['import_id'=>base64_decode($id)];
-            DeleteCalendarial::dispatch($dispatch)->delay(Carbon::now()->addSeconds(40));
+            DeleteCalendarial::dispatch($dispatch)->delay(Carbon::now()->addSeconds(55));
             Calendarial::find(base64_decode($id))->delete();
         });
         Session::flash('error', 'Deleted Successfully.');
@@ -461,7 +462,7 @@ class dashboardcontroller extends Controller
         $route->suspend = true;
         $route->save();        
         $dispatch = ['fleet_unique'=>$route->fleet_unique,'admin_suspend'=>$route->admin_suspend,'suspend'=>true];
-        HeadUpdate::dispatch($dispatch)->delay(Carbon::now()->addSeconds(2));
+        HeadUpdate::dispatch($dispatch)->delay(Carbon::now()->addSeconds(30));
         Session::flash('info', 'Route locked.');
         return redirect()->back();
     }
@@ -471,7 +472,7 @@ class dashboardcontroller extends Controller
         $route->suspend = false;
         $route->save();
         $dispatch = ['fleet_unique'=>$route->fleet_unique,'admin_suspend'=>$route->admin_suspend,'suspend'=>false];
-        HeadUpdate::dispatch($dispatch)->delay(Carbon::now()->addSeconds(2));
+        HeadUpdate::dispatch($dispatch)->delay(Carbon::now()->addSeconds(30));
         Session::flash('info', 'Route unlocked.');
         return redirect()->back();
     }
@@ -482,7 +483,7 @@ class dashboardcontroller extends Controller
         $route->save();
         // dd($route);
         $dispatch = ['fleet_unique'=>$route->fleet_unique,'admin_suspend'=>true,'suspend'=>$route->suspend];
-        HeadUpdate::dispatch($dispatch)->delay(Carbon::now()->addSeconds(2));
+        HeadUpdate::dispatch($dispatch)->delay(Carbon::now()->addSeconds(30));
         Session::flash('info', 'Route locked.');
         return redirect()->back();
     }
@@ -492,7 +493,7 @@ class dashboardcontroller extends Controller
         $route->admin_suspend = false;
         $route->save();
         $dispatch = ['fleet_unique'=>$route->fleet_unique,'admin_suspend'=>false,'suspend'=>$route->suspend];
-        HeadUpdate::dispatch($dispatch)->delay(Carbon::now()->addSeconds(2));
+        HeadUpdate::dispatch($dispatch)->delay(Carbon::now()->addSeconds(30));
         Session::flash('info', 'Route unlocked.');
         return redirect()->back();
     }
@@ -501,11 +502,10 @@ class dashboardcontroller extends Controller
         return json_encode($route);
     }
     public function view_ticket_7($id) {
-        $filter_user = app_filterAgent();
+        // $filter_user = app_filterAgent();
         $route = Route::find($id);
         if($route->seaters != 7) return redirect()->route('dashboard.index');
         $current_bookings = Booking::where([
-            ['user_id', $filter_user],
             ['dispatched', false],
             ['departure', $route->departure],
             ['destination', $route->destination],
@@ -514,7 +514,6 @@ class dashboardcontroller extends Controller
             ['suspended', false]
         ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
         $online_bookings = Booking::where([
-            ['user_id', $filter_user],
             ['dispatched', false],
             ['departure', $route->departure],
             ['destination', $route->destination],
@@ -522,15 +521,14 @@ class dashboardcontroller extends Controller
             ['seaters', 7],
             ['suspended', true]
         ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
-        $fleets = Fleet::where([['user_id', $filter_user], ['suspend', false]])->get();
+        $fleets = Fleet::where([['suspend', false]])->get();
         return view('tickets.7', compact('route','current_bookings','online_bookings', 'fleets'));
     }
     public function view_ticket_10($id) {
-        $filter_user = app_filterAgent();
+        // $filter_user = app_filterAgent();
         $route = Route::find($id);
         if($route->seaters != 10) return redirect()->route('dashboard.index');
         $current_bookings = Booking::where([
-            ['user_id', $filter_user],
             ['dispatched', false],
             ['departure', $route->departure],
             ['destination', $route->destination],
@@ -539,7 +537,6 @@ class dashboardcontroller extends Controller
             ['suspended', false]
         ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
         $online_bookings = Booking::where([
-            ['user_id', $filter_user],
             ['dispatched', false],
             ['departure', $route->departure],
             ['destination', $route->destination],
@@ -547,15 +544,14 @@ class dashboardcontroller extends Controller
             ['seaters', 10],
             ['suspended', true]
         ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
-        $fleets = Fleet::where([['user_id', $filter_user], ['suspend', false]])->get();
+        $fleets = Fleet::where([['suspend', false]])->get();
         return view('tickets.10', compact('route','current_bookings','online_bookings', 'fleets'));
     }
     public function view_ticket_11($id) {
-        $filter_user = app_filterAgent();
+        // $filter_user = app_filterAgent();
         $route = Route::find($id);
         if($route->seaters != 11) return redirect()->route('dashboard.index');
         $current_bookings = Booking::where([
-            ['user_id', $filter_user],
             ['dispatched', false],
             ['departure', $route->departure],
             ['destination', $route->destination],
@@ -564,7 +560,6 @@ class dashboardcontroller extends Controller
             ['suspended', false]
         ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
         $online_bookings = Booking::where([
-            ['user_id', $filter_user],
             ['dispatched', false],
             ['departure', $route->departure],
             ['destination', $route->destination],
@@ -572,15 +567,14 @@ class dashboardcontroller extends Controller
             ['seaters', 11],
             ['suspended', true]
         ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
-        $fleets = Fleet::where([['user_id', $filter_user], ['suspend', false]])->get();
+        $fleets = Fleet::where([['suspend', false]])->get();
         return view('tickets.11', compact('route','current_bookings','online_bookings', 'fleets'));
     }
     public function view_ticket_14($id) {
-        $filter_user = app_filterAgent();
+        // $filter_user = app_filterAgent();
         $route = Route::find($id);
         if($route->seaters != 14) return redirect()->route('dashboard.index');
         $current_bookings = Booking::where([
-            ['user_id', $filter_user],
             ['dispatched', false],
             ['departure', $route->departure],
             ['destination', $route->destination],
@@ -589,7 +583,6 @@ class dashboardcontroller extends Controller
             ['suspended', false]
         ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
         $online_bookings = Booking::where([
-            ['user_id', $filter_user],
             ['dispatched', false],
             ['departure', $route->departure],
             ['destination', $route->destination],
@@ -597,15 +590,14 @@ class dashboardcontroller extends Controller
             ['seaters', 14],
             ['suspended', true]
         ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
-        $fleets = Fleet::where([['user_id', $filter_user], ['suspend', false]])->get();
+        $fleets = Fleet::where([['suspend', false]])->get();
         return view('tickets.14', compact('route','current_bookings','online_bookings', 'fleets'));
     }
     public function view_ticket_16($id) {
-        $filter_user = app_filterAgent();
+        // $filter_user = app_filterAgent();
         $route = Route::find($id);
         if($route->seaters != 16) return redirect()->route('dashboard.index');
         $current_bookings = Booking::where([
-            ['user_id', $filter_user],
             ['dispatched', false],
             ['departure', $route->departure],
             ['destination', $route->destination],
@@ -614,7 +606,6 @@ class dashboardcontroller extends Controller
             ['suspended', false]
         ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
         $online_bookings = Booking::where([
-            ['user_id', $filter_user],
             ['dispatched', false],
             ['departure', $route->departure],
             ['destination', $route->destination],
@@ -622,7 +613,7 @@ class dashboardcontroller extends Controller
             ['seaters', 16],
             ['suspended', true]
         ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->get();
-        $fleets = Fleet::where([['user_id', $filter_user], ['suspend', false]])->get();
+        $fleets = Fleet::where([['suspend', false]])->get();
         return view('tickets.16', compact('route','current_bookings','online_bookings', 'fleets'));
     }
     public function bookings(Request $request) {        
@@ -858,10 +849,12 @@ class dashboardcontroller extends Controller
         ])->whereDate('travel_date', Carbon::today()->format('Y-m-d'))->sum('amount');
         $der = $path.$fleet_unique.'-'.date('Y-m-d-H-i').'.pdf';
         DB::transaction(function() use($request,$books,$fleet_unique,$der,$rout,$cash,$mpesa) {
+            $ticket_no = [];
             foreach($books as $book) {
                 $book->update([
-                    'dispatched' => 1
+                    'dispatched' => 1                 
                 ]);
+                array_push($ticket_no, $book->ticket_no);
             }
             Dispatch::create([
                 'dispatch' => json_encode($books),                
@@ -878,6 +871,7 @@ class dashboardcontroller extends Controller
                 'mpesa' => $mpesa,
                 'total_amount' => $cash+$mpesa
             ]);
+            BookDispatch::dispatch($ticket_no)->delay(Carbon::now()->addSeconds(10));
         });
         Session::flash('success', 'Fleet dispatched successfully');
         return redirect()->back();
@@ -913,10 +907,12 @@ class dashboardcontroller extends Controller
         ])->sum('amount');
         $der = $path.$route.'-'.date('Y-m-d-H-i').'.pdf';
         DB::transaction(function() use($request, $books,$route,$der,$rout,$date,$cash, $mpesa) {
+            $ticket_no = [];
             foreach($books as $book) {
                 $book->update([
                     'dispatched' => 1
                 ]);
+                array_push($ticket_no, $book->ticket_no);
             }
             $dispatch = Dispatch::create([
                 'dispatch' => json_encode($books),                
@@ -935,6 +931,7 @@ class dashboardcontroller extends Controller
                 'mpesa' => $mpesa,
                 'total_amount' => $cash+$mpesa
             ]);
+            BookDispatch::dispatch($ticket_no)->delay(Carbon::now()->addSeconds(20));
         });
         Session::flash('success', 'Fleet dispatched successfully');
         return redirect()->back();

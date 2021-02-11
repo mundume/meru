@@ -18,6 +18,7 @@ class apiscontroller extends Controller
         $this->create_calend = config('services.xwift_url').config('services.xwift_api_key').'/create_calend';
         $this->update_calend = config('services.xwift_url').config('services.xwift_api_key').'/update_calend';
         $this->delete_calend = config('services.xwift_url').config('services.xwift_api_key').'/delete_calend';
+        $this->head_dispatch_url = config('services.xwift_url').config('services.xwift_api_key').'/dispatches';
     }
     public function check_booked() {
         $client = new Client;
@@ -29,7 +30,7 @@ class apiscontroller extends Controller
                 if($route->fleet_unique == $value['fleet_unique']) {                    
                     try {
                         $book = [
-                            'user_id' => 0,
+                            'user_id' => 1,
                             'CheckoutRequestID' => null,
                             'group' => User::first()->c_name,
                             'seaters' => $value['seaters'],
@@ -138,6 +139,18 @@ class apiscontroller extends Controller
                 'import_id' => $dispatch['import_id']
             ])
         ]);
+        return response()->json();
+    }
+    public function head_dispatch($ticket_no) {
+        $client = new Client;
+        $der = $client->request('POST', $this->head_dispatch_url, [
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                'ticket_no' => $ticket_no
+            ])
+        ]);        
         return response()->json();
     }
 }
