@@ -146,6 +146,7 @@ Route::prefix('dashboard')->group(function() {
     });
     Route::prefix('reports')->group(function() {
         Route::get('/', [dashboardcontroller::class, 'daily_reporting'])->name('dashboard.daily_reporting');
+        Route::post('/filter_report', [dashboardcontroller::class, 'filter_report'])->name('dashboard.filter_report');
         Route::post('/add', [dashboardcontroller::class, 'add_admin'])->name('dashboard.add_admin');
         Route::post('/admin/trash/{id}', [dashboardcontroller::class, 'trash_admin'])->name('dashboard.trash_admin');
     });

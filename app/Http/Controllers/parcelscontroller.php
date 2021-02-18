@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\{Fleet,Parcel,Provider,Dropoff,Charge,Account,ParcelUser,Cec,Payment};
+use App\Models\{Fleet,Parcel,Provider,Dropoff,Charge,Account,ParcelUser,Cec,Payment,Message};
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -97,7 +97,12 @@ class parcelscontroller extends Controller
                 'user_id' => auth()->user()->id
             ];
             ParcelUser::create($creator);
-            $message = "Parcel Number\r\n#". $parcel_no."\r\nRegards\r\n".Auth::user()->c_name." Team";
+
+            $message = Message::where('name', 'PARCEL_SENDER')->first()->body;
+            $message = str_replace('%parcel_no%', $parcel_no, $message);
+            $message = str_replace('%break%', "\r\n", $message);
+            $message = str_replace('%link%', config('app.url'), $message);
+
             $sms = new smscontroller;
             $sms->send_sms($contact, $message);
         });
@@ -139,6 +144,16 @@ class parcelscontroller extends Controller
         $parcel = Parcel::where('parcel_no', $parcel_no)->update([
             'fleet_id' => $request->fleet_id
         ]);
+
+        $message = Message::where('name', 'PARCEL_RECEIVER')->first()->body;
+        $message = str_replace('%parcel_no%', $parcel_no, $message);
+        $message = str_replace('%name%', $parcel->receiver_name, $message);
+        $message = str_replace('%break%', "\r\n", $message);
+        $message = str_replace('%link%', config('app.url'), $message);
+
+        $sms = new smscontroller;
+        $sms->send_sms($parcel->receiver_mobile, $message);
+
         Session::flash('success', 'Parcel assigned to fleet.');
         return redirect()->back();
     }

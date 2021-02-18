@@ -19,6 +19,7 @@ class apiscontroller extends Controller
         $this->update_calend = config('services.xwift_url').config('services.xwift_api_key').'/update_calend';
         $this->delete_calend = config('services.xwift_url').config('services.xwift_api_key').'/delete_calend';
         $this->head_dispatch_url = config('services.xwift_url').config('services.xwift_api_key').'/dispatches';
+        $this->head_book_update = config('services.xwift_url').config('services.xwift_api_key').'/subsidiary_books';
     }
     public function check_booked() {
         $client = new Client;
@@ -151,6 +152,32 @@ class apiscontroller extends Controller
                 'ticket_no' => $ticket_no
             ])
         ]);        
+        return response()->json();
+    }
+    public function head_book_update($booking_data) {
+        $client = new Client;
+        $der = $client->request('post', $this->head_book_update, [
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ],
+            'body' => json_encode([
+                'group' => $booking_data['group'],
+                'seaters' => $booking_data['seaters'],
+                'amount' => $booking_data['amount'],
+                'fullname' => $booking_data['fullname'],
+                'id_no' => $booking_data['id_no'],
+                'pick_up' => $booking_data['pick_up'],
+                'mobile' => $booking_data['mobile'],
+                'time' => $booking_data['time'],
+                'travel_date' => $booking_data['travel_date'],
+                'ticket_no' => $booking_data['ticket_no'],
+                'departure' => $booking_data['departure'],
+                'destination' => $booking_data['destination'],
+                'ticket_token' => $booking_data['ticket_token'],
+                'seat_no' => $booking_data['seat_no'],
+                'fleet_unique' => $booking_data['fleet_unique']
+            ])
+        ]);
         return response()->json();
     }
 }

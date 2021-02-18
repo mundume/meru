@@ -36,6 +36,7 @@
                                 <th>Ticket</th>
                                 <th>Seat NO</th>
                                 <th>Travel Date</th>
+                                <th>Time</th>
                                 <th>Name</th>
                                 <th>Mobile</th>
                                 <th>Amount</th>
@@ -52,6 +53,7 @@
                                 <td>{{ $item->ticket_no }}</td>
                                 <td>{{ $item->seat_no }}</td>
                                 <td>{{ $item->travel_date }}</td>
+                                <td>{{ $item->time }}</td>
                                 <td>{{ $item->fullname }}</td>
                                 <td>{{ $item->mobile }}</td>
                                 <td>{{ number_format($item->amount, 2) }}</td>

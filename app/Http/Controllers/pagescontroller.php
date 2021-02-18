@@ -121,7 +121,7 @@ public function post_complete_booking(Request $request) {
     }
     $contact = '254'.substr($request->mobile,-9);
     $stk = new pesacontroller;
-    $result = $stk->stk_push(
+    $result = $stk->prompt_push(
         $request->ticket_no,
         $amount,
         $contact,
@@ -142,7 +142,12 @@ public function post_complete_booking(Request $request) {
                 'CheckoutRequestID' => $result->CheckoutRequestID,
             ]);
         });
-        $message = "Ticket Status\r\nhttp://127.0.0.1:8000/route/booking/status/".$book->ticket_no;
+
+        $message = Message::where('name', 'TICKET_STATUS')->first()->body;
+        $message = str_replace('%ticket_no%', $book->ticket_no, $message);
+        $message = str_replace('%link%', config('app.url'), $message);
+        $message = str_replace('%break%', "\r\n", $message);
+
         $sms = new smscontroller;
         $sms->send_sms($contact, $message);
         Session::flash('success', 'Ticket generated successfully.');
@@ -154,7 +159,12 @@ public function post_complete_booking(Request $request) {
             'travel_date' => $request->travel_date,
             'seat_no' => $request->seat_no
         ]);
-        $message = "Ticket Status\r\nhttp://127.0.0.1:8000/route/booking/status/".$book->ticket_no;
+        
+        $message = Message::where('name', 'TICKET_STATUS')->first()->body;
+        $message = str_replace('%ticket_no%', $book->ticket_no, $message);
+        $message = str_replace('%link%', config('app.url'), $message);
+        $message = str_replace('%break%', "\r\n", $message);
+
         $sms = new smscontroller;
         $sms->send_sms($contact, $message);
         Session::flash('success', 'Ticket generated successfully.');

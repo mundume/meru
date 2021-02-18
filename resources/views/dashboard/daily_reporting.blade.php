@@ -1,6 +1,7 @@
 @extends('layouts.dashboard.main')
 @section('title', 'Reports')
 @section('body')
+<link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
 <div class="row">
     <div class="col-md-6">
         <div class="card">
@@ -30,13 +31,87 @@
 <br>
 <div class="row">
     <div class="col-md-12">
-        <button class="btn btn-success float-right" data-toggle="modal" data-target="#testUser">
-            <i class="icon-sm" data-feather="plus"></i>&nbsp;Add Receiver
-        </button>
+        <form action="{{ route('dashboard.filter_report') }}" method="POST" class="form-inline">
+            @csrf
+            <input type="text" class="form-control" style="height: 42px;margin-right:2px;" name="start_date" id="datetimepicker" placeholder="START DATE">
+            <input type="text" class="form-control" style="height: 42px;" name="end_date" id="datetimepicker1" placeholder="END DATE">
+            <button class="btn btn-success" style="height: 40px;margin:2px;" type="submit"><i data-feather="search" class="icon-sm"></i></button>
+        </form>
+        </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-baseline mb-2">
+                            <h6 class="card-title mb-0">Parcels | <b style="color:red;">{{request()->input('start_date')}} ~ {{request()->input('end_date')}}</b></h6>
+                        </div>
+                        <hr>
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Amount (KSh)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($parcel_data as $key => $data)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $key }}</td>
+                                        <td>{{ number_format($data, 2) }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-baseline mb-2">
+                            <h6 class="card-title mb-0">Bookings | <b style="color:red;">{{request()->input('start_date')}} ~ {{request()->input('end_date')}}</b></h6>
+                        </div>
+                        <hr>
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Amount (KSh)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($booking_data as $key => $data)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $key }}</td>
+                                        <td>{{ number_format($data, 2) }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+            <button class="btn btn-success float-right" data-toggle="modal" data-target="#testUser">
+                <i class="icon-sm" data-feather="plus"></i>&nbsp;Add Receiver
+            </button>
+        </div>
     </div>
-</div>
-<br>
-<div class="row">
+    <br>
+    <div class="row">
     <div class="col-lg-12 col-xl-12 stretch-card">
         <div class="card">
             <div class="card-body">
@@ -172,5 +247,17 @@
             new Chart(ctx, options)
         }
     })
+</script>
+<script>
+    $(document).ready(function () {
+        $('#datetimepicker').datetimepicker({
+            timepicker: false,
+            format: "Y-m-d"
+        })
+        $('#datetimepicker1').datetimepicker({
+            timepicker: false,
+            format: "Y-m-d"
+        })
+    });
 </script>
 @endsection

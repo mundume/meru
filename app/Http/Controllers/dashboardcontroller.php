@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\smscontroller;
-use App\Http\Controllers\graphscontroller;
-use App\Models\{AgentUser,User,Account,Fleet,Category,Route,Calendarial,AgentRoute,Booking,Parcel,BookingUser,Payment,Cec,Dispatch,Provider,Dropoff,AgentCourier,Topup,Customer,Admin};
+use App\Http\Controllers\{smscontroller,graphscontroller,pesacontroller};
+use App\Models\{AgentUser,User,Account,Fleet,Category,Route,Calendarial,AgentRoute,Booking,Parcel,BookingUser,Payment,Cec,Dispatch,Provider,Dropoff,AgentCourier,Topup,Customer,Admin,Message};
 use DB;
 use Hash;
 use Session;
@@ -18,8 +17,9 @@ use PDF;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\{Validator};
 use App\Jobs\HeadUpdate;
-use App\Jobs\Book\BookDispatch;
+use App\Jobs\Book\{BookDispatch,HeadBookUpdate};
 use App\Jobs\Calendarial\{CreateCalendarial,DeleteCalendarial,UpdateCalendarial};
+
 class dashboardcontroller extends Controller
 {
     public function __construct() {
@@ -136,7 +136,12 @@ class dashboardcontroller extends Controller
             }
         });
         $sms = new smscontroller;
-        $message = "Login Code\r\nPasscode:".$password."\r\nhttp://127.0.0.1:8000/dashboard/\r\nRegards\r\n".auth()->user()->c_name." Team";
+
+        $message = Message::where('name', 'AGENT_CODE')->first()->body;
+        $message = str_replace('%password%', $password, $message);
+        $message = str_replace('%link%', config('app.url'), $message);
+        $message = str_replace('%break%', "\r\n", $message);
+
         $contact = '254'.substr($request->mobile, -9);
         $sms->send_sms($contact, $message);
         Session::flash('success', 'Agent added successfully.');
@@ -745,7 +750,66 @@ class dashboardcontroller extends Controller
         $token = hash('sha256', Str::random());
         $contact = '254'.substr($request->mobile,-9);
         if($request->payment_method == 'mpesa') {
-
+            $stk = new pesacontroller;
+            $push = $stk->prompt_push(
+                $ticket_no,
+                $request->amount,
+                $contact,
+                route('payment.callback'),
+                'PAYMENTS'
+            );
+            //perform check ~ but ignored
+            DB::transaction(function() use($push,$ticket_no,$filter_date,$filter_user,$contact,$request,$token) {
+                $booking_data = [
+                    'user_id' => $filter_user,
+                    // 'CheckoutRequestID' => $push->CheckoutRequestID,
+                    'CheckoutRequestID' => null,
+                    'group' => $request->group,
+                    'seaters' => $request->seaters,
+                    'amount' => $request->amount,
+                    'fullname' => $request->fullname,
+                    'id_no' => $request->id_no,
+                    'pick_up' => 'Office Ticket',
+                    'mobile' => $contact,
+                    'time' => $filter_date['time'],
+                    'travel_date' => $filter_date['date'],
+                    'ticket_no' => $ticket_no,
+                    'departure' => $request->departure,
+                    'destination' => $request->destination,
+                    'ticket_token' => $token,
+                    'seat_no' => $request->seat_no,
+                    'is_paid' => true,
+                    'payment_method' => $request->payment_method,
+                    'fleet_unique' => $request->fleet_unique
+                ];
+                $payment_data = [
+                    'user_id' => $filter_user,
+                    'ResultCode' => 0,
+                    'ResultDesc' => 'Moderator Ticket',
+                    'MerchantRequestID' => 0,
+                    // 'MerchantRequestID' => $push->MerchantRequestID,
+                    // 'CheckoutRequestID' => $push->CheckoutRequestID,
+                    'CheckoutRequestID' => 0,
+                    'mpesaReceiptNumber' => 0,
+                    'ticket_no' => $ticket_no,
+                    'amount' => $request->amount,
+                    'phoneNumber' => $contact,
+                    'TransactionDate' => Carbon::now()
+                ];
+                $book = Booking::create($booking_data);
+                Payment::create($payment_data);
+                $exist_agent = app_existsAgent();
+                if($exist_agent == 1) {
+                    $agen = new BookingUser;
+                    $agen->booking_id = $book->id;
+                    $agen->user_id = auth()->user()->id; 
+                    $agen->save();
+                }
+                //update head booking; either before payment or after payment
+                //sms either called on successfully paid ticket
+            });
+            Session::flash('success', 'Ticket generated.');
+            return redirect()->back();
         } else {
             DB::transaction(function() use($ticket_no,$filter_date,$filter_user,$contact,$request,$token) {
                 $booking_data = [
@@ -790,12 +854,14 @@ class dashboardcontroller extends Controller
                     $agen->user_id = auth()->user()->id; 
                     $agen->save();
                 }
-                $message = "Ticket number: ".$ticket_no.
-                "\r\nAmount paid KSh" . $request->amount . " for seat no " .$request->seat_no.
-                "\r\n" . $request->departure . " ~ " . $request->destination.
-                "\r\nBook a online ticket".
-                "\r\nhttps://shuttleapp.co.ke/".
-                "\r\nRegards\r\n".auth()->user()->c_name." Team";
+                HeadBookUpdate::dispatch($booking_data)->delay(Carbon::now()->addSeconds(2));
+
+                $message = Message::where('name', 'PAID_TICKET')->first()->body;
+                $message = str_replace('%ticket_no%', $ticket_no, $message);
+                $message = str_replace('%amount%', $request->amount, $message);
+                $message = str_replace('%seat_no%', $request->seat_no, $message);
+                $message = str_replace('%link%', config('app.url'), $message);
+                $message = str_replace('%break%', "\r\n", $message);
                 $sms = new smscontroller;
                 $sms->send_sms($contact, $message);
             });
@@ -931,7 +997,7 @@ class dashboardcontroller extends Controller
                 'mpesa' => $mpesa,
                 'total_amount' => $cash+$mpesa
             ]);
-            BookDispatch::dispatch($ticket_no)->delay(Carbon::now()->addSeconds(20));
+            BookDispatch::dispatch($ticket_no)->delay(Carbon::now()->addSeconds(10));
         });
         Session::flash('success', 'Fleet dispatched successfully');
         return redirect()->back();
@@ -1032,14 +1098,62 @@ class dashboardcontroller extends Controller
          Session::flash('success', 'Messages sent.');
          return redirect()->back();
     }
-    public function daily_reporting() {
+    public function daily_reporting(Request $request) {
         if($this->check_if_admin() == false) return redirect()->back();
         if(auth()->user()->role_id != 1) {
             Session::flash('error', 'Oops, you are not allowed to access this page.');
             return redirect()->back();
         }
         $admins = Admin::get();
-        return view('dashboard.daily_reporting', compact('admins'));
+        if($request->start_date) {
+            $end = Carbon::parse($request->end_date);
+            $start = Carbon::parse($request->start_date);
+            $dates = collect();
+            for($i=0;$i<=$end->diffInDays($start);$i++) {
+                $date = (clone $start)->addDays($i)->format('Y-m-d');
+                $dates->put($date, 0);
+            }
+            $bookings = Booking::where([['is_paid', true], ['created_at', '>=', $dates->keys()->first()]])
+                                    ->groupBy('date')->orderBy('date')
+                                    ->get(([
+                                        DB::raw('DATE(created_at) as date'),
+                                        DB::raw('SUM(amount) as "views"')
+                                    ]))->pluck('views', 'date');
+            $booking_data = $dates->merge($bookings);
+            $parcels = Parcel::where([['is_paid', true], ['created_at', '>=', $dates->keys()->first()]])
+                            ->groupBy('date')->orderBy('date')
+                            ->get(([
+                                DB::raw('DATE(created_at) as date'),
+                                DB::raw('SUM(service_provider_amount) as "views"')
+                            ]))->pluck('views', 'date');
+            $parcel_data = $dates->merge($parcels);
+        } else {
+            $end = Carbon::now()->subDays(7);
+            $start = Carbon::now()->subDays(14);
+            $dates = collect();
+            for($i=0;$i<=$end->diffInDays($start);$i++) {
+                $date = (clone $start)->addDays($i)->format('Y-m-d');
+                $dates->put($date, 0);
+            }
+            $bookings = Booking::where([['is_paid', true], ['created_at', '>=', $dates->keys()->first()]])
+                                    ->groupBy('date')->orderBy('date')
+                                    ->get(([
+                                        DB::raw('DATE(created_at) as date'),
+                                        DB::raw('SUM(amount) as "views"')
+                                    ]))->pluck('views', 'date');
+            $booking_data = $dates->merge($bookings);
+            $parcels = Parcel::where([['is_paid', true], ['created_at', '>=', $dates->keys()->first()]])
+                            ->groupBy('date')->orderBy('date')
+                            ->get(([
+                                DB::raw('DATE(created_at) as date'),
+                                DB::raw('SUM(service_provider_amount) as "views"')
+                            ]))->pluck('views', 'date');
+            $parcel_data = $dates->merge($parcels);
+        }
+        return view('dashboard.daily_reporting', compact('admins', 'booking_data', 'parcel_data'));
+    }
+    public function filter_report(Request $request) {
+        return redirect()->route('dashboard.daily_reporting',['start_date' => $request->start_date, 'end_date' => $request->end_date]);
     }
     public function add_admin(Request $request) {
         if($this->check_if_admin() == false) return redirect()->back();
@@ -1069,9 +1183,13 @@ class dashboardcontroller extends Controller
         // $data = [$booking_count, $booking_sum, $parcel_count, $parcel_sum];
         // Log::info($data);
 
-        $message = "Daily Report\r\nBookings #".$booking_count."/=".$booking_sum.
-                   "\r\nParcels #".$parcel_count."/=".$parcel_sum.
-                   "\r\nRegards\r\n".User::first()->c_name." Team.";
+        $message = Message::where('name', 'ADMIN_REPORT')->first()->body;
+        $message = str_replace('%booking_count%', $booking_count, $message);
+        $message = str_replace('%booking_sum%', $booking_sum, $message);
+        $message = str_replace('%parcel_count%', $parcel_count, $message);
+        $message = str_replace('%parcel_sum%', $parcel_sum, $message);
+        $message = str_replace('%break%', "\r\n", $message);
+
         $contact = [];
         $admins = Admin::get();
         foreach($admins as $admin) {
