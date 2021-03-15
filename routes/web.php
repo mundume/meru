@@ -14,6 +14,7 @@ Auth::routes();
 
 //guest
 Route::get('/', [pagescontroller::class, 'independent'])->name('independent');
+Route::get('/services', [pagescontroller::class, 'services'])->name('independent.services');
 Route::get('/search', [pagescontroller::class, 'search'])->name('independent.search');
 Route::post('/step_one/{route_id}', [pagescontroller::class, 'booking_step_one'])->name('independent.booking_step_one');
 Route::prefix('route')->group(function() {
@@ -156,3 +157,8 @@ Route::get('/book/tickets/10/{id}', [dashboardcontroller::class, 'view_ticket_10
 Route::get('/book/tickets/11/{id}', [dashboardcontroller::class, 'view_ticket_11'])->name('dashboard.view_ticket_11');
 Route::get('/book/tickets/14/{id}', [dashboardcontroller::class, 'view_ticket_14'])->name('dashboard.view_ticket_14');
 Route::get('/book/tickets/16/{id}', [dashboardcontroller::class, 'view_ticket_16'])->name('dashboard.view_ticket_16');
+
+Route::get('/scheduled', [pagescontroller::class, 'scheduled'])->name('test.scheduled');
+
+Route::get('/route/1_1', [pagescontroller::class, 'single_route'])->name('single_route');
+Route::get('/contact_1', [pagescontroller::class, 'contact'])->name('contact');

@@ -1,43 +1,50 @@
-<form action="{{ route('independent.search') }}" method="GET" class="form-box">
+<form action="{{ route('independent.search') }}" method="GET">
     @csrf
     <div class="row">
-        <div class="col-md-12">
-            SEARCH ROUTE
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-12">
-            <select class="form-control" name="seaters" required>
-                <option selected hidden data-default disabled>SELECT SEATERS</option>
-                @foreach($uni->unique('seaters') as $rou)
-                <option>{{$rou->seaters }}</option>
-                @endforeach
-            </select>
-        </div>
-    </div>
-    <br>
-    <div class="form-group row">
-        <div class="col-md-6 mb-3 mb-lg-0">
-            <select class="form-control" name="departure" required>
-                <option selected hidden data-default disabled>DEPARTURE</option>
-                @foreach($uni->unique('departure') as $rou)
-                <option>{{ $rou->departure }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-md-6">
-            <select class="form-control" name="destination" required>
-                <option selected hidden data-default disabled>DESTINATION</option>
-                @foreach($uni->unique('destination') as $rou)
-                <option>{{ $rou->destination }}</option>
-                @endforeach
-            </select>
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-md-12">
-            <button type="submit" class="btn btn-primary btn-pill btn-block">SEARCH ROUTE</button>
-        </div>
-    </div>
+        <div class="col-12 col-md-6 col-lg-3 col-xl-3">
+            <div class="form-group">
+                <span><i class="fa fa-angle-down"></i></span>
+                <select class="form-control" name="departure" required>
+                    <option selected hidden data-default disabled>SELECT DEPARTURE</option>
+                    {{-- <option>Meru</option> --}}
+                    @foreach($uni->unique('departure') as $rou)
+                    <option>{{ $rou->departure }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div><!-- end columns -->
+
+        <div class="col-12 col-md-6 col-lg-3 col-xl-3">
+            <div class="form-group">
+                <span><i class="fa fa-angle-down"></i></span>
+                <select class="form-control" name="destination" required>
+                    <option selected hidden data-default disabled>SELECT DESTINATION</option>
+                    {{-- <option>Nairobi</option> --}}
+                    @foreach($uni->unique('destination') as $rou)
+                    <option>{{ $rou->destination }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div><!-- end columns -->
+
+        <div class="col-12 col-md-6 col-lg-3 col-xl-3">
+            <div class="form-group">
+                <span><i class="fa fa-angle-down"></i></span>
+                <select class="form-control">
+                    <option selected hidden data-default disabled>SELECT SEATERS</option>
+                    {{-- <option>10</option> --}}
+                    @foreach($uni->unique('seaters') as $rou)
+                    <option>{{$rou->seaters }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div><!-- end columns -->
+
+        <div class="col-12 col-md-6 col-lg-3 col-xl-3">
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-lg btn-block">Search Route</button>
+            </div>
+        </div><!-- end columns -->
+
+        </div><!-- end row -->
 </form>

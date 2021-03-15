@@ -1,28 +1,24 @@
-<header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
-    <div class="container-fluid">
-        <div class="d-flex align-items-center">
-            <div class="site-logo mr-auto w-25"><a href="{{ route('independent') }}">shuttleApp</a></div>
-            <div class="mx-auto text-center">
-                <nav class="site-navigation position-relative text-right" role="navigation">
-                    <ul class="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
-                        {{-- <li><a href="#home" class="nav-link">Home</a></li> --}}
-                        <li><a href="#work" class="nav-link">HOW IT WORK</a></li>
-                        <li><a href="#services" class="nav-link">OUR SERVICES</a></li>
-                        {{-- <li><a href="#teachers-section" class="nav-link">Teachers</a></li> --}}
-                    </ul>
-                </nav>
-            </div>
-            <div class="ml-auto w-25">
-                <nav class="site-navigation position-relative text-right" role="navigation">
-                    <ul class="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
-                        <li class="cta"><a href="#contact-section" class="nav-link"><span>Contact Us</span></a></li>
-                    </ul>
-                </nav>
-                <a href="#" class="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right">
-                    <span class="icon-menu h3"></span>
-                    {{-- DER --}}
-                </a>
-            </div>
+<nav class="navbar navbar-expand-xl navbar-custom fixed-top header-1 landing-page" id="main_navbar">
+    <div class="container">
+
+        <a href="{{ route('independent') }}" class="navbar-brand"><span>SHUTTLE</span>APP</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <i class="fa fa-bars"></i>
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('independent') }}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('independent.services') }}">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('contact') }}">Contact Us</a>
+                </li>
+            </ul>
         </div>
     </div>
- </header>
+</nav>

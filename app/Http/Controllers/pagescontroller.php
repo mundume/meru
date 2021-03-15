@@ -244,4 +244,25 @@ public function booked_future(Request $request) {
         }
         return json_encode($data);
 }
+public function scheduled() {
+    $routes = Route::where([['suspend', false], ['admin_suspend', false]])->get();
+    $time = Carbon::now()->format('H:00');
+    $data = [];
+    foreach($routes as $route) {        
+        $calend = Calendarial::where([
+            ['fleet_unique', $route->fleet_unique],
+            ['lock', true],
+            ['date', Carbon::today()->format('Y-m-d')]
+            ])->first();
+        if(!$calend) {
+            if($time <= $route->depart1 || $time <= $route->depart2 || $time <= $route->depart3 || $time <= $route->depart4) {
+                array_push($data, $route);
+            }
+        }
+    }
+    dd($data);
+}
+public function services() {
+    return view('pages.services');
+}
 }
