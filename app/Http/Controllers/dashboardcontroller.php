@@ -60,6 +60,7 @@ class dashboardcontroller extends Controller
         foreach($agents as $agent) {
             array_push($ids, $agent->user_id);
         }
+        $ids[] = 1;
         $admins = User::whereNotIn('id', $ids)->get();
         return view('dashboard.agents', compact('agents', 'offices', 'topups', 'admins'));
     }
@@ -77,7 +78,7 @@ class dashboardcontroller extends Controller
         // $user = auth()->user();
         $handle = strtolower(Str::random(7));
         $agent_unique = Str::random(7);
-        $password = strtolower(substr($request->fname, 0, 2).mt_rand(1000,9999));
+        $password = strtoupper(substr($request->fname, 0, 2).mt_rand(1000,9999));
         DB::transaction(function() use($request,$password,$handle,$agent_unique) {
             $user_data = [
                 'fname' => $request->fname,

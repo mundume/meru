@@ -3,7 +3,7 @@
         <div class="container">
             <div class="navbar-content">
                 <a href="{{ route('dashboard.index') }}" class="navbar-brand">
-                    Shuttle<span>APP</span>
+artists<span>APP</span>
                 </a>
                 <form class="search-form">
                     <div class="input-group">
@@ -52,12 +52,12 @@
                     </li>
                     <li class="nav-item dropdown nav-profile">
                         <a class="nav-link dropdown-toggle" href="dashboard-one.html#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="{{asset('shuttle_images/tourist.png')}}" alt="profile">
+<img src="{{asset('shuttle_images/new_.png')}}" alt="profile">
                         </a>
                         <div class="dropdown-menu" aria-labelledby="profileDropdown">
                             <div class="dropdown-header d-flex flex-column align-items-center">
                                 <div class="figure mb-3">
-                                    <img src="{{asset('shuttle_images/tourist.png')}}" alt="logo">
+<img src="{{asset('shuttle_images/new_.png')}}" alt="logo">
                                 </div>
                                 <div class="info text-center">
                                     <p class="name font-weight-bold mb-0">
@@ -191,11 +191,11 @@
                         <span class="menu-title">Fleet Dispatches</span>
                     </a>
                 </li>
-                <li class="nav-item">
+{{-- <li class="nav-item">
                     <a href="{{ route('dashboard.wallet') }}" class="nav-link">
                         <i class="link-icon" data-feather="dollar-sign"></i>
                         <span class="menu-title">Wallet</span></a>
-                </li>
+</li> --}}
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('dashboard.bookings') }}">
                         <i class="link-icon" data-feather="globe"></i>
@@ -224,6 +224,13 @@
                                     </span>
                                 </a>
                             </li>
+<li class="nav-item">
+                                <a class="nav-link" href="{{ route('dashboard.wallet') }}">
+                                    <span class="menu-title">
+                                        Payments
+                                    </span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -239,7 +246,7 @@
                 @if(auth()->user()->role_id == 1)
                 <li class="nav-item">
                     <a href="{{ route('dashboard.daily_reporting') }}" class="nav-link">
-                        <i class="link-icon" data-feather="users"></i>
+<i class="link-icon" data-feather="activity"></i>
                         <span class="menu-title">Reporting</span>
                     </a>
                 </li>

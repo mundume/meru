@@ -13,10 +13,14 @@ use App\Http\Controllers\graphscontroller;
 Auth::routes();
 
 //guest
+// Route::get('/', function() {
+//     return redirect(route('login'));
+// });
 Route::get('/', [pagescontroller::class, 'independent'])->name('independent');
 Route::get('/services', [pagescontroller::class, 'services'])->name('independent.services');
 Route::get('/search', [pagescontroller::class, 'search'])->name('independent.search');
 Route::post('/step_one/{route_id}', [pagescontroller::class, 'booking_step_one'])->name('independent.booking_step_one');
+Route::post('/send/message', [pagescontroller::class, 'send_message'])->name('send_message');
 Route::prefix('route')->group(function() {
     Route::get('/booking/{id}', [pagescontroller::class, 'show_route'])->name('route.show');
     Route::get('/booking/complete/{ticket_no}', [pagescontroller::class, 'complete_booking'])->name('independent.complete_booking');

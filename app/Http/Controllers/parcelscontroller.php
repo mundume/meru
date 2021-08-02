@@ -145,14 +145,14 @@ class parcelscontroller extends Controller
             'fleet_id' => $request->fleet_id
         ]);
 
-        $message = Message::where('name', 'PARCEL_RECEIVER')->first()->body;
-        $message = str_replace('%parcel_no%', $parcel_no, $message);
-        $message = str_replace('%name%', $parcel->receiver_name, $message);
-        $message = str_replace('%break%', "\r\n", $message);
-        $message = str_replace('%link%', config('app.url'), $message);
+        // $message = Message::where('name', 'PARCEL_RECEIVER')->first()->body;
+        // $message = str_replace('%parcel_no%', $parcel_no, $message);
+        // $message = str_replace('%name%', $parcel->receiver_name, $message);
+        // $message = str_replace('%break%', "\r\n", $message);
+        // $message = str_replace('%link%', config('app.url'), $message);
 
-        $sms = new smscontroller;
-        $sms->send_sms($parcel->receiver_mobile, $message);
+        // $sms = new smscontroller;
+        // $sms->send_sms($parcel->receiver_mobile, $message);
 
         Session::flash('success', 'Parcel assigned to fleet.');
         return redirect()->back();

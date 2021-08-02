@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Route,Booking,Parcel,Payment,Calendarial};
+use App\Models\{Route,Booking,Parcel,Payment,Calendarial,Message};
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use DB;
@@ -11,6 +11,7 @@ use App\Http\Controllers\pesacontroller;
 use App\Http\Controllers\smscontroller;
 use Session;
 use Auth;
+use App\Jobs\SendSms;
 
 class pagescontroller extends Controller
 {
@@ -119,16 +120,16 @@ public function post_complete_booking(Request $request) {
         $route = Route::where('fleet_unique', $book->fleet_unique)->first();
         $amount = $route->amount;
     }
-    $contact = '254'.substr($request->mobile,-9);
+    $contact = $book->mobile;
     $stk = new pesacontroller;
     $result = $stk->prompt_push(
         $request->ticket_no,
-        $amount,
+        1,
         $contact,
         route('payment.callback'),
         'BOOKING PAYMENT'
     );
-    if($result['ResponseCode'] == 0) {
+    if($result->ResponseCode == 0) {
         DB::transaction(function() use($amount, $result, $request) {
             Booking::where('ticket_no', $request->ticket_no)->update([
                 'CheckoutRequestID' => $result->CheckoutRequestID,
@@ -147,9 +148,9 @@ public function post_complete_booking(Request $request) {
         $message = str_replace('%ticket_no%', $book->ticket_no, $message);
         $message = str_replace('%link%', config('app.url'), $message);
         $message = str_replace('%break%', "\r\n", $message);
+        $dispatch = ['mobile' => $contact, 'message' => $message];
+        SendSms::dispatch($dispatch)->delay(Carbon::now()->addSeconds(3));
 
-        $sms = new smscontroller;
-        $sms->send_sms($contact, $message);
         Session::flash('success', 'Ticket generated successfully.');
         return redirect('/route/booking/status/'.$book->ticket_no);
     } else {
@@ -164,9 +165,9 @@ public function post_complete_booking(Request $request) {
         $message = str_replace('%ticket_no%', $book->ticket_no, $message);
         $message = str_replace('%link%', config('app.url'), $message);
         $message = str_replace('%break%', "\r\n", $message);
-
-        $sms = new smscontroller;
-        $sms->send_sms($contact, $message);
+        $dispatch = ['mobile' => $contact, 'message' => $message];
+        SendSms::dispatch($dispatch)->delay(Carbon::now()->addSeconds(3));
+        
         Session::flash('success', 'Ticket generated successfully.');
         return redirect('/route/booking/status/'.$book->ticket_no);
     }
@@ -264,5 +265,20 @@ public function scheduled() {
 }
 public function services() {
     return view('pages.services');
+}
+public function send_message(Request $request) {
+    $this->validate($request, [
+        'mobile' => 'required|digits:10',
+        'name' => 'required',
+        'body' => 'required'
+    ]);
+    Complain::create([
+        'name' => $request->name,
+        'mobile' => $request->mobile,
+        'body' => strip_tags($request->body),
+        'subject' => $request->subject
+    ]);
+    Session::flash('success', 'Message received successfully. We will get intouch soon.');
+    return redirect()->back();
 }
 }

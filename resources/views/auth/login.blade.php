@@ -3,7 +3,7 @@
 @section('body')
 <style>
     #home {
-        background: url(shuttle_images/tourist.png) no-repeat center center fixed;
+background: url(shuttle_images/new_.png) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;

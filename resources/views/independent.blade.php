@@ -1,5 +1,10 @@
 @extends('layouts.main')
 @section('title', 'Home')
+<style>
+    .navbar.header-1 {
+        background-color: transparent;
+    }
+</style>
 @section('body')
 <div class="home-container">
 
@@ -15,8 +20,8 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                <h1 id="welcome">Welcome To Shuttle App</h1>
-                                <h3 id="tagline">Enjoy Best Services With Us!</h3>
+<h1 id="welcome">Welcome To Meru Artists</h1>
+<h3 id="tagline">Ride with us, ride with style.</h3>
                                 <div class="hero-text" style="margin-bottom: 100px;">
                                     @include('layouts.search_form')
                                 </div><!-- end hero text -->
@@ -42,39 +47,49 @@
 
                 <div class="owl-carousel owl-theme" id="owl-rooms">
 
-                    <div>
-                        <div class="grid">
-                            <div class="room-block">
-                                <div class="room-img">
-                                    <img src="{{ asset('theme_one/images/room-1.jpg') }}" class="img-fluid" alt="room-image" />
-                                    <div class="room-title">
-                                        <a href="#">
-                                            <h3>Nairobi ~ Mombasa</h3>
-                                        </a>
-                                        <div class="rating">
-                                            <span><i class="fa fa-star"></i></span>
-                                            <span><i class="fa fa-star"></i></span>
-                                            <span><i class="fa fa-star"></i></span>
-                                            <span><i class="fa fa-star"></i></span>
-                                            <span><i class="fa fa-star-o"></i></span>
-                                        </div><!-- end rating -->
+@forelse($routes as $item)
+<div>
+    <div class="grid">
+        <div class="room-block">
+            <div class="room-img">
+<img src="{{ asset('theme_one/images/logo.png') }}" class="img-fluid" alt="room-image" />
+<div class="room-title">
+<a href="/route/booking/{{ base64_encode($item->id) }}">
+    <h3>{{ $item->departure }} ~ {{ $item->destination }}</h3>
+</a>
+<div class="rating">
+    <span><i class="fa fa-star"></i></span>
+    <span><i class="fa fa-star"></i></span>
+    <span><i class="fa fa-star"></i></span>
+    <span><i class="fa fa-star"></i></span>
+    <span><i class="fa fa-star-o"></i></span>
+</div><!-- end rating -->
                                         </div><!-- end room-title -->
-                                        </div><!-- end room-img -->
+</div><!-- end room-img -->
 
-                                        <div class="room-price">
-                                            <ul class="list-unstyled">
-                                                <li>KShs 1800<span class="link"><a href="#" style="color:white;" class="btn btn-warning">Book</a></span></li>
+<div class="room-price">
+    <ul class="list-unstyled">
+<li>KShs {{ number_format($item->amount, 2) }}<span class="link"><a href="/route/booking/{{ base64_encode($item->id) }}"
+            style="color:white;" class="btn btn-warning">Book</a></span>
+</li>
                                             </ul>
-                                        </div><!-- end room-price -->
-                                        </div><!-- end room-block -->
-                                        </div><!-- end grid -->
-                                        </div><!-- end item -->
+</div><!-- end room-price -->
+</div><!-- end room-block -->
+</div><!-- end grid -->
+</div>
+@empty
+<div>
+    <div class="grid">
+<p>Oops, no fleet available!</p>
+</div>
+</div>
+@endforelse
 
-                    <div>
-                        <div class="grid">
+{{-- <div>
+                                <div class="grid">
                             <div class="room-block">
                                 <div class="room-img">
-                                    <img src="{{ asset('theme_one/images/room-3.jpg') }}" class="img-fluid" alt="room-image" />
+<img src="{{ asset('theme_one/images/logo.png') }}" class="img-fluid" alt="room-image" />
                                     <div class="room-title">
                                         <a href="#">
                                             <h3>Nairobi ~ Kisumu</h3>
@@ -96,13 +111,13 @@
                                 </div><!-- end room-price -->
                             </div><!-- end room-block -->
                         </div><!-- end grid -->
-                        </div><!-- end item -->
+</div><!-- end item --> --}}
 
-                    <div>
+{{-- <div>
                         <div class="grid">
                             <div class="room-block">
                                 <div class="room-img">
-                                    <img src="{{ asset('theme_one/images/room-5.jpg') }}" class="img-fluid" alt="room-image" />
+<img src="{{ asset('theme_one/images/logo.png') }}" class="img-fluid" alt="room-image" />
                                     <div class="room-title">
                                         <a href="#">
                                             <h3>Nairobi ~ Eldoret</h3>
@@ -124,13 +139,13 @@
                                 </div><!-- end room-price -->
                             </div><!-- end room-block -->
                         </div><!-- end grid -->
-                        </div><!-- end item -->
+</div><!-- end item --> --}}
 
-                    <div>
+{{-- <div>
                         <div class="grid">
                             <div class="room-block">
                                 <div class="room-img">
-                                    <img src="{{ asset('theme_one/images/room-3.jpg') }}" class="img-fluid" alt="room-image" />
+<img src="{{ asset('theme_one/images/logo.png') }}" class="img-fluid" alt="room-image" />
                                     <div class="room-title">
                                         <a href="#">
                                             <h3>Meru ~ Nairobi</h3>
@@ -152,13 +167,13 @@
                                 </div><!-- end room-price -->
                             </div><!-- end room-block -->
                         </div><!-- end grid -->
-                        </div><!-- end item -->
+</div><!-- end item --> --}}
 
-                    <div>
+{{-- <div>
                         <div class="grid">
                             <div class="room-block">
                                 <div class="room-img">
-                                    <img src="{{ asset('theme_one/images/room-1.jpg') }}" class="img-fluid" alt="room-image" />
+<img src="{{ asset('theme_one/images/logo.png') }}" class="img-fluid" alt="room-image" />
                                     <div class="room-title">
                                         <a href="#">
                                             <h3>Mombasa ~ Nairobi</h3>
@@ -180,7 +195,7 @@
                                 </div><!-- end room-price -->
                             </div><!-- end room-block -->
                         </div><!-- end grid -->
-                        </div><!-- end item -->
+</div><!-- end item --> --}}
 
                         </div><!-- end owl-rooms -->
                         </div><!-- end columns -->
@@ -196,9 +211,8 @@
                                     <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                                         <div class="page-heading">
                                             <h2>Our <span>Services</span></h2>
-                                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-                                                tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
-                                                nostrud exerci tation ullamcorper suscipit.</p>
+<p>As an organization, we are committed to providing our customers with the highest quality of service and safety in the
+    transport industry.</p>
                                         </div><!-- end page-heading -->
 
                                         <div id="service-blocks">
@@ -206,19 +220,17 @@
 
                                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                                     <div class="service-block">
-                                                        <span><i class="fa fa-coffee"></i></span>
+<span><i class="fa fa-receipt"></i></span>
                                                         <h2 class="service-name">Tickets Booking</h2>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti sit dicta quae
-                                                            natus quasi ratione quis id, tenetur atque blanditiis.</p>
+<p>You book, we preserve seat for you all at click of the button. Our committment is to serve you better.</p>
                                                     </div><!-- end service-block -->
                                                 </div><!-- end columns -->
 
                                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                                     <div class="service-block">
-                                                        <span><i class="fa fa-leaf"></i></span>
+<span><i class="fa fa-truck"></i></span>
                                                         <h2 class="service-name">Parcels</h2>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti sit dicta quae
-                                                            natus quasi ratione quis id, tenetur atque blanditiis.</p>
+<p>Affordable rates and security of your parcel is our concerns. Send parcel with us today.</p>
                                                     </div><!-- end service-block -->
                                                 </div><!-- end columns -->
                                             </div><!-- end row -->
@@ -245,7 +257,7 @@
                                                     <ol class="carousel-indicators">
                                                         <li data-target=".review-carousel" data-slide-to="0" class="active"></li>
                                                         <li data-target=".review-carousel" data-slide-to="1"></li>
-                                                        <li data-target=".review-carousel" data-slide-to="2"></li>
+{{-- <li data-target=".review-carousel" data-slide-to="2"></li> --}}
                                                     </ol>
                                                 </div><!-- end columns -->
 
@@ -262,22 +274,19 @@
                                                             <div class="row">
 
                                                                 <div class="col-12 col-md-4 col-lg-3 col-xl-3 reviewer-image">
-                                                                    <img src="{{ asset('theme_one/images/reviewer-1.jpg') }}" alt="reviewer-image" class="rounded-circle">
+<img src="{{ asset('avatar.png') }}" alt="reviewer-image" class="rounded-circle">
                                                                 </div><!-- end columns -->
 
                                                                 <div class="col-12 col-md-8 col-lg-9 col-xl-9">
-                                                                    <p class="review-text">Lorem ipsum dolor sit amet, consectetuer
-                                                                        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
-                                                                        dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam,
-                                                                        quis nostrud exerci tation ullamcorper suscipit.</p>
+<p class="review-text">So far as I know the best service provider in Meru to Nairobi route</p>
                                                                     <div class="rating">
                                                                         <span><i class="fa fa-star"></i></span>
                                                                         <span><i class="fa fa-star"></i></span>
-                                                                        <span><i class="fa fa-star star-opacity"></i></span>
-                                                                        <span><i class="fa fa-star star-opacity"></i></span>
+<span><i class="fa fa-star"></i></span>
+<span><i class="fa fa-star"></i></span>
                                                                         <span><i class="fa fa-star star-opacity"></i></span>
                                                                     </div><!-- end rating -->
-                                                                    <p class="reviewer-name">Lorem Ipsum</p>
+<p class="reviewer-name">Derrick Bundi</p>
                                                                 </div><!-- end columns -->
 
                                                             </div><!-- end row -->
@@ -287,34 +296,32 @@
                                                             <div class="row">
 
                                                                 <div class="col-12 col-md-4 col-lg-3 col-xl-3 reviewer-image">
-                                                                    <img src="{{ asset('theme_one/images/reviewer-1.jpg') }}" alt="reviewer-image" class="rounded-circle">
+<img src="{{ asset('avatar.png') }}" alt="reviewer-image" class="rounded-circle">
                                                                 </div><!-- end columns -->
 
                                                                 <div class="col-12 col-md-8 col-lg-9 col-xl-9">
-                                                                    <p class="review-text">Lorem ipsum dolor sit amet, consectetuer
-                                                                        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
-                                                                        dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam,
-                                                                        quis nostrud exerci tation ullamcorper suscipit.</p>
+<p class="review-text">I sent my parcel through Meru Artist Coaches and guess what, they delivered it into my door.
+    Thank you guys.</p>
                                                                     <div class="rating">
                                                                         <span><i class="fa fa-star"></i></span>
                                                                         <span><i class="fa fa-star"></i></span>
-                                                                        <span><i class="fa fa-star star-opacity"></i></span>
-                                                                        <span><i class="fa fa-star star-opacity"></i></span>
+<span><i class="fa fa-star"></i></span>
+<span><i class="fa fa-star"></i></span>
                                                                         <span><i class="fa fa-star star-opacity"></i></span>
                                                                     </div><!-- end rating -->
 
-                                                                    <p class="reviewer-name">Lorem Ipsum</p>
+<p class="reviewer-name">Cecilia Kendi</p>
                                                                 </div><!-- end columns -->
 
                                                             </div><!-- end row -->
                                                         </div><!-- end item -->
 
-                                                        <div class="carousel-item">
+{{-- <div class="carousel-item">
                                                             <div class="row">
 
                                                                 <div class="col-12 col-md-4 col-lg-3 col-xl-3 reviewer-image">
-                                                                    <img src="{{ asset('theme_one/images/reviewer-1.jpg') }}" alt="reviewer-image" class="rounded-circle">
-                                                                </div><!-- end columns -->
+<img src="{{ asset('theme_one/images/derr.jpg') }}" alt="reviewer-image" class="rounded-circle">
+</div>
 
                                                                 <div class="col-12 col-md-8 col-lg-9 col-xl-9">
                                                                     <p class="review-text">Lorem ipsum dolor sit amet, consectetuer
@@ -327,13 +334,13 @@
                                                                         <span><i class="fa fa-star star-opacity"></i></span>
                                                                         <span><i class="fa fa-star star-opacity"></i></span>
                                                                         <span><i class="fa fa-star star-opacity"></i></span>
-                                                                    </div><!-- end rating -->
+</div>
 
                                                                     <p class="reviewer-name">Lorem Ipsum</p>
-                                                                </div><!-- end columns -->
+</div>
 
-                                                            </div><!-- end row -->
-                                                        </div><!-- end item -->
+</div>
+</div> --}}
 
                                                     </div><!-- end carousel-inner -->
                                                 </div><!-- end columns -->
@@ -351,28 +358,28 @@
         <div class="row">
             <div class="col-12 col-md-6 col-lg-3 col-xl-3">
                 <div class="highlight-box">
-                    <h2>11200</h2>
+<h2>{{ $total_booking }}</h2>
                     <h4>Total Bookings</h4>
                 </div><!-- end highlight-box -->
             </div><!-- end columns -->
 
             <div class="col-12 col-md-6 col-lg-3 col-xl-3">
                 <div class="highlight-box">
-                    <h2>25400</h2>
+<h2>{{ $total_parcel }}</h2>
                     <h4>Total Parcels</h4>
                 </div><!-- end highlight-box -->
             </div><!-- end columns -->
 
             <div class="col-12 col-md-6 col-lg-3 col-xl-3">
                 <div class="highlight-box">
-                    <h2>150</h2>
+<h2>{{ $today_booking }}</h2>
                     <h4>Today's Bookings</h4>
                 </div><!-- end highlight-box -->
             </div><!-- end columns -->
 
             <div class="col-12 col-md-6 col-lg-3 col-xl-3">
                 <div class="highlight-box">
-                    <h2>500</h2>
+<h2>{{ $today_parcel }}</h2>
                     <h4>Today's Parcels</h4>
                 </div><!-- end highlight-box -->
             </div><!-- end columns -->
@@ -383,7 +390,7 @@
 
 
             <!--============== CONTACT-FORM ===============-->
-            <section id="contact-form-2" class="banner-padding">
+<section id="contact-form-2" class="banner-padding">
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
@@ -397,7 +404,7 @@
                             </div><!-- end columns -->
 
                             <div class="a-text">
-                                <p>River Road Next to Shell, Nairobi, Kenya.</p>
+<p>River Road Egoji House, 2nd Floor, Nairobi, Kenya.</p>
                             </div><!-- end columns -->
                         </div><!-- end address-block -->
 
@@ -407,8 +414,8 @@
                             </div><!-- end columns -->
 
                             <div class="a-text">
-                                <p>Phone: +254 712345678</p>
-                                <p>P.O Box: 123-60200</p>
+<p>Phone: +254 746245461</p>
+<p>P.O Box: 461-60200</p>
                             </div><!-- end columns -->
                         </div><!-- end address-block -->
 
@@ -418,35 +425,36 @@
                             </div><!-- end columns -->
 
                             <div class="a-text">
-                                <p>Support: <a href="#">support@shuttleapp.co.ke</a></p>
-                                <p>Booking: <a href="#">booking@shuttleapp.co.ke</a></p>
+<p>Enquiries: <a href="#">info@meruartists.co.ke</a></p>
+<p>Booking: <a href="#">booking@meruartists.co.ke</a></p>
                             </div><!-- end columns -->
                         </div><!-- end address-block -->
                     </div>
                     <div class="col-12 col-md-12 col-lg-7 col-xl-7 text-center">
-                        <form>
+<form action="{{ route('send_message') }}" method="POST">
+    @csrf
                             <div class="row">
                                 <div class="col-md-6 slide-right-vis">
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Name" required />
+<input type="text" class="form-control" placeholder="Name *" name="name" required />
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Email" required />
+<input type="text" class="form-control" placeholder="0712345678 *" name="mobile" required />
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Subject" required />
+<input type="text" class="form-control" placeholder="Subject (Optional)" name="subject" />
                                     </div>
                                 </div><!-- end columns -->
 
                                 <div class="col-md-6 slide-left-vis">
                                     <div class="form-group m-0">
-                                        <textarea class="form-control" placeholder="Your Message"></textarea>
+<textarea class="form-control" placeholder="Your Message *" name="body" required></textarea>
                                     </div>
                                 </div><!-- end columns -->
 
                                 <div class="col-md-12 text-center">
-                                    <a href="#" class="btn btn-yellow btn-block">Submit</a>
+<button type="submit" class="btn btn-yellow btn-block">Send Message</button>
                                 </div><!-- end butn -->
                                 </div><!-- end row -->
                         </form>

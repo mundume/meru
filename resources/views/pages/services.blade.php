@@ -11,9 +11,8 @@
                     <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="page-heading">
                             <h2>Our <span>Services</span></h2>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-                                tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam,
-                                quis nostrud exerci tation ullamcorper suscipit.</p>
+<p>As an organization, we are committed to providing our customers with the highest quality of service and safety in the
+    transport industry.</p>
                         </div><!-- end page-heading -->
 
                         <div id="service-blocks">
@@ -21,27 +20,25 @@
 
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="service-block-2">
-                                        <span class="main-icon"><i class="fa fa-coffee"></i></span>
+<span class="main-icon"><i class="fa fa-receipt"></i></span>
                                         <div class="s-2-text">
                                             <h2 class="service-name">Tickets Booking</h2>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti sit
-                                                dicta quae natus quasi ratione quis id, tenetur atque blanditiis.</p>
+<p>You book we preserve seat for you all at click of the button. Our committment is to serve you better.</p>
                                         </div><!-- end s-2-text -->
 
-                                        <span class="back-icon"><i class="fa fa-coffee"></i></span>
+<span class="back-icon"><i class="fa fa-receipt"></i></span>
                                     </div><!-- end service-block-2 -->
                                 </div><!-- end columns -->
 
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                     <div class="service-block-2">
-                                        <span class="main-icon"><i class="fa fa-coffee"></i></span>
+<span class="main-icon"><i class="fa fa-truck"></i></span>
                                         <div class="s-2-text">
                                             <h2 class="service-name">Parcels</h2>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti sit
-                                                dicta quae natus quasi ratione quis id, tenetur atque blanditiis.</p>
+<p>Affordable rates and security of your parcel is our concerns. Send parcel with us today.</p>
                                         </div><!-- end s-2-text -->
 
-                                        <span class="back-icon"><i class="fa fa-coffee"></i></span>
+<span class="back-icon"><i class="fa fa-truck"></i></span>
                                     </div><!-- end service-block-2 -->
                                 </div><!-- end columns -->
 

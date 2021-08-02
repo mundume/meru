@@ -19,7 +19,7 @@ class userseeder extends Seeder
                 'role_id' => 1,
                 'fname' => 'Derrick',
                 'lname' => 'Bundi',
-                'c_name' => 'Shuttle App',
+                'c_name' => 'Artists App',
                 'mobile' => '0799770833',
                 'c_mobile' => '0799770833',
                 'id_no' => '31842542',
@@ -27,6 +27,19 @@ class userseeder extends Seeder
                 'email' => 'derrick.bundi27@gmail.com',
                 'password' => bcrypt('123456'),
                 'handle'=> 'abcdef'
+            ],
+            [
+                'role_id' => 1,
+                'fname' => 'Mike',
+                'lname' => 'Julian',
+                'c_name' => 'Artists App',
+                'mobile' => '0710640098',
+                'c_mobile' => '0710640098',
+                'id_no' => '31842540',
+                'c_county' => 'Meru',
+                'email' => 'mike@meruartists.co.ke',
+                'password' => bcrypt('123456'),
+                'handle'=> 'abcdee'
             ]
         ]);
         DB::table('systems')->insert([
@@ -37,17 +50,32 @@ class userseeder extends Seeder
         DB::table('accounts')->insert([
             [
                 'user_id' => 1,
-				'c_name' => 'Shuttle App',
+				'c_name' => 'Artists App',
 				'u_name' => 'Derrick',
 				'mobile' => '0799770833',
 				'balance' => 0,
                 'total_amount' => 0,
                 'account_code' => 4512411
+            ],
+            [
+                'user_id' => 2,
+				'c_name' => 'Artists App',
+				'u_name' => 'Mike',
+				'mobile' => '0710640098',
+				'balance' => 0,
+                'total_amount' => 0,
+                'account_code' => 4512412
             ]
         ]);
         DB::table('providers')->insert([
-            'user_id' => 1,
-            'c_name' => 'Shuttle App'
+            [
+                'user_id' => 1,
+                'c_name' => 'Artists App'
+            ],
+            [
+                'user_id' => 2,
+                'c_name' => 'Artists App'
+            ]
         ]);
     }
 }

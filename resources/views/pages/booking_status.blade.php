@@ -7,7 +7,7 @@
 @section('body')
 <div class="row align-items-center">
     <div class="col-md-12">
-        <div style="margin:80px 10px 0 10px;">
+<div style="margin:120px 10px 0 10px;">
 
             <div class="row">
                 <div class="col-md-8 offset-md-2">
@@ -68,7 +68,9 @@
                             <hr>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h4 style="background-color: #183947;color:white;padding:5px;">TICKET NO: {{ $books->ticket_no }} </h4>
+<button class="btn btn btn-block"
+    style="background-color: #183947;color:white;padding:5px;border-radius:0px;text-transform:uppercase;width:100%;">TICKET
+    NUMBER: {{ $books->ticket_no }}</button>
                                 </div>
                             </div>
                             <hr>
@@ -94,6 +96,7 @@
                 </div>
             </div>
 
+<br>
         </div>
     </div>
 </div>

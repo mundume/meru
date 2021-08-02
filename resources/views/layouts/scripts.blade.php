@@ -8,3 +8,4 @@
 <script src="{{ asset('theme_one/vendors/gijgo-combined-1.9.13/js/gijgo.min.js') }}"></script>
 <script src="{{ asset('theme_one/js/custom-flex.js') }}"></script>
 <script src="{{ asset('theme_one/js/custom-owl.js') }}"></script>
+<script src="{{asset('/datetime/build/jquery.datetimepicker.full.min.js')}}"></script>

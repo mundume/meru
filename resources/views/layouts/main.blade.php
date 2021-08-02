@@ -11,6 +11,7 @@
     </div>
    @yield('body')
     @include('layouts.footer')
+@yield('scripts')
     @include('layouts.scripts')
     <script>
         $('#datepicker').datepicker({

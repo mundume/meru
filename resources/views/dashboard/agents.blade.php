@@ -11,9 +11,9 @@
         </button>
         </div>
         </div>
-        @if(auth()->user()->role_id == 1)
-        <br>
-        <div class="row">
+{{-- @if(auth()->user()->role_id == 1) --}}
+{{-- <br> --}}
+{{-- <div class="row">
             <div class="col-lg-12 col-xl-12 stretch-card">
                 <div class="card">
                     <div class="card-body">
@@ -25,14 +25,11 @@
                                     <thead>
                                         <tr>
                                             <th class="pt-0">#</th>
-                                            <th class="pt-0">Name</th>
-                                            {{-- <th class="pt-0">ID</th> --}}
+<th class="pt-0">Name</th>
                                             <th class="pt-0">Email</th>
                                             <th class="pt-0">Mobile</th>
-                                            <th class="pt-0">Office Mobile</th>
-                                            {{-- <th class="pt-0">Pass Code</th> --}}
-                                            <th class="pt-0"></th>
-                                            {{-- <th class="pt-0">Office</th> --}}
+<th class="pt-0">Office Mobile</th>
+<th class="pt-0"></th>
                                             <th class="pt-0">Action</th>
                                         </tr>
                                     </thead>
@@ -40,20 +37,17 @@
                                         @foreach($admins as $user)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{$user->fname}}</td>
-                                            {{-- <td>{{ $user->user->id_no }}</td> --}}
+<td>{{$user->fname}}</td>
                                             <td><code>{{ $user->email }}</code></td>
                                             <td>{{ $user->mobile }}</td>
-                                            <td>{{ $user->c_mobile }}</td>
-                                            {{-- <td>{{ $user->pass_code }}</td> --}}
+<td>{{ $user->c_mobile }}</td>
                                             <td>
                                                 @if($user->suspend == null)
                                                 <span class="badge badge-success">Active</span>
                                                 @else
                                                 <span class="badge badge-danger">Not Active</span>
                                                 @endif
-                                            </td>
-                                            {{-- <td>{{ @$user->dropoff->office_name }}</td> --}}
+</td>
                                             <td class="form-inline">
                                                 @if($user->role_id == 0)
                                                 @if($user->suspend == null)
@@ -87,8 +81,8 @@
                             </div>
                             </div>
                             </div>
-                            </div>
-                            @endif
+</div> --}}
+{{-- @endif --}}
                             <br>
                             <div class="row">
                                 <div class="col-lg-12 col-xl-12 stretch-card">
@@ -281,9 +275,9 @@
                                 <option selected hidden data-default disabled>Select Role</option>
                                 <option value="0">Booking & Courier</option>
                                 <option value="1">Courier Only</option>
-                                @if(auth()->user()->role_id == 1)
+{{-- @if(auth()->user()->role_id == 1)
                                 <option value="2">Admin</option>
-                                @endif
+@endif --}}
                             </select>
                             @error('role')
                             <small class="text-danger">{{$message}}</small>
@@ -296,9 +290,9 @@
                                 @foreach($offices->unique('office_name') as $sp)
                                 <option>{{$sp->office_name}}</option>
                                 @endforeach
-                                @if(auth()->user()->role_id == 1)
+{{-- @if(auth()->user()->role_id == 1)
                                 <option value="admin">Admin</option>
-                                @endif
+@endif --}}
                             </select>
                         </div>
                     </div>

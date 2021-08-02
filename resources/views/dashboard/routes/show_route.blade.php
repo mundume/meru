@@ -126,14 +126,14 @@
 @extends('layouts.main')
 @section('title', 'Search')
 @section('body')
-<link rel="stylesheet" href="{{ asset('theme_one/frame.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('theme_one/frame.css') }}"> --}}
 <section id="our-services" class="innerpage-wrapper">
     <section id="blog-details-page" class="innerpage-wrapper">
 
         <div id="blog-details" class="innerpage-section-padding">
             <div class="container">
                 <div class="row">
-                    <div class="col-12 col-md-12 col-lg-8 col-xl-8 content-side">
+<div class="col-12 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2 content-side">
                         <div class="space-right">
                             {{-- <div class="blog-list-block">
                             <div class="blog-list-detail">
@@ -160,7 +160,9 @@
                                         <div class="row">
                                             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                                                 {{-- <div class="space-right"> --}}
-                                                <h4 style="text-transform: uppercase;"><b>Fleet Information</b></h4>
+<h4 style="text-transform: uppercase;"><b>Fleet Information</b><b class="float-right"
+        style="color:orange;font-size:12px;">step 1 of
+        2</b></h4>
                                                 <hr>
                                                 <p>Route:- <b>{{ $route->departure }}</b> ~ <b>{{ $route->destination }}</b></p>
                                                 <p>
@@ -192,7 +194,8 @@
                                                 <h4 style="text-transform: uppercase;"><b>Add your detail and proceed</b></h4>
                                                 <hr>
                                                 {{-- <div class="space-right"> --}}
-                                                <form>
+<form action="{{ route('independent.booking_step_one', base64_encode($route->id)) }}" method="POST">
+    @csrf
                                                     <div class="row">
 
                                                         <div class="col-12 col-md-12 col-lg-12 col-xl-12">
@@ -211,11 +214,11 @@
 
                                                         <div class="col-12 col-md-6 col-lg-12 col-xl-12 {{ $errors->has('pick_up') ? 'has-error' : '' }}">
                                                             <div class="form-group">
-                                                                <select class="form-control border-radius" name="pick_up" style="height:42px;" required>
-                                                                    {{-- @foreach($picks as $pick) --}}
+<select class="form-control border-radius" name="pick_up" style="height:42px;" required>
                                                                     <option selected hidden data-default disabled>CHOOSE PICKUP POINT</option>
-                                                                    <option>Point A</option>
-                                                                    {{-- @endforeach --}}
+@foreach($picks as $pick)
+<option>{{ $pick }}</option>
+@endforeach
                                                                 </select>
                                                                 <small class="text-danger">{{$errors->first('pick_up')}}</small>
                                                             </div>
@@ -229,7 +232,7 @@
                                                         </div>
 
                                                         <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                                            <a href="#" class="btn-block btn btn-yellow">PROCEED</a>
+<button type="submit" class="btn btn-block btn-yellow">PROCEED</button>
                                                         </div><!-- end columns -->
 
                                                     </div><!-- end row -->
@@ -245,7 +248,7 @@
                         </div><!-- end space-right -->
                     </div><!-- end columns -->
 
-                    <div class="col-12 col-md-12 col-lg-4 col-xl-4 side-bar blog-sidebar">
+{{-- <div class="col-12 col-md-12 col-lg-4 col-xl-4 side-bar blog-sidebar">
 
                         <div class="side-bar-block search">
                             <div class="row">
@@ -272,7 +275,7 @@
 
                             </div><!-- end row -->
                         </div><!-- end side-bar-block -->
-                    </div><!-- end columns -->
+</div><!-- end columns --> --}}
                 </div><!-- end row -->
             </div><!-- end container -->
         </div><!-- end blog-details -->

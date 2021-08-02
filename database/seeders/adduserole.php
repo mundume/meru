@@ -20,5 +20,11 @@ class adduserole extends Seeder
         $permissions = [1,2,3];
         $role->syncPermissions($permissions);
         $user_one->assignRole([$role->id]);
+
+        $user_two = User::find(2);
+        $role = Role::find(1);
+        $permissions = [1,2,3];
+        $role->syncPermissions($permissions);
+        $user_two->assignRole([$role->id]);
     }
 }

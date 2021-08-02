@@ -3,10 +3,12 @@
         <div class="container">
             <div class="row">
 <div class="col-12 col-md-6 col-lg-4 col-xl-4 text-left" id="more-about">
-    <h2 class="footer-heading"><span>SHUTTLE</span>APP</h2>
-    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-        tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
-        nostrud exerci tation ullamcorper suscipit.</p>
+<h2 class="footer-heading"><span>MERU </span>ARTIST COACHES</h2>
+<p>
+    We strive to offer superior services for success. This is achieved by employing the best people and maintaining
+    a modern fleet, committed to supporting our customers with the highest quality of service and safety in the
+    industry.
+</p>
     <ul class="social-links list-inline list-unstyled">
         <li class="list-inline-item"><a href="#"><span><i class="fab fa-facebook"></i></span></a>
         </li>
@@ -20,7 +22,8 @@
                     <h4 class="footer-heading">Company</h4>
                     <ul class="list-unstyled">
                         <li><a href="{{ route('independent') }}">Home</a></li>
-                        <li><a href="{{ route('independent.services') }}">Services</a></li>
+<li><a href="{{ route('independent.services') }}">Services</a></li>
+<li><a href="{{ route('login') }}">Login</a></li>
                     </ul>
                 </div><!-- end useful-links -->
 
@@ -34,7 +37,7 @@
 
                 <div class="col-12 col-md-6 col-lg-3 col-xl-3 text-left" id="f-newsletter">
                     <h4 class="footer-heading">Newsletter</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed nonummy nibh euismod.</p>
+<p>Ride with us, ride with style. Receive notification.</p>
                     <form>
                         <div class="form-group">
                             <div class="input-group">
@@ -53,7 +56,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6" id="copyright">
-                                <p>© <?php echo date('Y'); ?> <a href="#">ShuttleApp</a>. All rights reserved</p>
+<p>© <?php echo date('Y'); ?> <a href="#">Meru Artists Coaches</a>. All rights reserved</p>
                             </div><!-- end columns -->
 
                 <div class="col-12 col-md-6 col-lg-6 col-xl-6" id="terms">

@@ -31,7 +31,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
-                    <img src="{{ public_path('shuttle_images/barcode.png') }}" style="height: 50px;width:100%;">
+{{-- <img src="{{ public_path('shuttle_images/barcode.png') }}" style="height: 50px;width:100%;"> --}}
                 </div>
             </div>
             <br>

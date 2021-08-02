@@ -12,6 +12,11 @@ return [
     'faker_locale' => 'en_US',
     'key' => env('APP_KEY'),
     'cipher' => 'AES-256-CBC',
+    'business_code' => env('BUSINESS_CODE', ''),
+    'pass_key' => env('MPESA_PASS_KEY', ''),
+    'mpesa_consumer_key' => env('MPESA_CONSUMER_KEY', ''),
+    'mpesa_consumer_secret' => env('MPESA_CONSUMER_SECRET', ''),
+    'mpesa_type' => env('MPESA_TYPE', ''),
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

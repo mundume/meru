@@ -363,7 +363,7 @@ nav.navbar ul.dropdown-menu li.dropdown-submenu:hover a:after {
    ----------------------------------------------------- */
 
 .navbar.header-1 {
-	background-color: transparent;
+	/* background-color: transparent; */
 	-webkit-transition: .2s ease;
 	transition: .2s ease;
 	-webkit-box-shadow: unset;
@@ -738,15 +738,19 @@ ul.main-menu-social li a {
 }
 
 #slider .item-1 {
-	background: -webkit-gradient(linear, left top, left bottom, from(rgba(112, 86, 7, 0.45)), to(rgba(112, 86, 7, 0.45))), url(../images/slider-1.jpg) center center no-repeat;
-	background: linear-gradient(rgba(112, 86, 7, 0.45), rgba(112, 86, 7, 0.45)), url(../images/slider-1.jpg) center center no-repeat;
+	background: -webkit-gradient(linear, left top, left bottom, from(rgba(112, 86, 7, 0.45)), to(rgba(112, 86, 7, 0.45))),
+	url(../images/van.png) center center no-repeat;
+	background: linear-gradient(rgba(112, 86, 7, 0.45), rgba(112, 86, 7, 0.45)),
+	url(../images/van.png) center center no-repeat;
 	background-size: cover;
 	height: 100%;
 }
 
 #slider .item-2 {
-	background: -webkit-gradient(linear, left top, left bottom, from(rgba(112, 86, 7, 0.45)), to(rgba(112, 86, 7, 0.45))), url(../images/slider-2.jpg) center center;
-	background: linear-gradient(rgba(112, 86, 7, 0.45), rgba(112, 86, 7, 0.45)), url(../images/slider-2.jpg) center center;
+	background: -webkit-gradient(linear, left top, left bottom, from(rgba(112, 86, 7, 0.45)), to(rgba(112, 86, 7, 0.45))),
+	url(../images/van.png) center center;
+	background: linear-gradient(rgba(112, 86, 7, 0.45), rgba(112, 86, 7, 0.45)),
+	url(../images/van.png) center center;
 	background-size: cover;
 	height: 100%;
 }
@@ -1634,8 +1638,10 @@ ul.main-menu-social li a {
    ----------------------------------------------------- */
 
 #testimonials {
-	background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 203, 5, 0.8)), to(rgba(255, 203, 5, 0.8))), url('../images/testimonial.jpg');
-	background: linear-gradient(rgba(255, 203, 5, 0.8), rgba(255, 203, 5, 0.8)), url('../images/testimonial.jpg');
+	background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 203, 5, 0.8)), to(rgba(255, 203, 5, 0.8))),
+	url('../images/van.png');
+	background: linear-gradient(rgba(255, 203, 5, 0.8), rgba(255, 203, 5, 0.8)),
+	url('../images/van.png');
 	background-size: cover;
 	background-position: center;
 }

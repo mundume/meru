@@ -35,11 +35,11 @@
                             <div class="row derrick">
                                 <div class="col-md-2">
                                     <a href="{{route('route.show', [base64_encode($route->id)])}}">
-                                        <img src="{{ asset('shuttle_images/logo.png') }}" style="height: 50px;width:50px;">
+<img src="{{ asset('shuttle_images/logo.png') }}" style="height: 40px;width:50px;">
                                     </a>
                                 </div>
                                 <div class="col-md-3">
-                                    <p><b>{{$route->departure}} ~ {{$route->destination}}</b></p>
+<p><b>{{$route->depart1}} ~ {{$route->arriv1}}</b></p>
                                 </div>
                                 <div class="col-md-2" style="color: orange;">
                                     <p>{{number_format($route->amount, 2)}}</p>
@@ -69,7 +69,7 @@
                                     <li>
                                         <span><i class="fa fa-phone"></i></span>
                                         <div class="text">
-                                            <p>+254 712345678</p>
+<p>+254746245461</p>
                                         </div><!-- end text -->
                                     </li>
                                 </ul>

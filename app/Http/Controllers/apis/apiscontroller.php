@@ -96,7 +96,6 @@ class apiscontroller extends Controller
         // $res = json_decode($der->getBody());
         // Log::info($res);
         return response()->json();
-        // wget -m -k -p https://demo07.gethomey.io/
     }
     public function create_calend($dispatch) {
         $client = new Client;

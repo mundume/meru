@@ -1,11 +1,11 @@
 @extends('layouts.main')
 @section('title', 'Complete Booking')
 <link rel="stylesheet" href="{{ asset('css/frame.css') }}">
-<link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('datetime/jquery.datetimepicker.css')}}" />
 @section('body')
 <div class="row align-items-center">
     <div class="col-md-12">
-        <div style="margin:80px 10px 0 10px;">
+<div style="margin:120px 10px 0 10px;">
 
             <div class="row">
                 <div class="col-md-8 offset-md-2">
@@ -16,7 +16,8 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <input type="text" name="travel_date" placeholder="TRAVEL DATE" style="border-radius: 0px;height:50px;" id="get_date" required class="form-control" readonly>
+<input type="text" name="travel_date" placeholder="TRAVEL DATE" style="border-radius: 0px;height:50px;" id="get_date"
+    required class="form-control">
                                         <small class="text-danger">{{$errors->first('travel_date')}}</small>
                                     </div>
                                 </div>
@@ -38,6 +39,7 @@
                                 <div class="row">
                                     <div class="col-md-12" style="text-align: center;">
                                         <code>Amount may change based on travel date.</code>
+<br>
                                         <label id="ribbon">
                                         </label>
                                     </div>
@@ -60,16 +62,17 @@
                                     @endif
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+{{-- <div class="col-md-6">
                                         <a href="{{ url()->previous() }}" class="btn btn-danger btn-block" style="height:42px;border-radius:0px;">
                                             CANCEL TICKET
                                         </a>
                                     </div>
                                     <div class="d-md-none">
                                         <br>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button type="submit" class="btn btn-success btn-block" id="lock_fool" style="height:42px;border-radius:0px;">PAY TICKET</button>
+</div> --}}
+<div class="col-md-12">
+    <button type="submit" class="btn btn-success" id="lock_fool" style="height:42px;border-radius:0px;">PROCEED
+        AND FINISH</button>
                                     </div>
                                 </div>
                             </form>
@@ -102,6 +105,7 @@
                         </div>
                     </div>
 
+<br>
                 </div>
             </div>
 
