@@ -36,6 +36,10 @@ class messageseeder extends Seeder
                 'body' => 'Dear %name%, %break% Your parcel has been dispatched. Parcel number #%parcel_no% %break%Kindly check it arrival on our offices %break%Book ticket online via %link% %break%Thank you for choosing to send parcel with us.'
             ],
             [
+                'name' => 'COLLECT_PARCEL',
+                'body' => 'Greetings,%break%Kindly collect your parcel at our %office% or request a door delivery by calling %mobile%%break%Book ticket online via %link% %break%Thank you for choosing to send parcel with us.'  
+            ],
+            [
                 'name' => 'TICKET_STATUS',
                 'body' => 'Ticket Status %break%%link%/route/booking/status/%ticket_no%'
             ]

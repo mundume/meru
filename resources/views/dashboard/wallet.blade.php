@@ -80,7 +80,11 @@
 </script>
 <script>
     $(document).ready(function () {
-        $('#walletTable').DataTable()
+        $('#walletTable').DataTable({
+            "drawCallback": function (settings) {
+        feather.replace()
+        }
+        })
     });
 </script>
 @endsection

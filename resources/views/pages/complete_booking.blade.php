@@ -17,7 +17,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
 <input type="text" name="travel_date" placeholder="TRAVEL DATE" style="border-radius: 0px;height:50px;" id="get_date"
-    required class="form-control">
+    required class="form-control" readonly>
                                         <small class="text-danger">{{$errors->first('travel_date')}}</small>
                                     </div>
                                 </div>

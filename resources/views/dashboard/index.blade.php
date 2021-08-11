@@ -34,7 +34,7 @@
                                 <h4 class="mb-2 mt-3">{{ $parcels }}</h4>
                                 <div class="d-flex align-items-baseline">
                                     <p class="text-success">
-                                        <i data-feather="map" class="icon-sm mb-1"></i>
+                                        <i data-feather="truck" class="icon-sm mb-1"></i>
                                     </p>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                                 <h4 class="mb-2 mt-3">{{ $routes->count() }}</h4>
                                 <div class="d-flex align-items-baseline">
                                     <p class="text-success">
-                                        <i data-feather="truck" class="icon-md mb-1"></i>
+                                        <i data-feather="map" class="icon-md mb-1"></i>
                                     </p>
                                 </div>
                             </div>

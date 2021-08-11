@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-baseline mb-2">
-                    <h6 class="card-title mb-0">All Parcel ({{ $parcels->count() }})</h6>
+                    <h6 class="card-title mb-0">All Parcel ({{ $parcels->count() }})</h6>                    
                 </div>
                 <hr>
                 <div class="table-responsive">
@@ -194,7 +194,11 @@
 </script>
 <script>
     $(document).ready(function () {
-        $('#parcelTable').DataTable()
+        $('#parcelTable').DataTable({
+            "drawCallback": function (settings) {
+        feather.replace()
+        }
+        })
     });
 </script>
 @endsection

@@ -98,7 +98,11 @@
 </script>
 <script>
     $(document).ready(function () {
-        $('#dispatchTable').DataTable()
+        $('#dispatchTable').DataTable({
+            "drawCallback": function (settings) {
+        feather.replace()
+        }
+        })
     });
 </script>
 @endsection

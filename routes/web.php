@@ -92,6 +92,7 @@ Route::prefix('dashboard')->group(function() {
         Route::post('/parcel/assign/fleet/{parcel_no}', [parcelscontroller::class, 'parcel_assign_fleet'])->name('dashboard.parcel_assign_fleet');
         Route::post('/picked/{id}', [parcelscontroller::class, 'picked'])->name('dashboard.picked');
         Route::post('/sms/{id}', [parcelscontroller::class, 'parcel_sms'])->name('dashboard.sms');
+        Route::post('/agent/bulk/sms', [parcelscontroller::class, 'agent_bulk_sms'])->name('dashboard.agent_bulk_sms');
     });
     Route::prefix('wallet')->group(function() {
         Route::get('/', [dashboardcontroller::class, 'wallet'])->name('dashboard.wallet');
@@ -162,7 +163,8 @@ Route::get('/book/tickets/11/{id}', [dashboardcontroller::class, 'view_ticket_11
 Route::get('/book/tickets/14/{id}', [dashboardcontroller::class, 'view_ticket_14'])->name('dashboard.view_ticket_14');
 Route::get('/book/tickets/16/{id}', [dashboardcontroller::class, 'view_ticket_16'])->name('dashboard.view_ticket_16');
 
-Route::get('/scheduled', [pagescontroller::class, 'scheduled'])->name('test.scheduled');
+ Route::get('/print/ticket/{ticket_no}', [pagescontroller::class, 'print_ticket'])->name('print_ticket');
+// Route::get('/scheduled', [pagescontroller::class, 'scheduled'])->name('test.scheduled');
 
-Route::get('/route/1_1', [pagescontroller::class, 'single_route'])->name('single_route');
-Route::get('/contact_1', [pagescontroller::class, 'contact'])->name('contact');
+// Route::get('/route/1_1', [pagescontroller::class, 'single_route'])->name('single_route');
+// Route::get('/contact_1', [pagescontroller::class, 'contact'])->name('contact');

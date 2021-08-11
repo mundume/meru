@@ -90,7 +90,11 @@
 </script>
 <script>
     $(document).ready(function () {
-        $('#bookingTable').DataTable()
+        $('#bookingTable').DataTable({
+            "drawCallback": function (settings) {
+        feather.replace()
+        }
+        })
     });
 </script>
 @endsection

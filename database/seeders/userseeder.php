@@ -19,7 +19,7 @@ class userseeder extends Seeder
                 'role_id' => 1,
                 'fname' => 'Derrick',
                 'lname' => 'Bundi',
-                'c_name' => 'Artists App',
+                'c_name' => 'Meru Artist Coaches',
                 'mobile' => '0799770833',
                 'c_mobile' => '0799770833',
                 'id_no' => '31842542',
@@ -32,7 +32,7 @@ class userseeder extends Seeder
                 'role_id' => 1,
                 'fname' => 'Mike',
                 'lname' => 'Julian',
-                'c_name' => 'Artists App',
+                'c_name' => 'Meru Artist Coaches',
                 'mobile' => '0710640098',
                 'c_mobile' => '0710640098',
                 'id_no' => '31842540',
@@ -50,7 +50,7 @@ class userseeder extends Seeder
         DB::table('accounts')->insert([
             [
                 'user_id' => 1,
-				'c_name' => 'Artists App',
+				'c_name' => 'Meru Artist Coaches',
 				'u_name' => 'Derrick',
 				'mobile' => '0799770833',
 				'balance' => 0,
@@ -59,7 +59,7 @@ class userseeder extends Seeder
             ],
             [
                 'user_id' => 2,
-				'c_name' => 'Artists App',
+				'c_name' => 'Meru Artist Coaches',
 				'u_name' => 'Mike',
 				'mobile' => '0710640098',
 				'balance' => 0,
@@ -70,11 +70,11 @@ class userseeder extends Seeder
         DB::table('providers')->insert([
             [
                 'user_id' => 1,
-                'c_name' => 'Artists App'
+                'c_name' => 'Meru Artist Coaches'
             ],
             [
                 'user_id' => 2,
-                'c_name' => 'Artists App'
+                'c_name' => 'Meru Artist Coaches'
             ]
         ]);
     }

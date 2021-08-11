@@ -149,7 +149,11 @@
 </script>
 <script>
     $(document).ready(function () {
-        $('#smsTable').DataTable()
+        $('#smsTable').DataTable({
+            "drawCallback": function (settings) {
+        feather.replace()
+        }
+        })
     });
 </script>
 @endsection

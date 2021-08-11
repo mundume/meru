@@ -357,7 +357,11 @@
 @endif
 <script>
     $(document).ready(function () {
-        $('#parcelTable').DataTable()
+        $('#parcelTable').DataTable({
+            "drawCallback": function (settings) {
+        feather.replace()
+        }
+        })
     });
 </script>
 @endsection

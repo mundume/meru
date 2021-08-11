@@ -86,7 +86,11 @@
 <script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
 <script>
     $(document).ready(function () {
-        $('#bookingTable').DataTable()
+        $('#bookingTable').DataTable({
+            "drawCallback": function (settings) {
+        feather.replace()
+        }
+        })
         $('#datetimepicker').datetimepicker({
             timepicker: false,
             format: "Y-m-d"

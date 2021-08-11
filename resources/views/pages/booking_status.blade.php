@@ -16,7 +16,7 @@
                         <div class="col-xs-12 col-sm-12 col-md-8">
                             <h4 style="text-transform:uppercase;">Booking Summary</h4>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-4 status">
+                        <div class="col-xs-12 col-sm-12 col-md-4 status }}">
                         </div>
                     </div>
                     <hr>
@@ -65,15 +65,14 @@
                                     <p>Time of Travel:- {{ $books->time }}</p>
                                 </div>
                             </div>
-                            <hr>
+                            <p style="color:#183947;"><b>Ticket Detail:</b></p>
+                            <hr style="margin-top:-5px;">
                             <div class="row">
                                 <div class="col-md-12">
-<button class="btn btn btn-block"
-    style="background-color: #183947;color:white;padding:5px;border-radius:0px;text-transform:uppercase;width:100%;">TICKET
-    NUMBER: {{ $books->ticket_no }}</button>
+                                    <p>Ticket Number: {{ $books->ticket_no }}</p>
                                 </div>
                             </div>
-                            <hr>
+                            <br>
                         </div>
                         <div class="col-md-5">
                             <button class="btn btn btn-block" style="background-color: #183947;color:white;padding:20px;border-radius:0px;text-transform:uppercase;width:100%;">
@@ -118,10 +117,11 @@
             dataType: 'json',
             success: function (result) {
                 var status = result.is_paid
+                var ticket_no = result.ticket_no
                 if (status == 1) {
-                    $('.status').html('<button class="btn btn-outline-success float-right">PAID</button>')
+                    $('.status').html('<p class="float-right" style="text-transform:lowercase;color:blue;"><i class="fa fa-check-circle"></i>&nbsp;paid&nbsp;&nbsp;<a href="/print/ticket/'+ticket_no+'"><button class="btn btn-success" style="olor:white;">print ticket</button></a></hp>')
                 } else {
-                    $('.status').html('<button class="btn btn-outline-warning float-right">PENDING</button>')
+                    $('.status').html('<button class="btn btn-outline-warning float-right" style="text-transform:lowercase;"><i class="fa fa-clock"></i>&nbsp;pending</button>')
                 }
             },
             complete: function (data) {

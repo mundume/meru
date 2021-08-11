@@ -1,12 +1,25 @@
 @extends('layouts.dashboard.main')
 @section('title', 'Parcel Dispatches')
 @section('body')
+<link rel="stylesheet" type="text/css" href="{{asset('datetime/jquery.datetimepicker.css')}}" />
 <div class="row">
     <div class="col-lg-12 col-xl-12 stretch-card">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-baseline mb-2">
                     <h6 class="card-title mb-0">All Parcel ({{ $parcels->count() }})</h6>
+                    <form action="{{ route('dashboard.agent_bulk_sms') }}" method="POST" class="form-inline">
+                        @csrf
+                        <input type="text" name="date" placeholder="SELECT DATE" style="border-radius: 0px;height:42px;border:1px solid #999;" id="get_date"  required class="form-control">
+                            <select name="type" style="height: 42px;border:1px solid #999;" class="ml-2" required>
+                                <option selected data-default disabled>SELECT TYPE</option>
+                                <option value="1">SMS</option>
+                                <option value="2">EMAIL</option>
+                            </select>
+                            <button type="submit" class="btn btn-outline-success ml-2" style="height: 42px;">
+                                SEND <i data-feather="arrow-right" class="icon-md"></i>
+                            </button>
+                        </form>
                 </div>
                 <hr>
                 <div class="table-responsive">
@@ -192,7 +205,21 @@
 </script>
 <script>
     $(document).ready(function () {
-        $('#agentTable').DataTable()
+        $('#agentTable').DataTable({
+            "drawCallback": function (settings) {
+        feather.replace()
+        }
+        })
     });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#get_date').datetimepicker({
+            timepicker: false,
+            datepicker: true,
+            format: 'Y-m-d',
+            minDate: -1
+        })
+    })
 </script>
 @endsection

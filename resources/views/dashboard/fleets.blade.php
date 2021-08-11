@@ -186,7 +186,11 @@
 @endif
 <script>
     $(document).ready(function () {
-        $('#fleetTable').DataTable()
+        $('#fleetTable').DataTable({
+            "drawCallback": function (settings) {
+        feather.replace()
+        }
+        })
     });
 </script>
 @endsection

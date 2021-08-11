@@ -199,7 +199,11 @@
 <script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
 <script>
     $(document).ready(function () {
-        $('#parcelTable').DataTable()
+        $('#parcelTable').DataTable({
+            "drawCallback": function (settings) {
+        feather.replace()
+        }
+        })
     });
 </script>
 @endsection

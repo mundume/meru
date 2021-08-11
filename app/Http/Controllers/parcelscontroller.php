@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\{Fleet,Parcel,Provider,Dropoff,Charge,Account,ParcelUser,Cec,Payment,Message};
+use App\Models\{Fleet,Parcel,Provider,Dropoff,Charge,Account,ParcelUser,Cec,Payment,Message,AgentCourier};
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -12,6 +12,7 @@ use DB;
 use App\Http\Controllers\smscontroller;
 use Session;
 use PDF;
+use App\Jobs\SendSms;
 
 class parcelscontroller extends Controller
 {
@@ -176,8 +177,38 @@ class parcelscontroller extends Controller
         Session::flash('success', 'Parcel marked as received');
         return redirect()->back();
     }
-    public function parcel_sms($id) {
-        
+    public function parcel_sms(Request $request, $id) {
+        $parcel = Parcel::find($id);
+        $dispatch = ['mobile' => $parcel->receiver_mobile, 'message' => $request->message];
+        SendSms::dispatch($dispatch)->delay(Carbon::now()->addSeconds(2));
+        Session::flash('success', 'Message sent successfully.');
+        return redirect()->back();
+    }
+    public function agent_bulk_sms(Request $request) {
+        $this->validate($request, ['type' => 'required', 'date' => 'required']);
+        if($request->date != Carbon::yesterday()->format('Y-m-d')) {
+            Session::flash('error', 'Oops, kindly select correct date.');
+            return redirect()->back();
+        }
+        $user = Auth::user()->id;
+        $agent = AgentCourier::where('user_id', $user)->first();
+        $parcels = Parcel::whereDate('created_at', Carbon::yesterday())->where([['picked', false],['progress', true],['destination_office', $agent->dropoff_id]])->get();
+        if($parcels->count() <= 0) {
+            Session::flash('error', 'Oops, parcels doesn\'t exists.');
+            return redirect()->back();
+        }
+        foreach($parcels as $parcel) {
+            $office = Dropoff::find($parcel->destination_office)->office_name;
+            $message = Message::where('name', 'COLLECT_PARCEL')->first()->body;
+            $message = str_replace('%link%', config('app.url'), $message);
+            $message = str_replace('%mobile%', '0746245461', $message);
+            $message = str_replace('%break%', "\r\n", $message);
+            $message = str_replace('%office%', $office, $message);
+            $dispatch = ['mobile' => $parcel->receiver_mobile, 'message' => $message];
+            SendSms::dispatch($dispatch)->delay(Carbon::now()->addSeconds(2));
+        }
+        Session::flash('success', 'Message sent successfully.');
+        return redirect()->back();
     }
     public function print_parcel($parcel_no) {
         $print = Cec::orderBy('id','desc')->where('fleet_id', $parcel_no)->first();

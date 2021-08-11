@@ -63,7 +63,7 @@
                                         </a>
                                     </button>
                                     <button class="btn btn btn-sm">
-                                        <a href="{{route('route.show', base64_encode($item->id))}}">
+                                        <a href="{{route('route.show', base64_encode($item->id))}}" target="_blank">
                                             <i data-feather="globe" class="icon-sm"></i>
                                     </button>
                                     @if($item->admin_suspend == false)
@@ -92,7 +92,11 @@
 <script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>
 <script>
     $(document).ready(function () {
-        $('#routeTable').DataTable()
+        $('#routeTable').DataTable({
+            "drawCallback": function (settings) {
+        feather.replace()
+        }
+        })
     });
 </script>
 @endsection
