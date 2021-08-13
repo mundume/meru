@@ -29,7 +29,7 @@ Route::prefix('route')->group(function() {
     Route::post('/booking/check/status', [pagescontroller::class, 'check_status'])->name('independent.check_status');
 });
 Route::prefix('payments')->group(function() {
-    Route::post('/stk/callback', 'pesacontroller@stk_callback')->name('payment.callback');
+    Route::post('/stk/callback', pesacontroller::class, 'stk_callback')->name('payment.callback');
 });
 // Route::post('/booked/seats', [pagescontroller::class, 'booked_seats'])->name('independent.get_booked_seats');
 Route::post('/booked/calendarial', [pagescontroller::class, 'booked_calendarial'])->name('independent.calendarial');

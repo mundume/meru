@@ -404,7 +404,7 @@
                             </div><!-- end columns -->
 
                             <div class="a-text">
-<p>River Road Egoji House, 2nd Floor, Nairobi, Kenya.</p>
+<p>Egoji House, 2nd Floor, Taveta Road, Nairobi, Kenya.</p>
                             </div><!-- end columns -->
                         </div><!-- end address-block -->
 
@@ -415,7 +415,7 @@
 
                             <div class="a-text">
 <p>Phone: +254 746245461</p>
-<p>P.O Box: 461-60200</p>
+<p>P.O Box: 16337-00100</p>
                             </div><!-- end columns -->
                         </div><!-- end address-block -->
 
@@ -425,8 +425,8 @@
                             </div><!-- end columns -->
 
                             <div class="a-text">
-<p>Enquiries: <a href="#">info@meruartists.co.ke</a></p>
-<p>Booking: <a href="#">booking@meruartists.co.ke</a></p>
+<p>Enquiries: <a href="#">info@meruartistcoaches.co.ke</a></p>
+<p>Booking: <a href="#">booking@meruartistcoaches.co.ke</a></p>
                             </div><!-- end columns -->
                         </div><!-- end address-block -->
                     </div>

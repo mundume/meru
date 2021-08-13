@@ -61,8 +61,8 @@
 
                 <div class="col-12 col-md-6 col-lg-6 col-xl-6" id="terms">
                     <ul class="list-unstyled list-inline">
-                        <li class="list-inline-item">POWERED BY <a href="https://xwift.co.ke" target="_blank">XWIFT LIMITED</a></li>
-                        <li class="list-inline-item"><a href="mailto:xwiftea@gmail.com">CONTACT</a></li>
+                        <li class="list-inline-item">Powered By <a href="https://xwift.co.ke" target="_blank">Xwift Limited</a></li>
+                        <li class="list-inline-item"><a href="mailto:xwiftea@gmail.com">Contact</a></li>
                     </ul>
                 </div><!-- end columns -->
                 </div><!-- end row -->
