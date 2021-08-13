@@ -52,7 +52,7 @@
     <div class="grid">
         <div class="room-block">
             <div class="room-img">
-<img src="{{ asset('theme_one/images/logo.png') }}" class="img-fluid" alt="room-image" />
+<img src="{{ asset('booking_.png') }}" class="img-fluid" alt="room-image" />
 <div class="room-title">
 <a href="/route/booking/{{ base64_encode($item->id) }}">
     <h3>{{ $item->departure }} ~ {{ $item->destination }}</h3>
@@ -286,7 +286,7 @@
 <span><i class="fa fa-star"></i></span>
                                                                         <span><i class="fa fa-star star-opacity"></i></span>
                                                                     </div><!-- end rating -->
-<p class="reviewer-name">Derrick Bundi</p>
+<p class="reviewer-name">Chris Omondi</p>
                                                                 </div><!-- end columns -->
 
                                                             </div><!-- end row -->

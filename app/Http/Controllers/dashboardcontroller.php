@@ -754,7 +754,7 @@ class dashboardcontroller extends Controller
             $stk = new pesacontroller;
             $push = $stk->prompt_push(
                 $ticket_no,
-                $request->amount,
+                1,
                 $contact,
                 route('payment.callback'),
                 'PAYMENTS'

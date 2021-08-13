@@ -37,7 +37,7 @@ class userseeder extends Seeder
                 'c_mobile' => '0710640098',
                 'id_no' => '31842540',
                 'c_county' => 'Meru',
-                'email' => 'mike@meruartists.co.ke',
+                'email' => 'mike@meruartistcoaches.co.ke',
                 'password' => bcrypt('123456'),
                 'handle'=> 'abcdee'
             ]

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Route,Booking,Parcel,Payment,Calendarial,Message};
+use App\Models\{Route,Booking,Parcel,Payment,Calendarial,Message,System};
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use DB;
@@ -121,6 +121,7 @@ class pagescontroller extends Controller
             $route = Route::where('fleet_unique', $book->fleet_unique)->first();
             $amount = $route->amount;
         }
+        $system = System::first();
         $contact = $book->mobile;
         $stk = new pesacontroller;
         $result = $stk->prompt_push(
@@ -147,6 +148,7 @@ class pagescontroller extends Controller
 
             $message = Message::where('name', 'TICKET_STATUS')->first()->body;
             $message = str_replace('%ticket_no%', $book->ticket_no, $message);
+            $message = str_replace('%paybill%', $system->paybill, $message);
             $message = str_replace('%link%', config('app.url'), $message);
             $message = str_replace('%break%', "\r\n", $message);
             $dispatch = ['mobile' => $contact, 'message' => $message];
@@ -164,6 +166,7 @@ class pagescontroller extends Controller
             
             $message = Message::where('name', 'TICKET_STATUS')->first()->body;
             $message = str_replace('%ticket_no%', $book->ticket_no, $message);
+            $message = str_replace('%paybill%', $system->paybill, $message);
             $message = str_replace('%link%', config('app.url'), $message);
             $message = str_replace('%break%', "\r\n", $message);
             $dispatch = ['mobile' => $contact, 'message' => $message];

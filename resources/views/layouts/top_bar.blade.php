@@ -12,7 +12,7 @@
 
             <div class="col-12 col-md-4 col-lg-4 col-xl-4">
                 <div id="links">
-                    <ul class="list-unstyled list-inline">
+                    {{-- <ul class="list-unstyled list-inline">
 <li class="list-inline-item"><a href="#"><span><i class="fab fa-facebook"></i></span></a></li>
 <li class="list-inline-item"><a href="#"><span><i class="fab fa-twitter"></i></span></a></li>
                         <li class="list-inline-item">
@@ -25,7 +25,7 @@
                                 </div>
                             </form>
                         </li>
-                    </ul>
+                    </ul> --}}
                 </div>
             </div>
         </div>

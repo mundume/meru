@@ -41,7 +41,7 @@ class messageseeder extends Seeder
             ],
             [
                 'name' => 'TICKET_STATUS',
-                'body' => 'Ticket Status %break%%link%/route/booking/status/%ticket_no%'
+                'body' => 'Ticket Status%break%If no prompt in your phone use%break%Paybil:- %paybill% A/C NO. %ticket_no%%break%References%break%%link%/route/booking/status/%ticket_no%'
             ]
         ];
         foreach ($messages as $message) {

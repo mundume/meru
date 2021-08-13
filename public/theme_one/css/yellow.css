@@ -739,18 +739,18 @@ ul.main-menu-social li a {
 
 #slider .item-1 {
 	background: -webkit-gradient(linear, left top, left bottom, from(rgba(112, 86, 7, 0.45)), to(rgba(112, 86, 7, 0.45))),
-	url(../images/van.png) center center no-repeat;
+	url(../images/vans/home_image.jpg) center center no-repeat;
 	background: linear-gradient(rgba(112, 86, 7, 0.45), rgba(112, 86, 7, 0.45)),
-	url(../images/van.png) center center no-repeat;
+	url(../images/vans/home_image.jpg) center center no-repeat;
 	background-size: cover;
 	height: 100%;
 }
 
 #slider .item-2 {
 	background: -webkit-gradient(linear, left top, left bottom, from(rgba(112, 86, 7, 0.45)), to(rgba(112, 86, 7, 0.45))),
-	url(../images/van.png) center center;
+	url(../images/vans/ad_.jpg) center center;
 	background: linear-gradient(rgba(112, 86, 7, 0.45), rgba(112, 86, 7, 0.45)),
-	url(../images/van.png) center center;
+	url(../images/vans/ad_.jpg) center center;
 	background-size: cover;
 	height: 100%;
 }

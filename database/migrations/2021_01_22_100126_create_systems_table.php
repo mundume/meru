@@ -18,6 +18,7 @@ class CreateSystemsTable extends Migration
             $table->integer('subscription')->nullable();
             $table->integer('buygoods')->nullable();
             $table->integer('paybill')->nullable();
+            $table->string('mobile')->nullable();
             $table->timestamps();
         });
     }
