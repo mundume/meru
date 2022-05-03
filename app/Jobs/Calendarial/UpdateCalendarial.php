@@ -14,7 +14,7 @@ class UpdateCalendarial implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     public $dispatch;
-    public $tries = 3;
+    public $tries = 1;
     public function __construct($dispatch)
     {
         $this->dispatch = $dispatch;

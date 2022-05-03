@@ -43,12 +43,12 @@
                     <button class="btn btn-outline-warning" style="margin:2px;" data-toggle="modal" data-target="#add_charge-{{$drop->id}}">
                         <i data-feather="plus" class="icon-sm"></i>
                     </button>
-                    <form action="{{route('dashboard.delete_charge', $drop->id)}}" method="POST">
+                    {{-- <form action="{{route('dashboard.delete_charge', $drop->id)}}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-danger" style="margin:2px;" disabled>
                             <i data-feather="trash" class="icon-sm"></i>
                         </button>
-                    </form>
+                    </form> --}}
                 </div>
             </div>
         </div>

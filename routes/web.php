@@ -16,7 +16,10 @@ Auth::routes();
 // Route::get('/', function() {
 //     return redirect(route('login'));
 // });
-Route::get('/', [pagescontroller::class, 'independent'])->name('independent');
+Route::get('/d', [pagescontroller::class, 'independent'])->name('independent');
+Route::get('/', function() {
+    return redirect()->route('login');
+});
 Route::get('/services', [pagescontroller::class, 'services'])->name('independent.services');
 Route::get('/search', [pagescontroller::class, 'search'])->name('independent.search');
 Route::post('/step_one/{route_id}', [pagescontroller::class, 'booking_step_one'])->name('independent.booking_step_one');

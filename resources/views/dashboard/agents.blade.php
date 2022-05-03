@@ -6,9 +6,9 @@
         <button class="btn btn-success float-right" style="margin:2px;" data-toggle="modal" data-target="#add_agent">
             <i data-feather="plus" class="icon-sm"></i>&nbsp;ADD AGENT
         </button>
-        <button class="btn btn-warning float-right" style="margin:2px;" data-toggle="modal" data-target="#topup_agent">
+        {{-- <button class="btn btn-warning float-right" style="margin:2px;" data-toggle="modal" data-target="#topup_agent">
             <i data-feather="dollar-sign" class="icon-sm"></i>&nbsp;CREDIT AGENT ACCOUNT
-        </button>
+        </button> --}}
         </div>
         </div>
 {{-- @if(auth()->user()->role_id == 1) --}}
@@ -95,16 +95,16 @@
                             <table class="table table-hover mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="pt-0">#</th>
-                                        <th class="pt-0">Name</th>
-                                        {{-- <th class="pt-0">ID</th> --}}
-                                        <th class="pt-0">Email</th>
-                                        <th class="pt-0">Mobile</th>
-                                        <th class="pt-0">Office Mobile</th>
-                                        <th class="pt-0">Pass Code</th>
-                                        <th class="pt-0"></th>
-                                        <th class="pt-0">Office</th>
-                                        <th class="pt-0">Action</th>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        {{-- <th>ID</th> --}}
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Office Mobile</th>
+                                        <th>Pass Code</th>
+                                        <th></th>
+                                        <th>Office</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -141,9 +141,9 @@
                                                 </button>
                                             </form>
                                             @endif
-                                            <button type="button" style="margin:2px;" class="btn btn-outline-success" data-toggle="modal" data-target="#edit_agent">
+                                            {{-- <button type="button" style="margin:2px;" class="btn btn-outline-success" data-toggle="modal" data-target="#edit_agent">
                                                 <i data-feather="edit" class="icon-sm"></i>
-                                            </button>
+                                            </button> --}}
                                             {{-- <form action="{{ route('dashboard.delete_user', base64_encode($user->user->id)) }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn btn-outline-danger" style="margin:2px;">
@@ -161,9 +161,9 @@
     </div>
 </div>
 
-<br>
+{{-- <br> --}}
 
-<div class="row">
+{{-- <div class="row">
     <div class="col-lg-12 col-xl-12 stretch-card">
         <div class="card">
             <div class="card-body">
@@ -203,7 +203,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- pop up -->
 <div class="modal close_modal" id="add_agent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -305,7 +305,7 @@
         </div>
     </div>
 </div>
-<div class="modal close_modal" id="topup_agent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+{{-- <div class="modal close_modal" id="topup_agent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="border-radius:0px;">
             <div class="modal-header">
@@ -326,7 +326,6 @@
                                 <option>{{$agent->user->email}}</option>
                                 @endforeach
                             </select>
-                            {{-- <input type="text" {{ $errors->cood->has('email') ? 'has-error' : '' }} name="email" required style="height:42px;" class="form-control" placeholder="Email Address*"> --}}
                             <small class="text-danger">{{$errors->cood->first('email')}}</small>
                         </div>
                     </div>
@@ -345,7 +344,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 @endsection
 @section('scripts')
 <script src="{{ asset('plugins/jquery/jquery-3.2.1.min.js') }}"></script>

@@ -14,7 +14,7 @@ class BookDispatch implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     public $ticket_no;
-    public $tries = 3;
+    public $tries = 1;
     public function __construct($ticket_no)
     {
         $this->ticket_no = $ticket_no;

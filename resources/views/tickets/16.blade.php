@@ -5,8 +5,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('/datetime/jquery.datetimepicker.css')}}" />
 <div class="row">
     <div class="col-md-12">
-        <button class="btn btn-outline-success">{{ $route->departure }} ~ {{ $route->destination }} | Booking Office</button>
-        <a href="{{ url()->previous() }}" class="btn btn-outline-warning"><i data-feather="arrow-left" class="icon-sm"></i>Go Back</a>
+        <button class="btn btn-outline-success">{{ $route->departure }} ~ {{ $route->destination }}</button>
+        {{-- <a href="{{ url()->previous() }}" class="btn btn-outline-warning"><i data-feather="arrow-left" class="icon-sm"></i>Go Back</a> --}}
         <button class="btn btn-success float-right" type="button" data-toggle="modal" data-target="#generate_ticket" id="check_paid">Generate Ticket&nbsp;<i data-feather="map" class="icon-sm"></i></button>
     </div>
 </div>

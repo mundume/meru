@@ -20,13 +20,13 @@
                     <table class="table table-hover mb-0" id="routeTable">
                         <thead>
                             <tr>
-                                <th class="pt-0">#</th>
-                                <th class="pt-0">Group</th>
-                                <th class="pt-0">Amount</th>
-                                <th class="pt-0">Seaters</th>
-                                <th class="pt-0">Route</th>
-                                <th class="pt-0">Agent</th>
-                                <th class="pt-0 float-right">Overall Action</th>
+                                <th>#</th>
+                                <th>Group</th>
+                                <th>Amount</th>
+                                <th>Seaters</th>
+                                <th>Route</th>
+                                <th>Agent</th>
+                                <th>Overall Action</th>
                             </tr>
                         </thead>
                         <tbody>

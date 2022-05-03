@@ -69,10 +69,10 @@
                         </div>
                         <div class="row">
                             <div class="col-6 col-md-12 col-xl-12">
-                                <h3 class="mb-2 mt-2">89.87%</h3>
+                                <h3 class="mb-2 mt-2">00.00%</h3>
                                 <div class="d-flex align-items-baseline">
                                     <p class="text-success">
-                                        <span>+2.8%</span>
+                                        <span>+0.0%</span>
                                         <i data-feather="arrow-up" class="icon-sm mb-1"></i>
                                     </p>
                                 </div>

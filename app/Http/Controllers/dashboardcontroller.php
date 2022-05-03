@@ -55,14 +55,14 @@ class dashboardcontroller extends Controller
         $agents = AgentUser::with(['user', 'dropoff'])->get();
         $provider = Provider::first();
         $offices = Dropoff::where('provider_id', $provider->id)->get();
-        $topups = Topup::orderBy('id', 'desc')->with('user')->get();
+        // $topups = Topup::orderBy('id', 'desc')->with('user')->get();
         $ids = [];
         foreach($agents as $agent) {
             array_push($ids, $agent->user_id);
         }
         $ids[] = 1;
         $admins = User::whereNotIn('id', $ids)->get();
-        return view('dashboard.agents', compact('agents', 'offices', 'topups', 'admins'));
+        return view('dashboard.agents', compact('agents', 'offices','admins'));
     }
     public function add_agent(Request $request) {
         if($this->check_if_admin() == false) return redirect()->back();
@@ -628,7 +628,7 @@ class dashboardcontroller extends Controller
         if($request->created_at) {
             $bookings = Booking::whereDate('created_at', $request->created_at)->get();
         } else {
-            $bookings = Booking::get();
+            $bookings = Booking::paginate(200);
         }
         return view('dashboard.bookings', compact('bookings'));
     }
