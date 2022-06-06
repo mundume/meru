@@ -28,7 +28,7 @@ class SendSms implements ShouldQueue
      */
     public function handle()
     {
-        if(App::environment('production')) {
+        if(App::environment(['staging','production'])) {
             $at = new AfricasTalking(config('services.africastalking_secret'), config('services.africastalking_key'));
             $sms = $at->sms();
             $result = $sms->send([
