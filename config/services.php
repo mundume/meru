@@ -34,6 +34,7 @@ return [
     'africastalking_secret' => env('AFRICASTALKING_SECRET', ''),
     'africastalking_env' => env('AFRICASTALKING_ENV', ''),
     'xwift_api_key' => env('XWIFT_API_KEY', ''),
-    'xwift_url' => env('XWIFT_URL', '')
-
+    'xwift_url' => env('XWIFT_URL', ''),
+    'stk_push_url' => env('STK_PUSH_URL', ''),
+    'generate_token_url' => env('GENERATE_TOKEN_URL', '')
 ];

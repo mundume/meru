@@ -9,10 +9,9 @@ use App\Models\{Payment,Booking};
 class pesacontroller extends Controller
 {
     public function prompt_push($identifier, $amount, $contact,$callback,$remarks) {
-        $url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
         $token = artists_LiveToken();
         $client = new Client;
-        $res = $client->request('post', $url, [
+        $res = $client->request('post', config('services.stk_push_url'), [
             'verify' => false,
             'headers' => [
                 'Authorization' => 'Bearer ' . $token,

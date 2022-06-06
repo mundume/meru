@@ -70,7 +70,7 @@ function artists_LiveToken() {
     }
     $client = new Client();
     $credentials = base64_encode($consumer_key . ':' . $consumer_secret);
-    $response = $client->request('get', 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials', [
+    $response = $client->request('get', config('services.generate_token_url').'?grant_type=client_credentials', [
         'verify' => false,
         'headers' => [
             'Authorization' => 'Basic ' . $credentials,
