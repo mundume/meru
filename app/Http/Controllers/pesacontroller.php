@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Jobs\SendSms;
 use GuzzleHttp\Client;
+use App\Models\Message;
+use Illuminate\Http\Request;
 use App\Models\{Payment,Booking};
 use Illuminate\Support\Facades\Log;
 
@@ -57,9 +60,19 @@ class pesacontroller extends Controller
                 'mpesaReceiptNumber' => $mpesaReceiptNumber,
                 'amount' => $amount
             ]);
-            Booking::where('CheckoutRequestID', $checkoutRequestID)->update([
+            $user = Booking::where('CheckoutRequestID', $checkoutRequestID)->update([
                 'is_paid' => 1
             ]);
+
+            $message = Message::where('name', 'PAID_STK')->first()->body;
+            $message = str_replace('%ticket_no%', $user->ticket_no, $message);
+            $message = str_replace('%seat_no%', $user->seat_no, $message);
+            $message = str_replace('%name%', $user->fullname, $message);
+            $message = str_replace('%seaters%', $user->seaters, $message);
+            $message = str_replace('%break%', "\r\n", $message);
+            $dispatch = ['mobile' => $contact, 'message' => $message];
+            SendSms::dispatch($dispatch)->delay(Carbon::now()->addSeconds(3));
+            
         } else {
             $resultCode = $callbackData->Body->stkCallback->ResultCode;
             $resultDesc = $callbackData->Body->stkCallback->ResultDesc;

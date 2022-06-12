@@ -146,13 +146,13 @@ class pagescontroller extends Controller
                 ]);
             });
 
-            $message = Message::where('name', 'TICKET_STATUS')->first()->body;
-            $message = str_replace('%ticket_no%', $book->ticket_no, $message);
-            $message = str_replace('%paybill%', $system->paybill, $message);
-            $message = str_replace('%link%', config('app.url'), $message);
-            $message = str_replace('%break%', "\r\n", $message);
-            $dispatch = ['mobile' => $contact, 'message' => $message];
-            SendSms::dispatch($dispatch)->delay(Carbon::now()->addSeconds(3));
+            // $message = Message::where('name', 'TICKET_STATUS')->first()->body;
+            // $message = str_replace('%ticket_no%', $book->ticket_no, $message);
+            // $message = str_replace('%paybill%', $system->paybill, $message);
+            // $message = str_replace('%link%', config('app.url'), $message);
+            // $message = str_replace('%break%', "\r\n", $message);
+            // $dispatch = ['mobile' => $contact, 'message' => $message];
+            // SendSms::dispatch($dispatch)->delay(Carbon::now()->addSeconds(3));
 
             Session::flash('success', 'Ticket generated successfully.');
             return redirect('/route/booking/status/'.$book->ticket_no);
@@ -164,13 +164,13 @@ class pagescontroller extends Controller
                 'seat_no' => $request->seat_no
             ]);
             
-            $message = Message::where('name', 'TICKET_STATUS')->first()->body;
-            $message = str_replace('%ticket_no%', $book->ticket_no, $message);
-            $message = str_replace('%paybill%', $system->paybill, $message);
-            $message = str_replace('%link%', config('app.url'), $message);
-            $message = str_replace('%break%', "\r\n", $message);
-            $dispatch = ['mobile' => $contact, 'message' => $message];
-            SendSms::dispatch($dispatch)->delay(Carbon::now()->addSeconds(3));
+            // $message = Message::where('name', 'TICKET_STATUS')->first()->body;
+            // $message = str_replace('%ticket_no%', $book->ticket_no, $message);
+            // $message = str_replace('%paybill%', $system->paybill, $message);
+            // $message = str_replace('%link%', config('app.url'), $message);
+            // $message = str_replace('%break%', "\r\n", $message);
+            // $dispatch = ['mobile' => $contact, 'message' => $message];
+            // SendSms::dispatch($dispatch)->delay(Carbon::now()->addSeconds(3));
             
             Session::flash('success', 'Ticket generated successfully.');
             return redirect('/route/booking/status/'.$book->ticket_no);

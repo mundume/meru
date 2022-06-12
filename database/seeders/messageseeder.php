@@ -42,10 +42,14 @@ class messageseeder extends Seeder
             [
                 'name' => 'TICKET_STATUS',
                 'body' => 'Ticket Status%break%If no prompt in your phone use%break%Paybil:- %paybill% A/C NO. %ticket_no%%break%References%break%%link%/route/booking/status/%ticket_no%'
+            ],
+            [
+                'name' => 'PAID_STK',
+                'body' => 'Dear %name%%break%Seat #%seat_no%(%ticket_no%) has been preserved on our %seaters% fleet%break%Kindly preserve this sms to show on pickup location%break%'
             ]
         ];
         foreach ($messages as $message) {
-            Message::create($message);
+            Message::updateOrCreate($message);
         }
     }
 }
