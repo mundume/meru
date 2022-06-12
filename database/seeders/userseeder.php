@@ -45,7 +45,7 @@ class userseeder extends Seeder
         DB::table('systems')->insert([
 			'subscription' => 0,
 			'buygoods' => 0,
-			'paybill' => 4029669
+			'paybill' => 4091727
         ]);
         DB::table('accounts')->insert([
             [

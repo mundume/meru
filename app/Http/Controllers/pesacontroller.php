@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use App\Models\{Payment,Booking};
+use Illuminate\Support\Facades\Log;
 
 class pesacontroller extends Controller
 {
@@ -36,6 +37,7 @@ class pesacontroller extends Controller
     }
     public function stk_callback() {
         $callbackJSONData = file_get_contents('php://input');
+        Log::critical($callbackJSONData);
         $callbackData = json_decode($callbackJSONData);
         if($callbackData->Body->stkCallback->ResultCode == 0) {
             //on success payment on booking push update to header app
