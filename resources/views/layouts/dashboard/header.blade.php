@@ -3,7 +3,7 @@
         <div class="container">
             <div class="navbar-content">
                 <a href="{{ route('dashboard.index') }}" class="navbar-brand">
-artists<span>APP</span>
+artist<span>APP</span>
                 </a>
                 <form class="search-form">
                     <div class="input-group">
