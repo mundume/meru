@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Route,Booking,Parcel,Payment,Calendarial,Message,System};
+use App\Models\{Route,Booking,Parcel,Payment,Calendarial,Message,System,Complain};
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use DB;
@@ -126,7 +126,7 @@ class pagescontroller extends Controller
         $stk = new pesacontroller;
         $result = $stk->prompt_push(
             $request->ticket_no,
-            1,
+            $amount,
             $contact,
             route('payment.callback'),
             'BOOKING PAYMENT'

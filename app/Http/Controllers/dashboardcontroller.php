@@ -722,7 +722,7 @@ class dashboardcontroller extends Controller
         $this->validate($request, [
             'mobile' => 'required|digits:10',
             'seat_no' => 'required',
-            'amount' => 'required'
+            'amount' => 'required|numeric'
         ]);
         if($request->travel_date != null && $request->time == null) {
             Session::flash('error', 'Oops, time can\'t be empty.');
@@ -754,7 +754,7 @@ class dashboardcontroller extends Controller
             $stk = new pesacontroller;
             $push = $stk->prompt_push(
                 $ticket_no,
-                1,
+                $request->amount,
                 $contact,
                 route('payment.callback'),
                 'PAYMENTS'

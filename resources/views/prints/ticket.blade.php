@@ -110,7 +110,7 @@
                             <br>
                             +254746245461 | booking@meruartists.co.ke
                             <br>
-                            visit: xwift.co.ke | P.O BOX 461-60200 Nairobi, Kenya
+                            visit: meruartists.co.ke.co.ke | P.O BOX 16337-00100 Nairobi, Kenya
                         </p>
                     </th>
                 </thead>

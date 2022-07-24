@@ -739,9 +739,9 @@ ul.main-menu-social li a {
 
 #slider .item-1 {
 	background: -webkit-gradient(linear, left top, left bottom, from(rgba(112, 86, 7, 0.45)), to(rgba(112, 86, 7, 0.45))),
-	url(../images/vans/home_image.jpg) center center no-repeat;
+	url(../images/vans/meru-artist-two.jpg) center center no-repeat;
 	background: linear-gradient(rgba(112, 86, 7, 0.45), rgba(112, 86, 7, 0.45)),
-	url(../images/vans/home_image.jpg) center center no-repeat;
+	url(../images/vans/meru-artist-two.jpg) center center no-repeat;
 	background-size: cover;
 	height: 100%;
 }
