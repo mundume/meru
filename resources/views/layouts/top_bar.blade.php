@@ -5,7 +5,7 @@
                 <div id="info">
                     <ul class="list-unstyled list-inline">
                         {{-- <li class="list-inline-item"><span><i class="fa fa-map-marker"></i></span>River Road Nairobi, Kenya.</li> --}}
-<li class="list-inline-item"><span><i class="fa fa-phone"></i></span>+254746245461</li>
+<li class="list-inline-item"><span><i class="fa fa-phone"></i></span>+254721542489</li>
                     </ul>
                 </div>
             </div>

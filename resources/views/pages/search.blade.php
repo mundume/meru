@@ -69,7 +69,7 @@
                                     <li>
                                         <span><i class="fa fa-phone"></i></span>
                                         <div class="text">
-<p>+254746245461</p>
+<p>+254721542489</p>
                                         </div><!-- end text -->
                                     </li>
                                 </ul>

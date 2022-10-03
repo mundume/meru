@@ -424,7 +424,7 @@
                                 </div><!-- end columns -->
 
                                 <div class="a-text">
-                                    <p>Phone: +254 746245461</p>
+                                    <p>Phone: +254 721542489</p>
                                     <p>P.O Box: 16337-00100</p>
                                 </div><!-- end columns -->
                             </div><!-- end address-block -->
