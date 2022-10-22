@@ -30,16 +30,12 @@ class SendSms implements ShouldQueue
      */
     public function handle()
     {
-        if(App::environment('production')) {
-            $at = new AfricasTalking(config('services.africastalking_key'), config('services.africastalking_secret'));
-            $sms = $at->sms();
-            $result = $sms->send([
-                'to' => 0 . substr($this->mobile,-9),
-                'message' => $this->message
-            ]);
-            Log::critical("Message sent\r\n".$this->message."to\r\n".$this->mobile);
-        } else {
-            Log::critical("Message sent\r\n".$this->message."to\r\n".$this->mobile);
-        }
+        $at = new AfricasTalking(config('services.africastalking_key'), config('services.africastalking_secret'));
+        $sms = $at->sms();
+        $result = $sms->send([
+            'to' => 0 . substr($this->mobile,-9),
+            'message' => $this->message
+        ]);
+        Log::critical("Message sent\r\n".$this->message."to\r\n".$this->mobile);
     }
 }
