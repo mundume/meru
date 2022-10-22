@@ -71,7 +71,7 @@ class pesacontroller extends Controller
             $message = str_replace('%seaters%', $user->seaters, $message);
             $message = str_replace('%break%', "\r\n", $message);
             // $dispatch = ['mobile' => $contact, 'message' => $message];
-            SendSms::dispatch($contact,$message)->delay(Carbon::now()->addSeconds(3));
+            SendSms::dispatch($user->mobile,$message)->delay(Carbon::now()->addSeconds(3));
             
         } else {
             $resultCode = $callbackData->Body->stkCallback->ResultCode;

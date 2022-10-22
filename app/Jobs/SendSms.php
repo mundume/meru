@@ -34,7 +34,7 @@ class SendSms implements ShouldQueue
             $at = new AfricasTalking(config('services.africastalking_key'), config('services.africastalking_secret'));
             $sms = $at->sms();
             $result = $sms->send([
-                'to' => $this->mobile,
+                'to' => 0 . substr($this->mobile,-9),
                 'message' => $this->message
             ]);
             Log::critical("Message sent\r\n".$this->message."to\r\n".$this->mobile);
