@@ -179,8 +179,8 @@ class parcelscontroller extends Controller
     }
     public function parcel_sms(Request $request, $id) {
         $parcel = Parcel::find($id);
-        $dispatch = ['mobile' => $parcel->receiver_mobile, 'message' => $request->message];
-        SendSms::dispatch($dispatch)->delay(Carbon::now()->addSeconds(2));
+        // $dispatch = ['mobile' => $parcel->receiver_mobile, 'message' => $request->message];
+        SendSms::dispatch($parcel->receiver_mobile,$request->message)->delay(Carbon::now()->addSeconds(2));
         Session::flash('success', 'Message sent successfully.');
         return redirect()->back();
     }
@@ -204,8 +204,8 @@ class parcelscontroller extends Controller
             $message = str_replace('%mobile%', '0746245461', $message);
             $message = str_replace('%break%', "\r\n", $message);
             $message = str_replace('%office%', $office, $message);
-            $dispatch = ['mobile' => $parcel->receiver_mobile, 'message' => $message];
-            SendSms::dispatch($dispatch)->delay(Carbon::now()->addSeconds(2));
+            // $dispatch = ['mobile' => $parcel->receiver_mobile, 'message' => $message];
+            SendSms::dispatch($parcel->receiver_mobile,$message)->delay(Carbon::now()->addSeconds(2));
         }
         Session::flash('success', 'Message sent successfully.');
         return redirect()->back();

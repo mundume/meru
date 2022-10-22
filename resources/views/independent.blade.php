@@ -70,7 +70,7 @@
 
                                         <div class="room-price">
                                             <ul class="list-unstyled">
-                                                <li>KShs {{ number_format($item->amount, 2) }}<span
+                                                <li style="font-size: 13px;">Kes {{ number_format($item->amount, 2) }}<span
                                                         class="link"><a
                                                             href="/route/booking/{{ base64_encode($item->id) }}"
                                                             style="color:white;" class="btn btn-warning">Book</a></span>

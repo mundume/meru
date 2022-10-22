@@ -35,7 +35,7 @@
                             <div class="row derrick">
                                 <div class="col-md-2">
                                     <a href="{{route('route.show', [base64_encode($route->id)])}}">
-<img src="{{ asset('shuttle_images/logo.png') }}" style="height: 40px;width:50px;">
+<img src="{{ asset('booking_.png') }}" style="height: 40px;width:50px;">
                                     </a>
                                 </div>
                                 <div class="col-md-3">

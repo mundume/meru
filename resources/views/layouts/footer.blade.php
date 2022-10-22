@@ -13,7 +13,7 @@
         <li class="list-inline-item"><a href="#"><span><i class="fab fa-facebook"></i></span></a>
         </li>
         <li class="list-inline-item"><a href="#"><span><i class="fab fa-twitter"></i></span></a></li>
-        <li class="list-inline-item"><a href="#"><span><i class="fab fa-instagram"></i></span></a>
+        <li class="list-inline-item"><a href="https://instagram.com/theartistcoaches?igshid=YmMyMTA2M2Y=" target="_blank"><span><i class="fab fa-instagram"></i></span></a>
         </li>
                     </ul>
                 </div><!-- end more-about -->
@@ -30,8 +30,8 @@
                 <div class="col-12 col-md-6 col-lg-3 col-xl-3 text-left" id="f-services">
                     <h4 class="footer-heading">Services</h4>
                     <ul class="list-unstyled">
-                        <li><a href="#">Bookings</a></li>
-                        <li><a href="#">Parcels</a></li>
+                        <li><a href="{{ route('independent.services') }}">Bookings</a></li>
+                        <li><a href="{{ route('independent.services') }}">Parcels</a></li>
                     </ul>
                 </div><!-- end visit-us -->
 
@@ -56,7 +56,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 col-md-6 col-lg-6 col-xl-6" id="copyright">
-<p>© <?php echo date('Y'); ?> <a href="#">Meru Artists Coaches</a>. All rights reserved</p>
+<p>© <?php echo date('Y'); ?> <a href="#">Meru Artist Coaches</a>. All rights reserved</p>
                             </div><!-- end columns -->
 
                 {{-- <div class="col-12 col-md-6 col-lg-6 col-xl-6" id="terms">

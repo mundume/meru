@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\{App,Log};
 use AfricasTalking\SDK\AfricasTalking;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -14,11 +14,13 @@ use Illuminate\Contracts\Queue\ShouldBeUnique;
 class SendSms implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $dispatch;
+    public $mobile;
+    public $message;
     public $tries = 1;
-    public function __construct($dispatch)
+    public function __construct($mobile,$message)
     {
-        $this->dispatch = $dispatch;
+        $this->mobile = $mobile;
+        $this->message = $message;
     }
 
     /**
@@ -28,15 +30,16 @@ class SendSms implements ShouldQueue
      */
     public function handle()
     {
-        if(App::environment(['production','local'])) {
-            $at = new AfricasTalking(config('services.africastalking_secret'), config('services.africastalking_key'));
+        if(App::environment('production')) {
+            $at = new AfricasTalking(config('services.africastalking_key'), config('services.africastalking_secret'));
             $sms = $at->sms();
             $result = $sms->send([
-                'to' => $this->dispatch['mobile'],
-                'message' => $this->dispatch['message']
+                'to' => $this->mobile,
+                'message' => $this->message
             ]);
+            Log::critical("Message sent\r\n".$this->message."to\r\n".$this->mobile);
         } else {
-            Log::critical($this->dispatch);
+            Log::critical("Message sent\r\n".$this->message."to\r\n".$this->mobile);
         }
     }
 }

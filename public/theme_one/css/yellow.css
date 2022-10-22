@@ -1021,8 +1021,8 @@ ul.main-menu-social li a {
    ----------------------------------------------------- */
 
 #banner-1 {
-	background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.8)), to(rgba(0, 0, 0, 0.8))), url('../images/banner-1.jpg');
-	background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../images/banner-1.jpg');
+	background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.8)), to(rgba(0, 0, 0, 0.8))), url('../images/banner-3.jpg');
+	background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../images/banner-3.jpg');
 	background-size: cover;
 	background-position: center;
 	color: white;
@@ -1039,8 +1039,10 @@ ul.main-menu-social li a {
 /***************** BANNER-2 ****************/
 
 #banner-2 {
-	background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.7)), to(rgba(0, 0, 0, 0.7))), url('../images/banner-2.jpg');
-	background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/banner-2.jpg');
+	/* background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.7)), to(rgba(0, 0, 0, 0.7))), url('../images/banner-1.jpg'); */
+	/* background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/banner-1.jpg'); */
+	background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.6)), to(rgba(0, 0, 0, 0.6))), url('../images/contact-form.jpg');
+	background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/contact-form.jpg');
 	background-size: cover;
 	background-position: 50% 55%;
 	color: white;
