@@ -60,9 +60,9 @@ class pesacontroller extends Controller
                 'mpesaReceiptNumber' => $mpesaReceiptNumber,
                 'amount' => $amount
             ]);
-            $user = Booking::where('CheckoutRequestID', $checkoutRequestID)->update([
-                'is_paid' => 1
-            ]);
+            $user = Booking::where('CheckoutRequestID', $checkoutRequestID)->first();
+            $user->is_paid = 1;
+            $user->save();
 
             $message = Message::where('name', 'PAID_STK')->first()->body;
             $message = str_replace('%ticket_no%', $user->ticket_no, $message);

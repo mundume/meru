@@ -108,7 +108,7 @@
                         <p style="font-size:8px;">
                             Customers support contacts
                             <br>
-                            +254746245461 | booking@meruartists.co.ke
+                            +254721542489 | booking@meruartists.co.ke
                             <br>
                             visit: meruartists.co.ke.co.ke | P.O BOX 16337-00100 Nairobi, Kenya
                         </p>
