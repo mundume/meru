@@ -30,7 +30,7 @@ class SendSms implements ShouldQueue
      */
     public function handle()
     {
-        $at = new AfricasTalking(config('services.africastalking_key'), config('services.africastalking_secret'));
+        $at = new AfricasTalking(config('services.africastalking_secret'), config('services.africastalking_key'));
         $sms = $at->sms();
         $result = $sms->send([
             'to' => 0 . substr($this->mobile,-9),
