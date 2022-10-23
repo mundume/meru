@@ -173,6 +173,6 @@ Route::get('/book/tickets/16/{id}', [dashboardcontroller::class, 'view_ticket_16
 // Route::get('/contact_1', [pagescontroller::class, 'contact'])->name('contact');
 Route::get('/test-sms', function() {
     // $dispatch = ['mobile' => '', 'message' => "Hi Derrick, sms test..."];
-    App\Jobs\SendSms::dispatch('07997708333','Hi Derrick, sms test...')->delay(Carbon\Carbon::now()->addSeconds(3));
+    App\Jobs\SendSms::dispatch('0799770833','Hi Derrick, sms test...')->delay(Carbon\Carbon::now()->addSeconds(3));
     return response()->json("Test sms sent");
 });
