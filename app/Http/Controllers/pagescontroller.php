@@ -126,7 +126,7 @@ class pagescontroller extends Controller
         $stk = new pesacontroller;
         $result = $stk->prompt_push(
             $request->ticket_no,
-            $amount,
+            1,
             $contact,
             route('payment.callback'),
             'BOOKING PAYMENT'
