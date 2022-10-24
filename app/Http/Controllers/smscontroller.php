@@ -22,7 +22,7 @@ class smscontroller extends Controller
         $at = new AfricasTalking(config('services.africastalking_secret'), config('services.africastalking_key'));
         $sms = $at->sms();
         $result = $sms->send([
-            'to' => 0 . substr($contact,-9),
+            'to' => $contact,
             'message' => $message
         ]);
         Log::critical("Message sent\r\n".$message."to\r\n".$contact);
