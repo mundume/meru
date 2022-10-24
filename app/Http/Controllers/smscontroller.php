@@ -26,6 +26,6 @@ class smscontroller extends Controller
             'to' => $contact,
             'message' => $message
         ]);
-        Log::critical("Message sent\r\n".$message."to\r\n".$contact);
+        // Log::critical("Message sent\r\n".$message."to\r\n".$contact);
     }
 }
