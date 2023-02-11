@@ -1,5 +1,5 @@
-$(document).ready(function(){
+$(document).ready(function () {
     $("#myModalHeader").modal();
 });
-$('#myModalHeader').modal('toggle');
-$('#myModalHeader').modal('show');
+$("#myModalHeader").modal("toggle");
+$("#myModalHeader").modal("show");

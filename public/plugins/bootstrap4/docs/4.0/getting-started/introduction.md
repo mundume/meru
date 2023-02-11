@@ -20,6 +20,7 @@ Looking to quickly add Bootstrap to your project? Use BootstrapCDN, provided for
 Copy-paste the stylesheet `<link>` into your `<head>` before all other stylesheets to load our CSS.
 
 {% highlight html %}
+
 <link rel="stylesheet" href="{{ site.cdn.css }}" integrity="{{ site.cdn.css_hash }}" crossorigin="anonymous">
 {% endhighlight %}
 
@@ -30,9 +31,11 @@ Many of our components require the use of JavaScript to function. Specifically, 
 We use [jQuery's slim build](https://blog.jquery.com/2016/06/09/jquery-3-0-final-released/), but the full version is also supported.
 
 {% highlight html %}
+
 <script src="{{ site.cdn.jquery }}" integrity="{{ site.cdn.jquery_hash }}" crossorigin="anonymous"></script>
 <script src="{{ site.cdn.popper }}" integrity="{{ site.cdn.popper_hash }}" crossorigin="anonymous"></script>
 <script src="{{ site.cdn.js }}" integrity="{{ site.cdn.js_hash }}" crossorigin="anonymous"></script>
+
 {% endhighlight %}
 
 Curious which components explicitly require jQuery, our JS, and Popper.js? Click the show components link below. If you're at all unsure about the general page structure, keep reading for an example page template.
@@ -57,6 +60,7 @@ Curious which components explicitly require jQuery, our JS, and Popper.js? Click
 Be sure to have your pages set up with the latest design and development standards. That means using an HTML5 doctype and including a viewport meta tag for proper responsive behaviors. Put it all together and your pages should look like this:
 
 {% highlight html %}
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -68,6 +72,7 @@ Be sure to have your pages set up with the latest design and development standar
     <link rel="stylesheet" href="{{ site.cdn.css }}" integrity="{{ site.cdn.css_hash }}" crossorigin="anonymous">
 
     <title>Hello, world!</title>
+
   </head>
   <body>
     <h1>Hello, world!</h1>
@@ -77,6 +82,7 @@ Be sure to have your pages set up with the latest design and development standar
     <script src="{{ site.cdn.jquery }}" integrity="{{ site.cdn.jquery_hash }}" crossorigin="anonymous"></script>
     <script src="{{ site.cdn.popper }}" integrity="{{ site.cdn.popper_hash }}" crossorigin="anonymous"></script>
     <script src="{{ site.cdn.js }}" integrity="{{ site.cdn.js_hash }}" crossorigin="anonymous"></script>
+
   </body>
 </html>
 {% endhighlight %}
@@ -85,13 +91,14 @@ That's all you need for overall page requirements. Visit the [Layout docs]({{ si
 
 ## Important globals
 
-Bootstrap employs a handful of important global styles and settings that you'll need to be aware of when using it, all of which are almost exclusively geared towards the *normalization* of cross browser styles. Let's dive in.
+Bootstrap employs a handful of important global styles and settings that you'll need to be aware of when using it, all of which are almost exclusively geared towards the _normalization_ of cross browser styles. Let's dive in.
 
 ### HTML5 doctype
 
 Bootstrap requires the use of the HTML5 doctype. Without it, you'll see some funky incomplete styling, but including it shouldn't cause any considerable hiccups.
 
 {% highlight html %}
+
 <!doctype html>
 <html lang="en">
   ...
@@ -100,9 +107,10 @@ Bootstrap requires the use of the HTML5 doctype. Without it, you'll see some fun
 
 ### Responsive meta tag
 
-Bootstrap is developed *mobile first*, a strategy in which we optimize code for mobile devices first and then scale up components as necessary using CSS media queries. To ensure proper rendering and touch zooming for all devices, **add the responsive viewport meta tag** to your `<head>`.
+Bootstrap is developed _mobile first_, a strategy in which we optimize code for mobile devices first and then scale up components as necessary using CSS media queries. To ensure proper rendering and touch zooming for all devices, **add the responsive viewport meta tag** to your `<head>`.
 
 {% highlight html %}
+
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 {% endhighlight %}
 
@@ -116,7 +124,7 @@ On the rare occasion you need to override it, use something like the following:
 
 {% highlight css %}
 .selector-for-some-widget {
-  box-sizing: content-box;
+box-sizing: content-box;
 }
 {% endhighlight %}
 

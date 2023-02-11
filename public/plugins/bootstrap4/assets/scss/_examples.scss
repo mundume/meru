@@ -3,10 +3,10 @@
 //
 
 .bd-examples .img-thumbnail {
-  margin-bottom: .75rem;
+  margin-bottom: 0.75rem;
 }
 .bd-examples h4 {
-  margin-bottom: .25rem;
+  margin-bottom: 0.25rem;
 }
 .bd-examples p {
   margin-bottom: 1.25rem;
@@ -14,11 +14,11 @@
 
 @media (max-width: 480px) {
   .bd-examples {
-    margin-right: -.75rem;
-    margin-left: -.75rem;
+    margin-right: -0.75rem;
+    margin-left: -0.75rem;
   }
   .bd-examples > [class^="col-"] {
-    padding-right: .75rem;
-    padding-left: .75rem;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
   }
 }

@@ -15,23 +15,23 @@ Once downloaded, unzip the compressed folder and you'll see something like this:
 {% highlight plaintext %}
 bootstrap/
 ├── css/
-│   ├── bootstrap.css
-│   ├── bootstrap.css.map
-│   ├── bootstrap.min.css
-│   ├── bootstrap.min.css.map
-│   ├── bootstrap-grid.css
-│   ├── bootstrap-grid.css.map
-│   ├── bootstrap-grid.min.css
-│   ├── bootstrap-grid.min.css.map
-│   ├── bootstrap-reboot.css
-│   ├── bootstrap-reboot.css.map
-│   ├── bootstrap-reboot.min.css
-│   └── bootstrap-reboot.min.css.map
+│ ├── bootstrap.css
+│ ├── bootstrap.css.map
+│ ├── bootstrap.min.css
+│ ├── bootstrap.min.css.map
+│ ├── bootstrap-grid.css
+│ ├── bootstrap-grid.css.map
+│ ├── bootstrap-grid.min.css
+│ ├── bootstrap-grid.min.css.map
+│ ├── bootstrap-reboot.css
+│ ├── bootstrap-reboot.css.map
+│ ├── bootstrap-reboot.min.css
+│ └── bootstrap-reboot.min.css.map
 └── js/
-    ├── bootstrap.bundle.js
-    ├── bootstrap.bundle.min.js
-    ├── bootstrap.js
-    └── bootstrap.min.js
+├── bootstrap.bundle.js
+├── bootstrap.bundle.min.js
+├── bootstrap.js
+└── bootstrap.min.js
 {% endhighlight %}
 
 This is the most basic form of Bootstrap: precompiled files for quick drop-in usage in nearly any web project. We provide compiled CSS and JS (`bootstrap.*`), as well as compiled and minified CSS and JS (`bootstrap.min.*`). CSS [source maps](https://developers.google.com/web/tools/chrome-devtools/javascript/source-maps) (`bootstrap.*.map`) are available for use with certain browsers' developer tools. Bundled JS files (`bootstrap.bundle.js` and minified `bootstrap.bundle.min.js`) include [Popper](https://popper.js.org/), but not [jQuery](https://jquery.com/).
@@ -123,10 +123,10 @@ The Bootstrap source code download includes the precompiled CSS and JavaScript a
 {% highlight plaintext %}
 bootstrap/
 ├── dist/
-│   ├── css/
-│   └── js/
+│ ├── css/
+│ └── js/
 ├── docs/
-│   └── examples/
+│ └── examples/
 ├── js/
 └── scss/
 {% endhighlight %}

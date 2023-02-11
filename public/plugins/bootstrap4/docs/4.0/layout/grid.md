@@ -438,14 +438,16 @@ Here's the source code for creating these styles. Note that column overrides are
 
 {% highlight sass %}
 .no-gutters {
-  margin-right: 0;
-  margin-left: 0;
+margin-right: 0;
+margin-left: 0;
 
-  > .col,
-  > [class*="col-"] {
+> .col,
+> [class*="col-"] {
+
     padding-right: 0;
     padding-left: 0;
-  }
+
+}
 }
 {% endhighlight %}
 
@@ -650,23 +652,23 @@ $grid-columns:      12;
 $grid-gutter-width: 30px;
 
 $grid-breakpoints: (
-  // Extra small screen / phone
-  xs: 0,
-  // Small screen / phone
-  sm: 576px,
-  // Medium screen / tablet
-  md: 768px,
-  // Large screen / desktop
-  lg: 992px,
-  // Extra large screen / wide desktop
-  xl: 1200px
+// Extra small screen / phone
+xs: 0,
+// Small screen / phone
+sm: 576px,
+// Medium screen / tablet
+md: 768px,
+// Large screen / desktop
+lg: 992px,
+// Extra large screen / wide desktop
+xl: 1200px
 );
 
 $container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
-  xl: 1140px
+sm: 540px,
+md: 720px,
+lg: 960px,
+xl: 1140px
 );
 {% endhighlight %}
 
@@ -692,38 +694,39 @@ You can modify the variables to your own custom values, or just use the mixins w
 
 {% highlight scss %}
 .example-container {
-  width: 800px;
-  @include make-container();
+width: 800px;
+@include make-container();
 }
 
 .example-row {
-  @include make-row();
+@include make-row();
 }
 
 .example-content-main {
-  @include make-col-ready();
+@include make-col-ready();
 
-  @include media-breakpoint-up(sm) {
-    @include make-col(6);
-  }
-  @include media-breakpoint-up(lg) {
-    @include make-col(8);
-  }
+@include media-breakpoint-up(sm) {
+@include make-col(6);
+}
+@include media-breakpoint-up(lg) {
+@include make-col(8);
+}
 }
 
 .example-content-secondary {
-  @include make-col-ready();
+@include make-col-ready();
 
-  @include media-breakpoint-up(sm) {
-    @include make-col(6);
-  }
-  @include media-breakpoint-up(lg) {
-    @include make-col(4);
-  }
+@include media-breakpoint-up(sm) {
+@include make-col(6);
+}
+@include media-breakpoint-up(lg) {
+@include make-col(4);
+}
 }
 {% endhighlight %}
 
 {% example html %}
+
 <div class="example-container">
   <div class="example-row">
     <div class="example-content-main">Main content</div>
@@ -751,16 +754,16 @@ Moving beyond the columns themselves, you may also customize the number of grid 
 
 {% highlight scss %}
 $grid-breakpoints: (
-  xs: 0,
-  sm: 480px,
-  md: 768px,
-  lg: 1024px
+xs: 0,
+sm: 480px,
+md: 768px,
+lg: 1024px
 );
 
 $container-max-widths: (
-  sm: 420px,
-  md: 720px,
-  lg: 960px
+sm: 420px,
+md: 720px,
+lg: 960px
 );
 {% endhighlight %}
 

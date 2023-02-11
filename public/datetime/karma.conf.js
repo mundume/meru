@@ -1,31 +1,27 @@
-module.exports = function(config) {
+module.exports = function (config) {
     config.set({
-        basePath: '',
-        frameworks: ['mocha', 'chai'],
+        basePath: "",
+        frameworks: ["mocha", "chai"],
         files: [
-            'jquery.datetimepicker.css',
-            'node_modules/php-date-formatter/js/php-date-formatter.js',
-            'jquery.js',
-            'jquery.datetimepicker.js',
-            'tests/bootstrap.js',
-            'tests/tests/*.js'
+            "jquery.datetimepicker.css",
+            "node_modules/php-date-formatter/js/php-date-formatter.js",
+            "jquery.js",
+            "jquery.datetimepicker.js",
+            "tests/bootstrap.js",
+            "tests/tests/*.js",
         ],
-        reporters: ['progress'],
+        reporters: ["progress"],
         port: 2002,
-        hostname: '127.0.0.1',
+        hostname: "127.0.0.1",
         colors: true,
         logLevel: config.LOG_INFO,
-        browsers: ['Firefox'],
+        browsers: ["Firefox"],
         autoWatch: true,
         singleRun: false, // Karma captures browsers, runs the tests and exits
         concurrency: Infinity,
-        plugins: [
-            'karma-firefox-launcher',
-            'karma-mocha',
-            'karma-chai'
-        ],
+        plugins: ["karma-firefox-launcher", "karma-mocha", "karma-chai"],
         client: {
-            captureConsole: true
-        }
-    })
+            captureConsole: true,
+        },
+    });
 };

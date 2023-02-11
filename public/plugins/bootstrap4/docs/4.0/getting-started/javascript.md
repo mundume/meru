@@ -40,7 +40,7 @@ All infinitive events provide [`preventDefault()`](https://developer.mozilla.org
 
 {% highlight js %}
 $('#myModal').on('show.bs.modal', function (e) {
-  if (!data) return e.preventDefault() // stops modal from being shown
+if (!data) return e.preventDefault() // stops modal from being shown
 })
 {% endhighlight %}
 
@@ -56,8 +56,8 @@ All methods should accept an optional options object, a string which targets a p
 
 {% highlight js %}
 $('#myModal').modal()                      // initialized with defaults
-$('#myModal').modal({ keyboard: false })   // initialized with no keyboard
-$('#myModal').modal('show')                // initializes and invokes show immediately
+$('#myModal').modal({ keyboard: false }) // initialized with no keyboard
+$('#myModal').modal('show') // initializes and invokes show immediately
 {% endhighlight %}
 
 Each plugin also exposes its raw constructor on a `Constructor` property: `$.fn.popover.Constructor`. If you'd like to get a particular plugin instance, retrieve it directly from an element: `$('[rel="popover"]').data('popover')`.
@@ -70,7 +70,7 @@ In order to execute an action once the transition is complete, you can listen to
 
 {% highlight js %}
 $('#myCollapse').on('shown.bs.collapse', function (e) {
-  // Action to execute once the collapsible area is expanded
+// Action to execute once the collapsible area is expanded
 })
 {% endhighlight %}
 
@@ -78,7 +78,7 @@ In addition a method call on a **transitioning component will be ignored**.
 
 {% highlight js %}
 $('#myCarousel').on('slid.bs.carousel', function (e) {
-  $('#myCarousel').carousel('2') // Will slide to the slide 2 as soon as the transition to slide 1 is finished
+$('#myCarousel').carousel('2') // Will slide to the slide 2 as soon as the transition to slide 1 is finished
 })
 
 $('#myCarousel').carousel('1') // Will start sliding to the slide 1 and returns to the caller
@@ -99,7 +99,7 @@ Sometimes it is necessary to use Bootstrap plugins with other UI frameworks. In 
 
 {% highlight js %}
 var bootstrapButton = $.fn.button.noConflict() // return $.fn.button to previously assigned value
-$.fn.bootstrapBtn = bootstrapButton            // give $().bootstrapBtn the Bootstrap functionality
+$.fn.bootstrapBtn = bootstrapButton // give $().bootstrapBtn the Bootstrap functionality
 {% endhighlight %}
 
 ## Version numbers
@@ -115,6 +115,7 @@ $.fn.tooltip.Constructor.VERSION // => "{{ site.current_version }}"
 Bootstrap's plugins don't fall back particularly gracefully when JavaScript is disabled. If you care about the user experience in this case, use [`<noscript>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/noscript) to explain the situation (and how to re-enable JavaScript) to your users, and/or add your own custom fallbacks.
 
 {% callout warning %}
+
 ##### Third-party libraries
 
 **Bootstrap does not officially support third-party JavaScript libraries** like Prototype or jQuery UI. Despite `.noConflict` and namespaced events, there may be compatibility problems that you need to fix on your own.

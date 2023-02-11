@@ -11,7 +11,7 @@
 
   .btn {
     width: 100%;
-    padding: .8rem 2rem;
+    padding: 0.8rem 2rem;
     font-size: 1.25rem;
     font-weight: 500;
   }
@@ -47,10 +47,12 @@
 }
 
 .masthead-followup {
-  .bd-clipboard { display: none; }
+  .bd-clipboard {
+    display: none;
+  }
 
   .highlight {
-    padding: .5rem 0;
+    padding: 0.5rem 0;
     background-color: transparent;
   }
 }

@@ -27,6 +27,7 @@ Be sure to set a unique id on the `.carousel` for optional controls, especially 
 Here's a carousel with slides only. Note the presence of the `.d-block` and `.img-fluid` on carousel images to prevent browser default image alignment.
 
 {% example html %}
+
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -47,6 +48,7 @@ Here's a carousel with slides only. Note the presence of the `.d-block` and `.im
 Adding in the previous and next controls:
 
 {% example html %}
+
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -75,6 +77,7 @@ Adding in the previous and next controls:
 You can also add the indicators to the carousel, alongside the controls, too.
 
 {% example html %}
+
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -104,6 +107,7 @@ You can also add the indicators to the carousel, alongside the controls, too.
 {% endexample %}
 
 {% callout warning %}
+
 ##### Initial active element required
 
 The `.active` class needs to be added to one of the slides. Otherwise, the carousel will not be visible.
@@ -155,6 +159,7 @@ Add captions to your slides easily with the `.carousel-caption` element within a
 </div>
 
 {% highlight html %}
+
 <div class="carousel-item">
   <img src="..." alt="...">
   <div class="carousel-caption d-none d-md-block">
@@ -239,7 +244,7 @@ Initializes the carousel with an optional options `object` and starts cycling th
 
 {% highlight js %}
 $('.carousel').carousel({
-  interval: 2000
+interval: 2000
 })
 {% endhighlight %}
 
@@ -299,6 +304,6 @@ All carousel events are fired at the carousel itself (i.e. at the `<div class="c
 
 {% highlight js %}
 $('#myCarousel').on('slide.bs.carousel', function () {
-  // do something…
+// do something…
 })
 {% endhighlight %}

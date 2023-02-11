@@ -33,6 +33,7 @@ Should you require [build tools]({{ site.baseurl }}/docs/{{ site.docs_version }}
 Skip the download with [BootstrapCDN](https://www.bootstrapcdn.com/) to deliver cached version of Bootstrap's compiled CSS and JS to your project.
 
 {% highlight html %}
+
 <link rel="stylesheet" href="{{ site.cdn.css }}" integrity="{{ site.cdn.css_hash }}" crossorigin="anonymous">
 <script src="{{ site.cdn.js }}" integrity="{{ site.cdn.js_hash }}" crossorigin="anonymous"></script>
 {% endhighlight %}
@@ -40,8 +41,10 @@ Skip the download with [BootstrapCDN](https://www.bootstrapcdn.com/) to deliver 
 If you're using our compiled JavaScript, don't forget to include CDN versions of jQuery and Popper.js before it.
 
 {% highlight html %}
+
 <script src="{{ site.cdn.jquery }}" integrity="{{ site.cdn.jquery_hash }}" crossorigin="anonymous"></script>
 <script src="{{ site.cdn.popper }}" integrity="{{ site.cdn.popper_hash }}" crossorigin="anonymous"></script>
+
 {% endhighlight %}
 
 ## Package managers

@@ -19,7 +19,7 @@ Before getting started with Bootstrap's modal component, be sure to read the fol
 
 {% highlight js %}
 $('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').trigger('focus')
+$('#myInput').trigger('focus')
 })
 {% endhighlight %}
 
@@ -54,6 +54,7 @@ Below is a _static_ modal example (meaning its `position` and `display` have bee
 </div>
 
 {% highlight html %}
+
 <div class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -106,6 +107,7 @@ Toggle a working modal demo by clicking the button below. It will slide down and
 </div>
 
 {% highlight html %}
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   Launch demo modal
@@ -181,6 +183,7 @@ When modals become too long for the user's viewport or device, they scroll indep
 </div>
 
 {% highlight html %}
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
   Launch demo modal
@@ -239,6 +242,7 @@ Add `.modal-dialog-centered` to `.modal-dialog` to vertically center the modal.
 </div>
 
 {% highlight html %}
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
   Launch demo modal
@@ -301,6 +305,7 @@ Add `.modal-dialog-centered` to `.modal-dialog` to vertically center the modal.
 </div>
 
 {% highlight html %}
+
 <div class="modal-body">
   <h5>Popover in a modal</h5>
   <p>This <a href="#" role="button" class="btn btn-secondary popover-test" title="Popover title" data-content="Popover body content is set in this attribute.">button</a> triggers a popover on click.</p>
@@ -364,6 +369,7 @@ Utilize the Bootstrap grid system within a modal by nesting `.container-fluid` w
 </div>
 
 {% highlight html %}
+
 <div class="modal-body">
   <div class="container-fluid">
     <div class="row">
@@ -437,13 +443,13 @@ Below is a live demo followed by example HTML and JavaScript. For more informati
 
 {% highlight js %}
 $('#exampleModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var recipient = button.data('whatever') // Extract info from data-* attributes
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-  var modal = $(this)
-  modal.find('.modal-title').text('New message to ' + recipient)
-  modal.find('.modal-body input').val(recipient)
+var button = $(event.relatedTarget) // Button that triggered the modal
+var recipient = button.data('whatever') // Extract info from data-\* attributes
+// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+var modal = $(this)
+modal.find('.modal-title').text('New message to ' + recipient)
+modal.find('.modal-body input').val(recipient)
 })
 {% endhighlight %}
 
@@ -452,6 +458,7 @@ $('#exampleModal').on('show.bs.modal', function (event) {
 For modals that simply appear rather than fade in to view, remove the `.fade` class from your modal markup.
 
 {% highlight html %}
+
 <div class="modal" tabindex="-1" role="dialog" aria-labelledby="..." aria-hidden="true">
   ...
 </div>
@@ -479,7 +486,9 @@ Modals have two optional sizes, available via modifier classes to be placed on a
 </div>
 
 {% highlight html %}
+
 <!-- Large modal -->
+
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -491,6 +500,7 @@ Modals have two optional sizes, available via modifier classes to be placed on a
 </div>
 
 <!-- Small modal -->
+
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-sm">Small modal</button>
 
 <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -516,6 +526,7 @@ Modals have two optional sizes, available via modifier classes to be placed on a
         ...
       </div>
     </div>
+
   </div>
 </div>
 
@@ -605,7 +616,7 @@ Activates your content as a modal. Accepts an optional options `object`.
 
 {% highlight js %}
 $('#myModal').modal({
-  keyboard: false
+keyboard: false
 })
 {% endhighlight %}
 
@@ -670,6 +681,6 @@ Bootstrap's modal class exposes a few events for hooking into modal functionalit
 
 {% highlight js %}
 $('#myModal').on('hidden.bs.modal', function (e) {
-  // do something...
+// do something...
 })
 {% endhighlight %}

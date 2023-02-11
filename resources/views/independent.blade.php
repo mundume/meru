@@ -1,48 +1,115 @@
+
+
 @extends('layouts.main')
 @section('title', 'Home')
 <style>
+    .hero-text{
+      border:none;
+    }
     .navbar.header-1 {
         background-color: transparent;
+        
+    }
+   
+    .button{
+        padding:10px 12px;
+        cursor: pointer;
+        border-radius:5px;
+        transition:.3s;
+        background-color:#6a1b9a;
+        margin:5px;
+        font-weight: 500;
+        width: 100px;
+        
+        
+    }
+    .buttona{
+        padding:10px 12px;
+        cursor: pointer;
+        border-radius:5px;
+        transition:.3s;
+        background-color:#6a1b9a;
+        margin:5px;
+        width: 100px;
+        font-weight: 500;
+        
+        
+    }
+    .button:hover{
+        scale: 1.1;
+        color:white;
+        font-weight:700;
+    }
+    .button:focus {
+        scale:1.1;
+        color:white;
+        font-weight:700;
+    }
+    .buttona:hover{
+        scale: 1.1;
+        color:white;
+        font-weight:700;
+    }
+    .buttona:focus {
+        scale:1.1;
+        color:white;
+        font-weight:700;
+    }
+    span{
+        color:#ce93d8;
+        font-weight:700;
+
     }
 </style>
 @section('body')
-    <div class="home-container">
+    <div class="home-container tw-bg-gray-900 tw-border-b-2 tw-border-gray-900">
 
-        <div class="flexslider" id="slider">
-            <ul class="slides">
-                <li class="item-1"></li>
-                <li class="item-2"></li>
-            </ul><!-- end slides -->
-
-            <div id="hero-main">
-                <div class="hero-content">
-                    <div class="text-align">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                    <h1 id="welcome">Welcome To Meru Artists</h1>
-                                    <h3 id="tagline">Ride with us, ride with style.</h3>
-                                    <div class="hero-text" style="margin-bottom: 100px;">
-                                        @include('layouts.search_form')
-                                    </div><!-- end hero text -->
-                                </div><!-- end col-md-12 -->
-                            </div><!-- end row -->
-                        </div><!-- end container -->
-                    </div><!-- end text align -->
-                </div><!-- end hero content -->
-            </div><!-- end hero main -->
-        </div><!-- end slider -->
+        <!-- Hero -->
+<div class="p-5 text-center pt-7 bg-image rounded-3" style="
+    background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp');
+    height: 500px;
+  ">
+  <div class="mask">
+    <div class="d-flex justify-content-center align-items-center h-100">
+      <div class="text-white">
+        <h1 class="mt-6 mb-3 tw-font-sans " style="font-size:3rem">Karibu <br>
+    <span class="tw-font-bold tw-p-4 tw-text-4xl tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500 tw-font-sans">Meru Artist</span> </h1>
+        <h4 class="mb-3 text-lg tw-font-mono" style="font-size: 26px;font-weight:400">Where comfort meets class</h4>
+        <div class=" d-flex justify-content-center align-items-center tw-font-sans"><a class="buttona button tw-font-bold tw-p-2 tw-border tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500 tw-font-sans" href="#gallery" role="button">Gallery</a>
+    <a href="#book" class="button tw-font-bold tw-p-2 tw-border tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500 tw-font-sans"
+    "> Book Now</a>
+ </div>
+        
+      </div>
+    </div>
+  </div>
+   </div><!-- end slider -->
     </div><!-- end home-container -->
+    
+   
+
+ <section class="tw-bg-gray-900 tw-border-2 tw-border-gray-900 ">
+ <div class="tw-m-4 tw-rounded-md" id="book">
+    <h1 class=" tw-font-mono tw-text-3xl tw-block tw-m-auto tw-text-center tw-text-white">Experience The Magic With Us <br>
+<span class="tw-font-bold tw-p-4 tw-text-4xl tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500 tw-font-sans">Book Now!</span></h1>
+            @include('layouts.search_form')
+            
+        </div><!-- end hero text -->>
+</div>
+        </section>   
+   
+                          
+       
 
 
     <!--================ ROOMS ==============-->
-    <section id="rooms" class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                    <div class="page-heading">
-                        <h2>Today's <span>Scheduled Fleets</span></h2>
-                        <p>List of fleets scheduled today...</p>
+    <section id="rooms" class="">
+        <div class="">
+            <div class="">
+                <div class="">
+                    <div class="">
+                        <h2 style="">Today's Scheduled Fleets</h2>
+                        <p style="color:white">List of fleets scheduled today...</p>
                     </div><!-- end page-heading -->
 
                     <div class="owl-carousel owl-theme" id="owl-rooms">
@@ -58,13 +125,7 @@
                                                 <a href="/route/booking/{{ base64_encode($item->id) }}">
                                                     <h3>{{ $item->departure }} ~ {{ $item->destination }}</h3>
                                                 </a>
-                                                <div class="rating">
-                                                    <span><i class="fa fa-star"></i></span>
-                                                    <span><i class="fa fa-star"></i></span>
-                                                    <span><i class="fa fa-star"></i></span>
-                                                    <span><i class="fa fa-star"></i></span>
-                                                    <span><i class="fa fa-star-o"></i></span>
-                                                </div><!-- end rating -->
+                                               
                                             </div><!-- end room-title -->
                                         </div><!-- end room-img -->
 
@@ -83,7 +144,7 @@
                         @empty
                             <div>
                                 <div class="grid">
-                                    <p>Oops, no fleet available!</p>
+                                    <p style="color:white">Oops, no fleet available!</p>
                                 </div>
                             </div>
                         @endforelse
@@ -148,7 +209,7 @@
                         <div class="grid">
                             <div class="room-block">
                                 <div class="room-img">
-<img src="{{ asset('theme_one/images/logo.png') }}" class="img-fluid" alt="room-image" />
+<img src="{{ asset('theme_one/images/meru2.webp') }}" class="img-fluid" alt="room-image" />
                                     <div class="room-title">
                                         <a href="#">
                                             <h3>Meru ~ Nairobi</h3>
@@ -206,39 +267,49 @@
         </div><!-- end container -->
     </section><!-- end rooms -->
 
+    <div id="gallery">
+        @include('layouts.gallery')
 
-    <!--================ SERVICES ==============-->
-    <section id="services" class="section-padding no-pd-bot">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                    <div class="page-heading">
-                        <h2>Our <span>Services</span></h2>
-                        <p>As an organization, we are committed to providing our customers with the highest quality of
+   
+    </div>
+<div id="services">
+     <section id="" class=" tw-bg-gray-900">
+        <div class="">
+            <div class="">
+                <div class=" tw-block tw-m-auto tw-text-center">
+                    <div class="">
+                        <h2 class="tw-font-bold tw-p-4 tw-text-4xl tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500 tw-font-mono">Our Services</h2>
+                        <p class=" tw-p-7 tw-font-sans">As an organization, we are committed to providing our customers with the highest quality of
                             service and safety in the
                             transport industry.</p>
                     </div><!-- end page-heading -->
 
-                    <div id="service-blocks">
-                        <div class="row">
+                    <div id="">
+                        <div class="p-3 tw-block tw-m-auto">
 
-                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="service-block">
-                                    <span><i class="fa fa-receipt"></i></span>
-                                    <h2 class="service-name">Tickets Booking</h2>
+                            <div class="" >
+                                <div class="mt-4 mb-6 border tw-w-full tw-text-center tw-m-auto tw-flex tw-flex-col tw-justify-around tw-items-center tw-h-64 tw-shadow-2xl tw-rounded-md" >
+                                    <span class=""><i style="color:white" class="fa fa-bus tw-text-3xl "></i></span>
+                                    <h2 class="tw-p-4 tw-text-4xl tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500">Tickets Booking</h2>
                                     <p>You book, we preserve seat for you all at click of the button. Our committment is to
                                         serve you better.</p>
                                 </div><!-- end service-block -->
                             </div><!-- end columns -->
+                            </div><!-- end row -->
 
-                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                                <div class="service-block">
-                                    <span><i class="fa fa-truck"></i></span>
-                                    <h2 class="service-name">Parcels</h2>
+                            <div class="p-3 tw-block tw-m-auto">
+
+                            <div class="" >
+                                <div class="mt-4 mb-4 border tw-w-full tw-text-center tw-m-auto tw-flex tw-flex-col tw-justify-around tw-items-center tw-h-64 tw-shadow-2xl tw-rounded-md" >
+                                    <span class=""><i style="color:white" class="fa fa-truck tw-text-3xl "></i></span>
+                                    <h2 class="tw-p-4 tw-text-4xl tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500">Parcel Deliveries</h2>
                                     <p>Affordable rates and security of your parcel is our concerns. Send parcel with us
                                         today.</p>
                                 </div><!-- end service-block -->
                             </div><!-- end columns -->
+
+    
+                            
                         </div><!-- end row -->
                     </div><!-- end service-blocks -->
 
@@ -247,123 +318,18 @@
         </div><!-- end container -->
     </section><!-- end services -->
 
+</div>
+ 
+   
     <br><br>
+<!-- Gallery -->
 
-
-    <!--=============== TESTIMONIALS ==============-->
-    <section id="testimonials" class="banner-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-
-                    <div class="carousel slide review-carousel" data-ride="carousel">
-
-                        <div class="row">
-                            <div class="col-3 col-md-1 col-lg-1 col-xl-1">
-                                <ol class="carousel-indicators">
-                                    <li data-target=".review-carousel" data-slide-to="0" class="active"></li>
-                                    <li data-target=".review-carousel" data-slide-to="1"></li>
-                                    {{-- <li data-target=".review-carousel" data-slide-to="2"></li> --}}
-                                </ol>
-                            </div><!-- end columns -->
-
-                            <div class="col-12 col-md-11 col-lg-11 col-xl-11">
-                                <div class="row">
-                                    <div class="col-12 offset-md-4 col-md-8 offset-lg-3 col-lg-7 offset-xl-3 col-xl-7">
-                                        <h2>What People Say About Us</h2>
-                                    </div><!-- end columns -->
-                                </div><!-- end row -->
-
-                                <div class="carousel-inner">
-
-                                    <div class="carousel-item active">
-                                        <div class="row">
-
-                                            <div class="col-12 col-md-4 col-lg-3 col-xl-3 reviewer-image">
-                                                <img src="{{ asset('avatar.png') }}" alt="reviewer-image"
-                                                    class="rounded-circle">
-                                            </div><!-- end columns -->
-
-                                            <div class="col-12 col-md-8 col-lg-9 col-xl-9">
-                                                <p class="review-text">I like the customer service, you won't be pushed
-                                                    around by crew guys. Kudos guys...</p>
-                                                <div class="rating">
-                                                    <span><i class="fa fa-star"></i></span>
-                                                    <span><i class="fa fa-star"></i></span>
-                                                    <span><i class="fa fa-star"></i></span>
-                                                    <span><i class="fa fa-star"></i></span>
-                                                    <span><i class="fa fa-star star-opacity"></i></span>
-                                                </div><!-- end rating -->
-                                                <p class="reviewer-name">Derrick Bundi</p>
-                                            </div><!-- end columns -->
-
-                                        </div><!-- end row -->
-                                    </div><!-- end item -->
-
-                                    <div class="carousel-item">
-                                        <div class="row">
-
-                                            <div class="col-12 col-md-4 col-lg-3 col-xl-3 reviewer-image">
-                                                <img src="{{ asset('avatar.png') }}" alt="reviewer-image"
-                                                    class="rounded-circle">
-                                            </div><!-- end columns -->
-
-                                            <div class="col-12 col-md-8 col-lg-9 col-xl-9">
-                                                <p class="review-text">I sent my parcel through Meru Artist Coaches and
-                                                    guess what, they delivered it into my door.
-                                                    Thank you guys.</p>
-                                                <div class="rating">
-                                                    <span><i class="fa fa-star"></i></span>
-                                                    <span><i class="fa fa-star"></i></span>
-                                                    <span><i class="fa fa-star"></i></span>
-                                                    <span><i class="fa fa-star"></i></span>
-                                                    <span><i class="fa fa-star star-opacity"></i></span>
-                                                </div><!-- end rating -->
-
-                                                <p class="reviewer-name">Cecilia Kendi</p>
-                                            </div><!-- end columns -->
-
-                                        </div><!-- end row -->
-                                    </div><!-- end item -->
-
-                                    {{-- <div class="carousel-item">
-                                                            <div class="row">
-
-                                                                <div class="col-12 col-md-4 col-lg-3 col-xl-3 reviewer-image">
-<img src="{{ asset('theme_one/images/derr.jpg') }}" alt="reviewer-image" class="rounded-circle">
+<div id="testimonials " class =" tw-block tw-m-auto tw-text-center">
+    @include('layouts.testimonials')
 </div>
-
-                                                                <div class="col-12 col-md-8 col-lg-9 col-xl-9">
-                                                                    <p class="review-text">Lorem ipsum dolor sit amet, consectetuer
-                                                                        adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
-                                                                        dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam,
-                                                                        quis nostrud exerci tation ullamcorper suscipit.</p>
-                                                                    <div class="rating">
-                                                                        <span><i class="fa fa-star"></i></span>
-                                                                        <span><i class="fa fa-star"></i></span>
-                                                                        <span><i class="fa fa-star star-opacity"></i></span>
-                                                                        <span><i class="fa fa-star star-opacity"></i></span>
-                                                                        <span><i class="fa fa-star star-opacity"></i></span>
-</div>
-
-                                                                    <p class="reviewer-name">Lorem Ipsum</p>
-</div>
-
-</div>
-</div> --}}
-
-                                </div><!-- end carousel-inner -->
-                            </div><!-- end columns -->
-                        </div><!-- end row -->
-                    </div><!-- end review-carousel -->
-                </div><!-- end columns -->
-            </div><!-- end row -->
-        </div><!-- end container -->
-    </section><!-- end testimonials -->
-
 
     <!--================ BANNER-2 =============-->
-    <section id="banner-2" class="banner-padding">
+    <section id="banner-2" class="banner-padding" >
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-3 col-xl-3">
@@ -398,84 +364,53 @@
         </div><!-- end container -->
     </section><!-- end banner-2 -->
 
+    <section id="contact" class=" tw-h-fit tw-bg-gray-900 sm:tw-flex sm:tw-justify-center sm:tw-items-center tw-block">
+        <div class=" sm:tw-w-1/2">
+          <h1 class="tw-text-4xl tw-text-white tw-font-bold tw-p-4 tw-m-auto tw-block tw-text-center">Love to Hear from you! <br/>
+            <span class="tw-font-bold tw-p-4 tw-text-4xl tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500 tw-font-sans">Lets get in touch</span>
+          </h1>
 
-    <!--============== CONTACT-FORM ===============-->
-    <section id="contact-form-2" class="banner-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                    <h2>Contact Us</h2>
+        </div>
+        <div  class="sm:tw-w-1/2 ">
+<form action="mailto:nzaih18@gmail.com" method="POST" type="text" class="  tw-flex tw-flex-col tw-justify-around  tw-h-full tw-mb-6 tw-bg-gray-900 tw-text-white sm:tw-w-96 tw-w-[90%]">
+    <div class="tw-flex tw-justify-between tw-items-center" >
+ <label for="name" class="tw-font-bold">  Name</label>
+<input type="email" name="email" placeholder="Email" class=" tw-m-2 tw-px-4 tw-py-3 tw-outline-none tw-rounded tw-text-gray-900 tw-w-72" />
+    
+    </div >
 
-                    <div class="row">
-                        <div class="col-12 col-md-12 col-lg-5 col-xl-5">
-                            <div class="address-text-icon">
-                                <div class="a-icon">
-                                    <span><i class="fa fa-2x fa-map-marker"></i></span>
-                                </div><!-- end columns -->
+    <div class=" tw-flex tw-justify-between tw-items-center">
+    <label for="name" class="tw-font-bold"> Email</label>
+    
+    <input type="text" name="name" placeholder="Name" class=" tw-m-2 tw-px-4 tw-py-3 tw-border tw-rounded tw-outline-none tw-text-gray-900 tw-w-72"/>
+    </div>
+    <div class="tw-flex tw-justify-between tw-items-center">
+    <label for="message" class="tw-font-bold"> Info</label>
+    <input type="textarea" name="message" placeholder="Message" class=" tw-m-2 tw-px-4 tw-py-7 tw-border tw-rounded tw-outline-none tw-text-gray-900 tw-w-72"/>
+    </div>
+    <button type="submit" class="py-2 border tw-mt-3 tw-mb-5 tw-block tw-px-3 tw-items-center tw-m-auto tw-rounded">Submit</button>
+</form>
 
-                                <div class="a-text">
-                                    <p>Egoji House, 2nd Floor, Tsavo Road, Nairobi, Kenya.</p>
-                                </div><!-- end columns -->
-                            </div><!-- end address-block -->
+        </div>
+    </section>
 
-                            <div class="address-text-icon">
-                                <div class="a-icon">
-                                    <span><i class="fa fa-2x fa-phone"></i></span>
-                                </div><!-- end columns -->
 
-                                <div class="a-text">
-                                    <p>Phone: +254 721542489</p>
-                                    <p>P.O Box: 16337-00100</p>
-                                </div><!-- end columns -->
-                            </div><!-- end address-block -->
+    <script>
+    document.querySelector('img').addEventlistener('click', ()=>console.log('clicked'))
+ //zoom image on click
+    
+  // Or with jQuery
+  
 
-                            <div class="address-text-icon">
-                                <div class="a-icon">
-                                    <span><i class="fa fa-2x fa-envelope"></i></span>
-                                </div><!-- end columns -->
+  
+</script>
+ <!-- Or use the minified version -->
+    <script src="js/lightgallery.min.js"></script>
 
-                                <div class="a-text">
-                                    <p>Enquiries: <a href="#">info@meruartistcoaches.co.ke</a></p>
-                                    <p>Booking: <a href="#">booking@meruartistcoaches.co.ke</a></p>
-                                </div><!-- end columns -->
-                            </div><!-- end address-block -->
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-7 col-xl-7 text-center">
-                            <form action="{{ route('send_message') }}" method="POST">
-                                @csrf
-                                <div class="row">
-                                    <div class="col-md-6 slide-right-vis">
+    <!-- lightgallery plugins -->
+    <script src="js/plugins/lg-thumbnail.umd.js"></script>
+    <script src="js/plugins/lg-zoom.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Name *" name="name"
-                                                required />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="0712345678 *"
-                                                name="mobile" required />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Subject (Optional)"
-                                                name="subject" />
-                                        </div>
-                                    </div>
 
-                                    <div class="col-md-6 slide-left-vis">
-                                        <div class="form-group m-0">
-                                            <textarea class="form-control" placeholder="Your Message *" name="body" required></textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 text-center">
-                                        <button type="submit" class="btn btn-yellow btn-block">Send Message</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div><!-- end columns -->
-                    </div><!-- end row -->
-
-                </div><!-- end columns -->
-            </div><!-- end row -->
-        </div><!-- end container -->
-    </section><!-- end newsletter -->
 @endsection

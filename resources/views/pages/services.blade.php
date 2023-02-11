@@ -1,7 +1,14 @@
 @extends('layouts.main')
 @section('title', 'Services')
 @section('body')
-<section id="our-services" class="innerpage-wrapper">
+
+<style>
+    .inner-wrapper{
+        background-color: #00A86B;
+
+    }
+</style>
+<section id="our-services" class="innerpage-wrapper" style=" background-color: #00A86B;">
 
     <section id="our-services-2" class="innerpage-wrapper">
 
@@ -10,7 +17,7 @@
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="page-heading">
-                            <h2>Our <span>Services</span></h2>
+                            <h2>Our <span class="bg-red-800">Services</span></h2>
 <p>As an organization, we are committed to providing our customers with the highest quality of service and safety in the
     transport industry.</p>
                         </div><!-- end page-heading -->

@@ -12,7 +12,7 @@
   overflow: hidden;
   color: #563d7c;
   background-color: #f9f9f9;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
 }
 
 // Individual items
@@ -69,7 +69,6 @@
   }
 }
 
-
 //
 // Color swatches
 //
@@ -83,9 +82,9 @@
   float: left;
   width: 4rem;
   height: 4rem;
-  margin-right: .25rem;
-  margin-left: .25rem;
-  border-radius: .25rem;
+  margin-right: 0.25rem;
+  margin-left: 0.25rem;
+  border-radius: 0.25rem;
 
   @media (min-width: 768px) {
     width: 6rem;

@@ -82,7 +82,7 @@
 
   > ul li,
   > ol li {
-    margin-bottom: .25rem;
+    margin-bottom: 0.25rem;
   }
 
   @include media-breakpoint-up(lg) {
@@ -96,7 +96,7 @@
 
 .bd-title {
   margin-top: 1rem;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   font-weight: 300;
 
   @include media-breakpoint-up(sm) {
@@ -115,5 +115,9 @@
   }
 }
 
-.bd-text-purple { color: $bd-purple; }
-.bd-text-purple-bright { color: $bd-purple-bright; }
+.bd-text-purple {
+  color: $bd-purple;
+}
+.bd-text-purple-bright {
+  color: $bd-purple-bright;
+}

@@ -143,8 +143,8 @@
     }
     .timelineBody .timeline .timelineDate {
         -webkit-box-flex: 0;
-            -ms-flex: 0 0 50px;
-                flex: 0 0 50px;
+        -ms-flex: 0 0 50px;
+        flex: 0 0 50px;
         padding: 0;
     }
     .footer-copywrite-info {
@@ -165,14 +165,14 @@
     .welcome_area {
         height: 1100px !important;
     }
-    .welcome_area.none{
+    .welcome_area.none {
         height: 100vh !important;
     }
     .sonar {
         -webkit-transform: scale(1);
         transform: scale(1);
     }
-    
+
     .welcome-content h2 {
         font-size: 30px;
     }
@@ -184,7 +184,6 @@
     .single-team-member:after {
         width: 50%;
     }
-   
 }
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {

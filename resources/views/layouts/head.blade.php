@@ -1,4 +1,5 @@
-<title>@yield('title') - Meru Artist Coaches</title>
+<title>@yield('title') - Meru Art Coaches</title>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="images/favicon.png" type="image/x-icon">
@@ -24,3 +25,16 @@
 <link href="{{ asset('theme_one/fonts/awesome/css/fontawesome.css') }}" rel="stylesheet">
 <link href="{{ asset('theme_one/fonts/awesome/css/brands.css') }}" rel="stylesheet">
 <link href="{{ asset('theme_one/fonts/awesome/css/solid.css') }}" rel="stylesheet">
+<link href="{{asset('css/app.css')}}" rel="stylesheet"> 
+<link type="text/css" rel="stylesheet" href="{{ asset('css/lightgallery.css') }}" />
+<link type="text/css" rel="stylesheet" href="{{ asset('css/lg-zoom.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{asset('css/lg-thumbnail.css')}}" />
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+/>
+<link href="
+https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery.min.css
+" rel="stylesheet"/>
+  
+   

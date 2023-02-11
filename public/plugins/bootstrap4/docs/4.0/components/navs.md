@@ -17,6 +17,7 @@ The base `.nav` component does not include any `.active` state. The following ex
 {% endcallout %}
 
 {% example html %}
+
 <ul class="nav">
   <li class="nav-item">
     <a class="nav-link active" href="#">Active</a>
@@ -36,6 +37,7 @@ The base `.nav` component does not include any `.active` state. The following ex
 Classes are used throughout, so your markup can be super flexible. Use `<ul>`s like above, or roll your own with say a `<nav>` element. Because the `.nav` uses `display: flex`, the nav links behave the same as nav items would, but without the extra markup.
 
 {% example html %}
+
 <nav class="nav">
   <a class="nav-link active" href="#">Active</a>
   <a class="nav-link" href="#">Link</a>
@@ -55,6 +57,7 @@ Change the horizontal alignment of your nav with [flexbox utilities]({{ site.bas
 Centered with `.justify-content-center`:
 
 {% example html %}
+
 <ul class="nav justify-content-center">
   <li class="nav-item">
     <a class="nav-link active" href="#">Active</a>
@@ -74,6 +77,7 @@ Centered with `.justify-content-center`:
 Right-aligned with `.justify-content-end`:
 
 {% example html %}
+
 <ul class="nav justify-content-end">
   <li class="nav-item">
     <a class="nav-link active" href="#">Active</a>
@@ -95,6 +99,7 @@ Right-aligned with `.justify-content-end`:
 Stack your navigation by changing the flex item direction with the `.flex-column` utility. Need to stack them on some viewports but not others? Use the responsive versions (e.g., `.flex-sm-column`).
 
 {% example html %}
+
 <ul class="nav flex-column">
   <li class="nav-item">
     <a class="nav-link active" href="#">Active</a>
@@ -114,6 +119,7 @@ Stack your navigation by changing the flex item direction with the `.flex-column
 As always, vertical navigation is possible without `<ul>`s, too.
 
 {% example html %}
+
 <nav class="nav flex-column">
   <a class="nav-link active" href="#">Active</a>
   <a class="nav-link" href="#">Link</a>
@@ -127,6 +133,7 @@ As always, vertical navigation is possible without `<ul>`s, too.
 Takes the basic nav from above and adds the `.nav-tabs` class to generate a tabbed interface. Use them to create tabbable regions with our [tab JavaScript plugin](#javascript-behavior).
 
 {% example html %}
+
 <ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link active" href="#">Active</a>
@@ -148,6 +155,7 @@ Takes the basic nav from above and adds the `.nav-tabs` class to generate a tabb
 Take that same HTML, but use `.nav-pills` instead:
 
 {% example html %}
+
 <ul class="nav nav-pills">
   <li class="nav-item">
     <a class="nav-link active" href="#">Active</a>
@@ -169,6 +177,7 @@ Take that same HTML, but use `.nav-pills` instead:
 Force your `.nav`'s contents to extend the full available width one of two modifier classes. To proportionately fill all available space with your `.nav-item`s, use `.nav-fill`. Notice that all horizontal space is occupied, but not every nav item has the same width.
 
 {% example html %}
+
 <ul class="nav nav-pills nav-fill">
   <li class="nav-item">
     <a class="nav-link active" href="#">Active</a>
@@ -188,6 +197,7 @@ Force your `.nav`'s contents to extend the full available width one of two modif
 When using a `<nav>`-based navigation, be sure to include `.nav-item` on the anchors.
 
 {% example html %}
+
 <nav class="nav nav-pills nav-fill">
   <a class="nav-item nav-link active" href="#">Active</a>
   <a class="nav-item nav-link" href="#">Link</a>
@@ -199,6 +209,7 @@ When using a `<nav>`-based navigation, be sure to include `.nav-item` on the anc
 For equal-width elements, use `.nav-justified`. All horizontal space will be occupied by nav links, but unlike the `.nav-fill` above, every nav item will be the same width.
 
 {% example html %}
+
 <nav class="nav nav-pills nav-justified">
   <a class="nav-link active" href="#">Active</a>
   <a class="nav-link" href="#">Longer nav link</a>
@@ -210,6 +221,7 @@ For equal-width elements, use `.nav-justified`. All horizontal space will be occ
 Similar to the `.nav-fill` example using a `<nav>`-based navigation, be sure to include `.nav-item` on the anchors.
 
 {% example html %}
+
 <nav class="nav nav-pills nav-justified">
   <a class="nav-item nav-link active" href="#">Active</a>
   <a class="nav-item nav-link" href="#">Link</a>
@@ -218,11 +230,13 @@ Similar to the `.nav-fill` example using a `<nav>`-based navigation, be sure to 
 </nav>
 
 {% endexample %}
+
 ## Working with flex utilities
 
 If you need responsive nav variations, consider using a series of [flexbox utilities]({{ site.baseurl }}/docs/{{ site.docs_version }}/utilities/flex/). While more verbose, these utilities offer greater customization across responsive breakpoints. In the example below, our nav will be stacked on the lowest breakpoint, then adapt to a horizontal layout that fills the available width starting from the small breakpoint.
 
 {% example html %}
+
 <nav class="nav nav-pills flex-column flex-sm-row">
   <a class="flex-sm-fill text-sm-center nav-link active" href="#">Active</a>
   <a class="flex-sm-fill text-sm-center nav-link" href="#">Link</a>
@@ -244,6 +258,7 @@ Add dropdown menus with a little extra HTML and the [dropdowns JavaScript plugin
 ### Tabs with dropdowns
 
 {% example html %}
+
 <ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link active" href="#">Active</a>
@@ -270,6 +285,7 @@ Add dropdown menus with a little extra HTML and the [dropdowns JavaScript plugin
 ### Pills with dropdowns
 
 {% example html %}
+
 <ul class="nav nav-pills">
   <li class="nav-item">
     <a class="nav-link active" href="#">Active</a>
@@ -329,6 +345,7 @@ Note that dynamic tabbed interfaces should <em>not</em> contain dropdown menus, 
 </div>
 
 {% highlight html %}
+
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
@@ -371,6 +388,7 @@ To help fit your needs, this works with `<ul>`-based markup, as shown above, or 
 </div>
 
 {% highlight html %}
+
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
@@ -413,6 +431,7 @@ The tabs plugin also works with pills.
 </div>
 
 {% highlight html %}
+
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
@@ -463,6 +482,7 @@ And with vertical pills.
 </div>
 
 {% highlight html %}
+
 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
   <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
   <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
@@ -482,6 +502,7 @@ And with vertical pills.
 You can activate a tab or pill navigation without writing any JavaScript by simply specifying `data-toggle="tab"` or `data-toggle="pill"` on an element. Use these data attributes on `.nav-tabs` or `.nav-pills`.
 
 {% highlight html %}
+
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
@@ -513,8 +534,8 @@ Enable tabbable tabs via JavaScript (each tab needs to be activated individually
 
 {% highlight js %}
 $('#myTab a').on('click', function (e) {
-  e.preventDefault()
-  $(this).tab('show')
+e.preventDefault()
+$(this).tab('show')
 })
 {% endhighlight %}
 
@@ -532,6 +553,7 @@ $('#myTab li:nth-child(3) a').tab('show') // Select third tab
 To make tabs fade in, add `.fade` to each `.tab-pane`. The first tab pane must also have `.show` to make the initial content visible.
 
 {% highlight html %}
+
 <div class="tab-content">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
@@ -550,6 +572,7 @@ To make tabs fade in, add `.fade` to each `.tab-pane`. The first tab pane must a
 Activates a tab element and content container. Tab should have either a `data-target` or an `href` targeting a container node in the DOM.
 
 {% highlight html %}
+
 <ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
@@ -577,6 +600,7 @@ Activates a tab element and content container. Tab should have either a `data-ta
     $('#myTab li:last-child a').tab('show')
   })
 </script>
+
 {% endhighlight %}
 
 #### .tab('show')
@@ -631,7 +655,7 @@ If no tab was already active, then the `hide.bs.tab` and `hidden.bs.tab` events 
 
 {% highlight js %}
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-  e.target // newly activated tab
-  e.relatedTarget // previous active tab
+e.target // newly activated tab
+e.relatedTarget // previous active tab
 })
 {% endhighlight %}

@@ -33,6 +33,7 @@ Navbars come with built-in support for a handful of sub-components. Choose from 
 Here's an example of all the sub-components included in a responsive light-themed navbar that automatically collapses at the `lg` (large) breakpoint.
 
 {% example html %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,6 +78,7 @@ This example uses [color]({{ site.baseurl }}/docs/{{ site.docs_version }}/utilit
 The `.navbar-brand` can be applied to most elements, but an anchor works best as some elements might require utility classes or custom styles.
 
 {% example html %}
+
 <!-- As a link -->
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
@@ -91,6 +93,7 @@ The `.navbar-brand` can be applied to most elements, but an anchor works best as
 Adding images to the `.navbar-brand` will likely always require custom styles or utilities to properly size. Here are some examples to demonstrate.
 
 {% example html %}
+
 <!-- Just an image -->
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">
@@ -100,6 +103,7 @@ Adding images to the `.navbar-brand` will likely always require custom styles or
 {% endexample %}
 
 {% example html %}
+
 <!-- Image and text -->
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">
@@ -116,6 +120,7 @@ Navbar navigation links build on our `.nav` options with their own modifier clas
 Active states—with `.active`—to indicate the current page can be applied directly to `.nav-link`s or their immediate parent `.nav-item`s.
 
 {% example html %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -143,6 +148,7 @@ Active states—with `.active`—to indicate the current page can be applied dir
 And because we use classes for our navs, you can avoid the list-based approach entirely if you like.
 
 {% example html %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,6 +168,7 @@ And because we use classes for our navs, you can avoid the list-based approach e
 You may also utilize dropdowns in your navbar nav. Dropdown menus require a wrapping element for positioning, so be sure to use separate and nested elements for `.nav-item` and `.nav-link` as shown below.
 
 {% example html %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -198,6 +205,7 @@ You may also utilize dropdowns in your navbar nav. Dropdown menus require a wrap
 Place various form controls and components within a navbar with `.form-inline`.
 
 {% example html %}
+
 <nav class="navbar navbar-light bg-light">
   <form class="form-inline">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -209,6 +217,7 @@ Place various form controls and components within a navbar with `.form-inline`.
 Align the contents of your inline forms with utilities as needed.
 
 {% example html %}
+
 <nav class="navbar navbar-light bg-light justify-content-between">
   <a class="navbar-brand">Navbar</a>
   <form class="form-inline">
@@ -221,6 +230,7 @@ Align the contents of your inline forms with utilities as needed.
 Input groups work, too:
 
 {% example html %}
+
 <nav class="navbar navbar-light bg-light">
   <form class="form-inline">
     <div class="input-group">
@@ -236,6 +246,7 @@ Input groups work, too:
 Various buttons are supported as part of these navbar forms, too. This is also a great reminder that vertical alignment utilities can be used to align different sized elements.
 
 {% example html %}
+
 <nav class="navbar navbar-light bg-light">
   <form class="form-inline">
     <button class="btn btn-outline-success" type="button">Main button</button>
@@ -249,6 +260,7 @@ Various buttons are supported as part of these navbar forms, too. This is also a
 Navbars may contain bits of text with the help of `.navbar-text`. This class adjusts vertical alignment and horizontal spacing for strings of text.
 
 {% example html %}
+
 <nav class="navbar navbar-light bg-light">
   <span class="navbar-text">
     Navbar text with an inline element
@@ -259,6 +271,7 @@ Navbars may contain bits of text with the help of `.navbar-text`. This class adj
 Mix and match with other components and utilities as needed.
 
 {% example html %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar w/ text</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -314,6 +327,7 @@ Theming the navbar has never been easier thanks to the combination of theming cl
         <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
+
   </nav>
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -342,6 +356,7 @@ Theming the navbar has never been easier thanks to the combination of theming cl
         <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
+
   </nav>
 
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
@@ -370,10 +385,12 @@ Theming the navbar has never been easier thanks to the combination of theming cl
         <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
+
   </nav>
 </div>
 
 {% highlight html %}
+
 <nav class="navbar navbar-dark bg-dark">
   <!-- Navbar content -->
 </nav>
@@ -392,6 +409,7 @@ Theming the navbar has never been easier thanks to the combination of theming cl
 Although it's not required, you can wrap a navbar in a `.container` to center it on a page or add one within to only center the contents of a [fixed or static top navbar](#placement).
 
 {% example html %}
+
 <div class="container">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Navbar</a>
@@ -402,6 +420,7 @@ Although it's not required, you can wrap a navbar in a `.container` to center it
 When the container is within your navbar, its horizontal padding is removed at breakpoints lower than your specified `.navbar-expand{-sm|-md|-lg|-xl}` class. This ensures we're not doubling up on padding unnecessarily on lower viewports when your navbar is collapsed.
 
 {% example html %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand" href="#">Navbar</a>
@@ -416,24 +435,28 @@ Use our [position utilities]({{ site.baseurl }}/docs/{{ site.docs_version }}/uti
 Also note that **`.sticky-top` uses `position: sticky`, which [isn't fully supported in every browser](https://caniuse.com/#feat=css-sticky)**.
 
 {% example html %}
+
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">Default</a>
 </nav>
 {% endexample %}
 
 {% example html %}
+
 <nav class="navbar fixed-top navbar-light bg-light">
   <a class="navbar-brand" href="#">Fixed top</a>
 </nav>
 {% endexample %}
 
 {% example html %}
+
 <nav class="navbar fixed-bottom navbar-light bg-light">
   <a class="navbar-brand" href="#">Fixed bottom</a>
 </nav>
 {% endexample %}
 
 {% example html %}
+
 <nav class="navbar sticky-top navbar-light bg-light">
   <a class="navbar-brand" href="#">Sticky top</a>
 </nav>
@@ -452,6 +475,7 @@ Navbar togglers are left-aligned by default, but should they follow a sibling el
 With no `.navbar-brand` shown in lowest breakpoint:
 
 {% example html %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -480,6 +504,7 @@ With no `.navbar-brand` shown in lowest breakpoint:
 With a brand name shown on the left and toggler on the right:
 
 {% example html %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -509,6 +534,7 @@ With a brand name shown on the left and toggler on the right:
 With a toggler on the left and brand name on the right:
 
 {% example html %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -540,6 +566,7 @@ With a toggler on the left and brand name on the right:
 Sometimes you want to use the collapse plugin to trigger hidden content elsewhere on the page. Because our plugin works on the `id` and `data-target` matching, that's easily done!
 
 {% example html %}
+
 <div class="pos-f-t">
   <div class="collapse" id="navbarToggleExternalContent">
     <div class="bg-dark p-4">

@@ -10,6 +10,7 @@ toc: true
 
 {% example html %}
 {% for color in site.data.theme-colors %}
+
 <p class="text-{{ color.name }}{% if color.name == "light" %} bg-dark{% endif %}">.text-{{ color.name }}</p>{% endfor %}
 <p class="text-muted">.text-muted</p>
 <p class="text-white bg-dark">.text-white</p>
@@ -19,6 +20,7 @@ Contextual text classes also work well on anchors with the provided hover and fo
 
 {% example html %}
 {% for color in site.data.theme-colors %}
+
 <p><a href="#" class="text-{{ color.name }}{% if color.name == "light" %} bg-dark{% endif %}">{{ color.name | capitalize }} link</a></p>{% endfor %}
 <p><a href="#" class="text-muted">Muted link</a></p>
 <p><a href="#" class="text-white bg-dark">White link</a></p>
@@ -30,6 +32,7 @@ Similar to the contextual text color classes, easily set the background of an el
 
 {% example html %}
 {% for color in site.data.theme-colors %}
+
 <div class="p-3 mb-2 bg-{{ color.name }} {% if color.name == "light" or color.name == "warning" %}text-dark{% else %}text-white{% endif %}">.bg-{{ color.name }}</div>{% endfor %}
 <div class="p-3 mb-2 bg-white text-dark">.bg-white</div>
 {% endexample %}
@@ -40,10 +43,12 @@ When `$enable-gradients` is set to true, you'll be able to use `.bg-gradient-` u
 
 {% example html %}
 {% for color in site.data.theme-colors %}
+
 <div class="p-3 mb-2 bg-gradient-{{ color.name }} {% if color.name == "light" or color.name == "warning" %}text-dark{% else %}text-white{% endif %}">.bg-gradient-{{ color.name }}</div>{% endfor %}
 {% endexample %}
 
 {% callout info %}
+
 #### Dealing with specificity
 
 Sometimes contextual classes cannot be applied due to the specificity of another selector. In some cases, a sufficient workaround is to wrap your element's content in a `<div>` with the class.
