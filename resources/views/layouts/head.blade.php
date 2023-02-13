@@ -36,5 +36,7 @@
 <link href="
 https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery.min.css
 " rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
+
   
    

@@ -10,6 +10,7 @@
     @include('layouts.top_bar')
     <div class="header-absolute">
         @include('layouts.header')
+       
     </div>
    @yield('body')
     @include('layouts.footer')
@@ -28,6 +29,7 @@
     
 
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script src="
 https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/lightgallery.min.js
