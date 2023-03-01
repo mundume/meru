@@ -62,7 +62,7 @@
     }
 </style>
 @section('body')
-    <div class="home-container tw-bg-gray-900 tw-border-b-2 tw-border-gray-900">
+    <div class="bg-gray-900 border-b-2 border-gray-900 home-container">
 
         <!-- Hero -->
 <div class="p-5 text-center pt-7 bg-image rounded-3" style="
@@ -72,11 +72,11 @@
   <div class="mask">
     <div class="d-flex justify-content-center align-items-center h-100">
       <div class="text-white">
-        <h1 class="mt-6 mb-3 tw-font-sans " style="font-size:3rem">Karibu <br>
-    <span class="tw-font-bold tw-p-4 tw-text-4xl tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500 tw-font-sans">Meru Artist</span> </h1>
-        <h4 class="mb-3 text-lg tw-font-mono" style="font-size: 26px;font-weight:400">Where comfort meets class</h4>
-        <div class=" d-flex justify-content-center align-items-center tw-font-sans"><a class="buttona button tw-font-bold tw-p-2 tw-border tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500 tw-font-sans" href="#gallery" role="button">Gallery</a>
-    <a href="#book" class="button tw-font-bold tw-p-2 tw-border tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500 tw-font-sans"
+        <h1 class="mt-6 mb-3 font-sans " style="font-size:3rem">Karibu <br>
+    <span class="p-4 font-sans text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500">Meru Artist</span> </h1>
+        <h4 class="mb-3 font-mono text-lg" style="font-size: 26px;font-weight:400">Where comfort meets class</h4>
+        <div class="font-sans d-flex justify-content-center align-items-center"><a class="p-2 font-sans font-bold text-transparent border buttona button bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500" href="#gallery" role="button">Gallery</a>
+    <a href="#book" class="p-2 font-sans font-bold text-transparent border button bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500"
     "> Book Now</a>
  </div>
         
@@ -88,15 +88,15 @@
     
    
 
- <section class="tw-bg-gray-900 tw-border-2 tw-border-gray-900 ">
- <div class="tw-m-4 tw-rounded-md" id="book">
-    <h1 class=" tw-font-mono tw-text-3xl tw-block tw-m-auto tw-text-center tw-text-white">Experience The Magic With Us <br>
-<span class="tw-font-bold tw-p-4 tw-text-4xl tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500 tw-font-sans">Book Now!</span></h1>
+  <section class="bg-gray-900 border-2 border-gray-900 ">
+ <div class="m-4 rounded-md" id="book">
+    <h1 class="block m-auto font-mono text-3xl text-center text-white ">Experience The Magic With Us <br>
+<span class="p-4 font-sans text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500">Book Now!</span></h1>
             @include('layouts.search_form')
             
-        </div><!-- end hero text -->>
+
 </div>
-        </section>   
+ </section>   
    
                           
        
@@ -273,36 +273,36 @@
    
     </div>
 <div id="services">
-     <section id="" class=" tw-bg-gray-900">
+     <section id="" class="bg-gray-900 ">
         <div class="">
             <div class="">
-                <div class=" tw-block tw-m-auto tw-text-center">
+                <div class="block m-auto text-center ">
                     <div class="">
-                        <h2 class="tw-font-bold tw-p-4 tw-text-4xl tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500 tw-font-mono">Our Services</h2>
-                        <p class=" tw-p-7 tw-font-sans">As an organization, we are committed to providing our customers with the highest quality of
+                        <h2 class="p-4 font-mono text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500">Our Services</h2>
+                        <p class="font-sans p-7">As an organization, we are committed to providing our customers with the highest quality of
                             service and safety in the
                             transport industry.</p>
                     </div><!-- end page-heading -->
 
                     <div id="">
-                        <div class="p-3 tw-block tw-m-auto">
+                        <div class="block p-3 m-auto">
 
                             <div class="" >
-                                <div class="mt-4 mb-6 border tw-w-full tw-text-center tw-m-auto tw-flex tw-flex-col tw-justify-around tw-items-center tw-h-64 tw-shadow-2xl tw-rounded-md" >
-                                    <span class=""><i style="color:white" class="fa fa-bus tw-text-3xl "></i></span>
-                                    <h2 class="tw-p-4 tw-text-4xl tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500">Tickets Booking</h2>
+                                <div class="flex flex-col items-center justify-around h-64 m-auto mt-4 mb-6 text-center border rounded-md full shad2xl" >
+                                    <span class=""><i style="color:white" class="text-3xl fa fa-bus "></i></span>
+                                    <h2 class="p-4 text-4xl text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500">Tickets Booking</h2>
                                     <p>You book, we preserve seat for you all at click of the button. Our committment is to
                                         serve you better.</p>
                                 </div><!-- end service-block -->
                             </div><!-- end columns -->
                             </div><!-- end row -->
 
-                            <div class="p-3 tw-block tw-m-auto">
+                            <div class="block p-3 m-auto">
 
                             <div class="" >
-                                <div class="mt-4 mb-4 border tw-w-full tw-text-center tw-m-auto tw-flex tw-flex-col tw-justify-around tw-items-center tw-h-64 tw-shadow-2xl tw-rounded-md" >
-                                    <span class=""><i style="color:white" class="fa fa-truck tw-text-3xl "></i></span>
-                                    <h2 class="tw-p-4 tw-text-4xl tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500">Parcel Deliveries</h2>
+                                <div class="flex flex-col items-center justify-around h-64 m-auto mt-4 mb-4 text-center border rounded-md full shad2xl" >
+                                    <span class=""><i style="color:white" class="text-3xl fa fa-truck "></i></span>
+                                    <h2 class="p-4 text-4xl text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500">Parcel Deliveries</h2>
                                     <p>Affordable rates and security of your parcel is our concerns. Send parcel with us
                                         today.</p>
                                 </div><!-- end service-block -->
@@ -324,7 +324,7 @@
     <br><br>
 <!-- Gallery -->
 
-<div id="testimonials " class =" tw-block tw-m-auto tw-text-center">
+<div id="testimonials " class ="block m-auto text-center ">
     @include('layouts.testimonials')
 </div>
 
@@ -364,31 +364,31 @@
         </div><!-- end container -->
     </section><!-- end banner-2 -->
 
-    <section id="contact" class=" tw-h-fit tw-bg-gray-900 sm:tw-flex sm:tw-justify-center sm:tw-items-center tw-block">
-        <div class=" sm:tw-w-1/2">
-          <h1 class="tw-text-4xl tw-text-white tw-font-bold tw-p-4 tw-m-auto tw-block tw-text-center">Love to Hear from you! <br/>
-            <span class="tw-font-bold tw-p-4 tw-text-4xl tw-text-transparent tw-bg-clip-text tw-bg-gradient-to-r tw-from-amber-500 tw-to-pink-500 tw-font-sans">Lets get in touch</span>
+    <section id="contact" class="block bg-gray-900 h-fit sm:flex sm:justify-center sm:items-center">
+        <div class=" sm:1/2">
+          <h1 class="block p-4 m-auto text-4xl font-bold text-center text-white">Love to Hear from you! <br/>
+            <span class="p-4 font-sans text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500">Lets get in touch</span>
           </h1>
 
         </div>
-        <div  class="sm:tw-w-1/2 ">
-<form action="mailto:nzaih18@gmail.com" method="POST" type="text" class="  tw-flex tw-flex-col tw-justify-around  tw-h-full tw-mb-6 tw-bg-gray-900 tw-text-white sm:tw-w-96 tw-w-[90%]">
-    <div class="tw-flex tw-justify-between tw-items-center" >
- <label for="name" class="tw-font-bold">  Name</label>
-<input type="email" name="email" placeholder="Email" class=" tw-m-2 tw-px-4 tw-py-3 tw-outline-none tw-rounded tw-text-gray-900 tw-w-72" />
+        <div  class="sm:1/2 ">
+<form action="mailto:nzaih18@gmail.com" method="POST" type="text" class="  flex flex-col justify-around  h-full mb-6 bg-gray-900 text-white sm:96 [90%]">
+    <div class="flex items-center justify-between" >
+ <label for="name" class="font-bold">  Name</label>
+<input type="email" name="email" placeholder="Email" class="px-4 py-3 m-2 text-gray-900 rounded outline-none 72" />
     
     </div >
 
-    <div class=" tw-flex tw-justify-between tw-items-center">
-    <label for="name" class="tw-font-bold"> Email</label>
+    <div class="flex items-center justify-between ">
+    <label for="name" class="font-bold"> Email</label>
     
-    <input type="text" name="name" placeholder="Name" class=" tw-m-2 tw-px-4 tw-py-3 tw-border tw-rounded tw-outline-none tw-text-gray-900 tw-w-72"/>
+    <input type="text" name="name" placeholder="Name" class="px-4 py-3 m-2 text-gray-900 border rounded outline-none 72"/>
     </div>
-    <div class="tw-flex tw-justify-between tw-items-center">
-    <label for="message" class="tw-font-bold"> Info</label>
-    <input type="textarea" name="message" placeholder="Message" class=" tw-m-2 tw-px-4 tw-py-7 tw-border tw-rounded tw-outline-none tw-text-gray-900 tw-w-72"/>
+    <div class="flex items-center justify-between">
+    <label for="message" class="font-bold"> Info</label>
+    <input type="textarea" name="message" placeholder="Message" class="px-4 m-2 text-gray-900 border rounded outline-none py-7 72"/>
     </div>
-    <button type="submit" class="py-2 border tw-mt-3 tw-mb-5 tw-block tw-px-3 tw-items-center tw-m-auto tw-rounded">Submit</button>
+    <button type="submit" class="items-center block px-3 py-2 m-auto mt-3 mb-5 border rounded">Submit</button>
 </form>
 
         </div>
